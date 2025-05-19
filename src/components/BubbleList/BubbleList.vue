@@ -54,6 +54,8 @@ const handleScroll = (e: Event) => {
 
 // 获取对话列表以及设置key and 设置bubble的呈现方式（props）
 const { ListData, setListData } = useListData(props.items, props.roles)
+console.log(props.items, props.roles);
+
 
 watch(() => props.items, () => {
   setListData(props.items)
