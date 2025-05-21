@@ -7,7 +7,7 @@ import Conversations from "./components/Conversation/Conversation.vue";
 import { ref } from 'vue'
 import { AddLocation, Aim, AlarmClock } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
-
+import Sender from './components/Sender/Sender.vue';
 // const repeat = ref(1)
 // const text = ref('hello world！')
 
@@ -68,46 +68,56 @@ import { ElMessage } from 'element-plus'
 //   })
 // }
 
-const items = Array.from({ length: 4 }).map((_, index) => ({
-  key: `item${index + 1}`,
-  label: `Conversation Item ${index + 1}`,
-  disabled: index === 3,
-  group: index === 3 ? '工作' : '学习',
-}))
-const activeKey = ref('item1')
+// const items = Array.from({ length: 4 }).map((_, index) => ({
+//   key: `item${index + 1}`,
+//   label: `Conversation Item ${index + 1}`,
+//   disabled: index === 3,
+//   group: index === 3 ? '工作' : '学习',
+// }))
+// const activeKey = ref('item1')
 
-const menuConfig = () => ({
-  items: [
-    {
-      label: 'Operation 1',
-      icon: AddLocation,
-      command: 'command1',
-    },
-    {
-      label: 'Operation 2',
-      icon: Aim,
-      command: 'command2',
-      disabled: true,
-    },
-    {
-      label: 'Operation 3',
-      icon: AlarmClock,
-      command: 'command3',
-    },
-  ],
-  onClick: (e) => {
-    ElMessage.info(`You clicked ${e.label} - ${e.key}`)
-  },
-})
+// const menuConfig = () => ({
+//   items: [
+//     {
+//       label: 'Operation 1',
+//       icon: AddLocation,
+//       command: 'command1',
+//     },
+//     {
+//       label: 'Operation 2',
+//       icon: Aim,
+//       command: 'command2',
+//       disabled: true,
+//     },
+//     {
+//       label: 'Operation 3',
+//       icon: AlarmClock,
+//       command: 'command3',
+//     },
+//   ],
+//   onClick: (e) => {
+//     ElMessage.info(`You clicked ${e.label} - ${e.key}`)
+//   },
+// })
 
-const groupableConfig = {
-  sort: (a, b) => {
-    const order: Record<string, number> = { 学习: 0, 工作: 1 }
-    const orderA = order[a] !== undefined ? order[a] : 999
-    const orderB = order[b] !== undefined ? order[b] : 999
-    return orderA - orderB
-  },
-  title: undefined
+// const groupableConfig = {
+//   sort: (a, b) => {
+//     const order: Record<string, number> = { 学习: 0, 工作: 1 }
+//     const orderA = order[a] !== undefined ? order[a] : 999
+//     const orderB = order[b] !== undefined ? order[b] : 999
+//     return orderA - orderB
+//   },
+//   title: undefined
+// }
+
+
+const senderValue = ref('Force as loading')
+const senderRef = ref()
+const handleSubmit = (e) => {
+  console.log(e);
+}
+const handleClick = () => {
+  senderRef.value?.handleHeaderOpen()
 }
 </script>
 
@@ -140,8 +150,24 @@ const groupableConfig = {
 
     <!-- <Conversations v-model:active-key="activeKey" :items="items" style="width: 300px" :menu="menuConfig"
       :groupable="groupableConfig" /> -->
-    <Conversations v-model:active-key="activeKey" :items="items" style="width: 300px" :menu="menuConfig" />
+    <!-- <Conversations v-model:active-key="activeKey" :items="items" style="width: 300px" :menu="menuConfig" /> -->
+    <el-button @click="handleClick">点击</el-button>
+    <Sender v-model="senderValue" ref="senderRef">
+      <template #prefix>
+        <el-button type="primary">打开header</el-button>
+      </template>
+      <template #header>
+        header
+      </template>
+      <template #footer>
+        footer
+      </template>
+      <!-- <template #actionsList>
+        <el-button type="warning">警告牌</el-button>
+      </template> -->
+    </Sender>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped lang="scss">
+// @import './style'</style>

@@ -1,0 +1,109 @@
+@import "../../theme/index";
+@import "../../theme/mixin";
+
+$prefix: "sender" !default;
+:deep(.el-textarea) {
+  .el-textarea__inner {
+    padding: var(--padding-sm);
+    border: none; // 移除边框
+    box-shadow: none; // 移除阴影
+    background: transparent; // 透明背景
+
+    &:focus {
+      box-shadow: none; // 移除聚焦时的阴影
+      border: none; // 移除聚焦时的边框
+    }
+
+    &:hover {
+      border: none; // 移除悬停时的边框
+    }
+  }
+}
+
+// 如果需要移除选中时的蓝色边框
+:deep(.el-input__wrapper) {
+  box-shadow: none !important;
+
+  &:hover,
+  &.is-focus {
+    box-shadow: none !important;
+  }
+}
+
+@include b(#{$prefix}) {
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  border-radius: calc($border-radius * 2);
+  box-shadow: var(--box-shadow-tertiary);
+  transition: all $motion-duration-slow;
+
+  @include b(#{$prefix}-header) {
+    height: auto;
+  }
+  // Vc-sender-container Vc-sender-default
+  @include b(#{$prefix}-container) {
+    display: flex;
+  }
+
+  @include b(#{$prefix}-default) {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @include b(#{$prefix}-updown) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .foo {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  @include b(#{$prefix}-prefix) {
+    padding: var(--padding-sm);
+  }
+
+  @include b(#{$prefix}-actionsList) {
+    padding: var(--padding-sm);
+  }
+
+  @include b(#{$prefix}-actionsList-default) {
+    padding: var(--padding-sm);
+  }
+
+  // focus-within 伪类用于匹配获得焦点的元素内部的子元素
+  &:focus-within {
+    border-color: var(--color-primary);
+    box-shadow: var(--box-shadow-secondary);
+  }
+
+  &#{&}-disabled {
+    color: rgb(var(--light), 0.25);
+    background: rgb(var(--light), 0.04);
+  }
+}
+
+.header-slide-enter-active,
+.header-slide-leave-active {
+  transition: all 0.3s ease;
+}
+
+.header-slide-enter-from,
+.header-slide-leave-to {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+.header-slide-enter-to,
+.header-slide-leave-from {
+  transform: translateY(0);
+  opacity: 1;
+}
