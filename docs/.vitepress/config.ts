@@ -37,11 +37,12 @@ export default defineConfig({
         items: [
           { text: "Welcome 欢迎 👏🏻", link: "/components/welcome" },
           { text: "Bubble 对话 💬", link: "/components/bubble" },
-          { text: "BubbleList 对话列表 💬", link: "/components/bubbleList" },
+          { text: "BubbleList 对话列表 ☄️", link: "/components/bubbleList" },
           {
             text: "Conversation 管理对话 📱",
             link: "/components/conversation",
           },
+          { text: "Sender 输入框 💭", link: "/components/sender" },
         ],
       },
     ],

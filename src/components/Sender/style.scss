@@ -40,9 +40,9 @@ $prefix: "sender" !default;
   box-shadow: var(--box-shadow-tertiary);
   transition: all $motion-duration-slow;
 
-  @include b(#{$prefix}-header) {
-    height: auto;
-  }
+  // @include b(#{$prefix}-header) {
+  //   height: 300px;
+  // }
   // Vc-sender-container Vc-sender-default
   @include b(#{$prefix}-container) {
     display: flex;
@@ -93,17 +93,16 @@ $prefix: "sender" !default;
 
 .header-slide-enter-active,
 .header-slide-leave-active {
-  transition: all 0.3s ease;
+  // 知识点 计算高度
+  height: calc-size(max-content, size);
+  // height: 200px;
+  opacity: 1;
+  transition: all var(--motion-duration-slow);
+  overflow: hidden;
 }
 
 .header-slide-enter-from,
 .header-slide-leave-to {
-  transform: translateY(-100%);
-  opacity: 0;
-}
-
-.header-slide-enter-to,
-.header-slide-leave-from {
-  transform: translateY(0);
-  opacity: 1;
+  height: 0;
+  opacity: 0 !important;
 }

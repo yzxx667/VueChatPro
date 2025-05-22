@@ -1,17 +1,19 @@
 <template>
   <div :class="[ns.b(), props?.rootClassName]" ref="senderRef">
-    <div :class="[ns.b('header')]" v-show="headerShow">
-      <slot name="header"></slot>
-    </div>
+    <Transition name="header-slide">
+      <div :class="[ns.b('header')]" v-if="headerShow">
+        <slot name="header"></slot>
+      </div>
+    </Transition>
     <div :class="computedContainerClass">
       <template v-if="props.variants === 'default'">
         <div :class="[ns.b('prefix')]" v-if="solts.prefix">
           <slot name="prefix"></slot>
         </div>
-        <el-input v-model="inputValue" :placeholder="props?.placeholder" :disabled="props?.disabled" autosize
-          resize="none" type="textarea" :readonly="props?.readonly" :class="computedInputClass"
-          :style="{ ...props?.styles?.input }" :submitType="props?.submitType" @change="props?.onChange"
-          @keypress="handleKeyPress">
+        <el-input ref="inputRefDefault" v-model="inputValue" :placeholder="props?.placeholder"
+          :disabled="props?.disabled" autosize resize="none" type="textarea" :readonly="props?.readonly"
+          :class="computedInputClass" :style="{ ...props?.styles?.input }" :submitType="props?.submitType"
+          @input="handleChange" @keypress="handleKeyPress">
         </el-input>
         <div :class="[ns.b('actionsList')]" v-if="solts.actionsList">
           <slot name="actionsList"></slot>
@@ -19,30 +21,39 @@
         <div :class="[ns.b('actionsList-default')]" v-else>
           <el-button circle type="primary">
             <el-icon>
-              <Promotion />
+              <Promotion @click="handleSubmit" />
             </el-icon>
           </el-button>
         </div>
       </template>
       <template v-else>
-        <el-input v-model="inputValue" :placeholder="props?.placeholder" :disabled="props?.disabled" autosize
-          resize="none" type="textarea" :readonly="props?.readonly" :class="computedInputClass"
-          :style="{ ...props?.styles?.input }" :submitType="props?.submitType" @change="props?.onChange"
-          @keypress="handleKeyPress">
+        <el-input ref="inputRefupDown" v-model="inputValue" :placeholder="props?.placeholder"
+          :disabled="props?.disabled" autosize resize="none" type="textarea" :readonly="props?.readonly"
+          :class="computedInputClass" :style="{ ...props?.styles?.input }" :submitType="props?.submitType"
+          @input="handleChange" @keypress="handleKeyPress">
         </el-input>
         <div class="foo">
           <div :class="[ns.b('prefix')]">
             <slot name="prefix"></slot>
           </div>
-          <div :class="[ns.b('actionsList')]">
+          <div :class="[ns.b('actionsList')]" v-if="solts.actionsList">
             <slot name="actionsList"></slot>
+          </div>
+          <div :class="[ns.b('actionsList-default')]" v-else>
+            <el-button circle type="primary">
+              <el-icon>
+                <Promotion @click="handleSubmit" />
+              </el-icon>
+            </el-button>
           </div>
         </div>
       </template>
     </div>
-    <div :class="[ns.b('footer')]">
-      <slot name="footer"></slot>
-    </div>
+    <Transition name="header-slide">
+      <div :class="[ns.b('footer')]" v-if="footerShow">
+        <slot name="footer"></slot>
+      </div>
+    </Transition>
   </div>
 </template>
 
@@ -52,16 +63,23 @@ import type { SenderProps, SenderMethods } from './types';
 import { useSlots, computed, ref } from 'vue';
 const ns = useClassMoudle('sender');
 const props = withDefaults(defineProps<SenderProps>(), {
-  variants: 'default'
+  variants: 'default',
+  submitType: 'enter'
 });
 
 const senderRef = ref<HTMLDivElement>()
 // 头部是否打开
 const headerShow = ref<boolean>(false)
+const inputRefDefault = ref<HTMLInputElement>()
+const inputRefupDown = ref<HTMLInputElement>()
+const footerShow = ref<boolean>(false)
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void
-  (e: 'submit', value: string): void
+  // (e: 'submit', value: string): void
+  (e: 'on-input', value: string): void
+  // (e: 'on-keypress', value: KeyboardEvent): void
+  (e: 'on-submit', value: string): void
 }>();
 
 const solts = useSlots();
@@ -91,6 +109,18 @@ function onInput(value: string) {
   emit('update:modelValue', value)
 }
 
+const handleChange = (e: string) => {
+  emit('on-input', e)
+}
+
+// const handleKeypress = (e: KeyboardEvent) => {
+//   emit('on-keypress', e)
+// }
+
+const handleSubmit = (e: string) => {
+  emit('on-submit', e)
+}
+
 
 const inputValue = computed({
   get: () => props.modelValue,
@@ -102,7 +132,7 @@ const handleKeyPress = (e: KeyboardEvent) => {
   if (props.submitType === 'enter') {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
-      emit('submit', props.modelValue) // 发出 submit 事件
+      handleSubmit(props.modelValue)
     }
   }
   if (props.submitType === 'shiftEnter') {
@@ -112,7 +142,7 @@ const handleKeyPress = (e: KeyboardEvent) => {
     }
     if (e.key === 'Enter' && e.shiftKey) {
       e.preventDefault()
-      emit('submit', props.modelValue)
+      handleSubmit(props.modelValue)
     }
   }
 }
@@ -125,9 +155,34 @@ const handleHeaderOpen = () => {
   headerShow.value = true
 }
 
+const handleFocusDefault = () => {
+  inputRefDefault.value?.focus()
+}
+
+const handleFocusupDown = () => {
+  inputRefupDown.value?.focus()
+}
+
+const handleFooterClose = () => {
+  footerShow.value = false
+}
+const handleFooterOpen = () => {
+  footerShow.value = true
+}
+
+const handleInputSubmit = () => {
+  if (inputValue.value) {
+    handleSubmit(inputValue.value)
+  }
+}
+
+const handleInputClear = () => {
+  inputValue.value = ''
+}
+
 defineExpose<SenderMethods>({
   handleHeaderClose,
-  handleHeaderOpen,
+  handleHeaderOpen, handleFocusDefault, handleFocusupDown, handleFooterClose, handleFooterOpen, handleInputSubmit, handleInputClear
 })
 </script>
 

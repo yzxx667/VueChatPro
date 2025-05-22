@@ -5,9 +5,10 @@ import BubbleList from "./components/BubbleList/BubbleList.vue";
 import Conversations from "./components/Conversation/Conversation.vue";
 // import { ElButton, ElSpace } from 'element-plus'
 import { ref } from 'vue'
-import { AddLocation, Aim, AlarmClock } from '@element-plus/icons-vue'
+import { AddLocation, Aim, AlarmClock, CircleClose } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import Sender from './components/Sender/Sender.vue';
+import TestComp from './components/TestComp/TestComp.vue';
 // const repeat = ref(1)
 // const text = ref('hello world！')
 
@@ -111,18 +112,39 @@ import Sender from './components/Sender/Sender.vue';
 // }
 
 
-const senderValue = ref('Force as loading')
+const senderValue = ref('')
 const senderRef = ref()
-const handleSubmit = (e) => {
-  console.log(e);
-}
+// const handleSubmit = (e) => {
+//   console.log(e);
+// }
 const handleClick = () => {
   senderRef.value?.handleHeaderOpen()
+
+  senderRef.value?.handleFocusDefault()
+}
+const handleClickClose = () => {
+  senderRef.value?.handleHeaderClose()
+  senderRef.value?.handleFocusDefault()
+}
+const handleChange = (e) => {
+  console.log(e);
+}
+const handleKeypress = (e) => {
+  console.log(e);
+}
+const handleSubmit = (e) => {
+  console.log(e);
 }
 </script>
 
 <template>
   <div>
+    <!-- <TestComp>
+      <template #header>
+        <div style="margin: 20px;overflow: auto;">Template</div>
+      </template>
+</TestComp> -->
+
     <!-- <Bubble content="hello world！" />
     <br />
     <ElSpace direction="vertical" alignment="align-start" style="width: 100%">
@@ -151,23 +173,74 @@ const handleClick = () => {
     <!-- <Conversations v-model:active-key="activeKey" :items="items" style="width: 300px" :menu="menuConfig"
       :groupable="groupableConfig" /> -->
     <!-- <Conversations v-model:active-key="activeKey" :items="items" style="width: 300px" :menu="menuConfig" /> -->
-    <el-button @click="handleClick">点击</el-button>
-    <Sender v-model="senderValue" ref="senderRef">
-      <template #prefix>
-        <el-button type="primary">打开header</el-button>
-      </template>
-      <template #header>
+    <div style="height: 300px; display: flex;flex-direction: column;justify-content: space-between;">
+      <el-button @click="handleClick">点击</el-button>
+      <el-button @click="senderRef?.handleInputClear">清空内容</el-button>
+      <el-button @click="senderRef?.handleInputSubmit">提交</el-button>
+      <Sender v-model="senderValue" ref="senderRef" @on-input="handleChange" @on-submit="handleSubmit"
+        variants="updown">
+        <template #prefix>
+          <el-button type="primary" @click="handleClickClose">关闭header</el-button>
+        </template>
+        <template #header>
+          <div class="header-self-wrap">
+            <div class="header-self-title">
+              <div class="header-left">
+                💯 欢迎使用 Element Plus X
+              </div>
+              <div class="header-right">
+                <el-button>
+                  <el-icon>
+                    <CircleClose />
+                  </el-icon>
+                  <span>关闭头部</span>
+                </el-button>
+              </div>
+            </div>
+            <div class="header-self-content">
+              🦜 自定义头部内容
+            </div>
+          </div>
+        </template>
+        <!-- <template #header>
         header
-      </template>
-      <template #footer>
+      </template> -->
+        <!-- <template #footer>
         footer
-      </template>
-      <!-- <template #actionsList>
+      </template> -->
+        <!-- <template #actionsList>
         <el-button type="warning">警告牌</el-button>
       </template> -->
-    </Sender>
+      </Sender>
+    </div>
   </div>
 </template>
 
 <style scoped lang="scss">
+.header-self-wrap {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  height: 200px;
+
+  .header-self-title {
+    width: 100%;
+    display: flex;
+    height: 30px;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 8px;
+  }
+
+  .header-self-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #626aef;
+    font-weight: 600;
+  }
+}
+
 // @import './style'</style>
