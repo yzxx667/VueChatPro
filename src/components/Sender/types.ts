@@ -15,6 +15,7 @@ export interface SenderProps {
     prefix?: CSSProperties;
     input?: CSSProperties;
   };
+  loading?: boolean;
   variants?: "default" | "updown";
   submitType?: "enter" | "shiftEnter";
   onInput?: (value: string) => void;

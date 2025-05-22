@@ -11,15 +11,22 @@
           <slot name="prefix"></slot>
         </div>
         <el-input ref="inputRefDefault" v-model="inputValue" :placeholder="props?.placeholder"
-          :disabled="props?.disabled" autosize resize="none" type="textarea" :readonly="props?.readonly"
-          :class="computedInputClass" :style="{ ...props?.styles?.input }" :submitType="props?.submitType"
-          @input="handleChange" @keypress="handleKeyPress">
+          :disabled="props?.disabled" autosize resize="none" type="textarea"
+          :readonly="props?.readonly || props?.loading" :class="computedInputClass" :style="{ ...props?.styles?.input }"
+          :submitType="props?.submitType" @input="handleChange" @keypress="handleKeyPress">
         </el-input>
         <div :class="[ns.b('actionsList')]" v-if="solts.actionsList">
           <slot name="actionsList"></slot>
         </div>
+        <div v-else-if="props?.loading" :class="[ns.b('actionsList')]">
+          <ElButton circle type="primary">
+            <ElIcon color="white" size="32">
+              <StopLoading />
+            </ElIcon>
+          </ElButton>
+        </div>
         <div :class="[ns.b('actionsList-default')]" v-else>
-          <el-button circle type="primary">
+          <el-button circle type="primary" :disabled="props?.disabled">
             <el-icon>
               <Promotion @click="handleSubmit" />
             </el-icon>
@@ -28,9 +35,9 @@
       </template>
       <template v-else>
         <el-input ref="inputRefupDown" v-model="inputValue" :placeholder="props?.placeholder"
-          :disabled="props?.disabled" autosize resize="none" type="textarea" :readonly="props?.readonly"
-          :class="computedInputClass" :style="{ ...props?.styles?.input }" :submitType="props?.submitType"
-          @input="handleChange" @keypress="handleKeyPress">
+          :disabled="props?.disabled" autosize resize="none" type="textarea"
+          :readonly="props?.readonly || props?.loading" :class="computedInputClass" :style="{ ...props?.styles?.input }"
+          :submitType="props?.submitType" @input="handleChange" @keypress="handleKeyPress">
         </el-input>
         <div class="foo">
           <div :class="[ns.b('prefix')]">
@@ -39,8 +46,15 @@
           <div :class="[ns.b('actionsList')]" v-if="solts.actionsList">
             <slot name="actionsList"></slot>
           </div>
+          <div v-else-if="props?.loading" :class="[ns.b('actionsList')]">
+            <ElButton circle type="primary">
+              <ElIcon color="white" size="32">
+                <StopLoading />
+              </ElIcon>
+            </ElButton>
+          </div>
           <div :class="[ns.b('actionsList-default')]" v-else>
-            <el-button circle type="primary">
+            <el-button circle type="primary" :disabled="props?.disabled">
               <el-icon>
                 <Promotion @click="handleSubmit" />
               </el-icon>
@@ -61,11 +75,13 @@
 import { useClassMoudle } from '@/hooks/useClassMoudle';
 import type { SenderProps, SenderMethods } from './types';
 import { useSlots, computed, ref } from 'vue';
+import StopLoading from './Loading.vue'
 const ns = useClassMoudle('sender');
 const props = withDefaults(defineProps<SenderProps>(), {
   variants: 'default',
   submitType: 'enter'
 });
+
 
 const senderRef = ref<HTMLDivElement>()
 // 头部是否打开
@@ -83,7 +99,7 @@ const emit = defineEmits<{
 }>();
 
 const solts = useSlots();
-console.log(solts);
+// console.log(solts);
 
 
 const computedInputClass = computed(() => {
@@ -129,14 +145,14 @@ const inputValue = computed({
 
 // 键盘按下事件
 const handleKeyPress = (e: KeyboardEvent) => {
-  if (props.submitType === 'enter') {
+  if (props.submitType === 'enter' && !props?.loading) {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
       handleSubmit(props.modelValue)
     }
   }
   if (props.submitType === 'shiftEnter') {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === 'Enter' && !e.shiftKey && !props?.loading) {
       // 默认允许换行
       return
     }

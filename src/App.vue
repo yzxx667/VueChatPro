@@ -176,7 +176,7 @@ const handleSubmit = (e) => {
     <div style="height: 300px; display: flex;flex-direction: column;justify-content: space-between;">
       <el-button @click="handleClick">点击</el-button>
       <el-button @click="senderRef?.handleInputClear">清空内容</el-button>
-      <el-button @click="senderRef?.handleInputSubmit">提交</el-button>
+      <el-button @click="senderRef?.handleInputClear">清空内容</el-button>
       <Sender v-model="senderValue" ref="senderRef" @on-input="handleChange" @on-submit="handleSubmit"
         variants="updown">
         <template #prefix>
