@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { reactive, onMounted } from 'vue'
 import Bubble from "./components/Bubble/Bubble.vue";
 import BubbleList from "./components/BubbleList/BubbleList.vue";
 import Conversations from "./components/Conversation/Conversation.vue";
@@ -9,6 +9,8 @@ import { AddLocation, Aim, AlarmClock, CircleClose } from '@element-plus/icons-v
 import { ElMessage } from 'element-plus'
 import Sender from './components/Sender/Sender.vue';
 import TestComp from './components/TestComp/TestComp.vue';
+import { useAudio } from './hooks/useAudio'
+
 // const repeat = ref(1)
 // const text = ref('hello world！')
 
@@ -135,10 +137,24 @@ const handleKeypress = (e) => {
 const handleSubmit = (e) => {
   console.log(e);
 }
+
+const { start, value, loading, stop } = useAudio({ lang: 'en-US', onEnd: handleEnd, onResult: handleResult })
+
+function handleEnd(res: string) {
+  console.log('end:', res)
+}
+function handleResult(res: string) {
+  console.log('result:', res)
+}
 </script>
 
 <template>
   <div>
+    <el-button @click="start">开始录音</el-button>
+    <el-button @click="stop">停止录音</el-button>
+    <div>
+      {{ value }}
+    </div>
     <!-- <TestComp>
       <template #header>
         <div style="margin: 20px;overflow: auto;">Template</div>

@@ -16,13 +16,19 @@ importers:
         version: 2.3.2(vitepress@1.6.3(@algolia/client-search@5.25.0)(@types/node@22.15.18)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.89.0)(search-insights@2.17.3)(typescript@5.8.3))(vue@3.5.14(typescript@5.8.3))
       '@vitepress-demo-preview/plugin':
         specifier: ^1.4.0
-        version: 1.4.0(markdown-it-container@3.0.0)(vitepress@1.6.3(@algolia/client-search@5.25.0)(@types/node@22.15.18)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.89.0)(search-insights@2.17.3)(typescript@5.8.3))(vue@3.5.14(typescript@5.8.3))
+        version: 1.4.0(markdown-it-container@4.0.0)(vitepress@1.6.3(@algolia/client-search@5.25.0)(@types/node@22.15.18)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.89.0)(search-insights@2.17.3)(typescript@5.8.3))(vue@3.5.14(typescript@5.8.3))
       element-plus:
         specifier: ^2.9.10
         version: 2.9.10(vue@3.5.14(typescript@5.8.3))
+      highlight.js:
+        specifier: ^11.11.1
+        version: 11.11.1
       markdown-it:
         specifier: ^14.1.0
         version: 14.1.0
+      markdown-it-container:
+        specifier: ^4.0.0
+        version: 4.0.0
       vue:
         specifier: ^3.5.13
         version: 3.5.14(typescript@5.8.3)
@@ -1640,6 +1646,10 @@ packages:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
     hasBin: true
 
+  highlight.js@11.11.1:
+    resolution: {integrity: sha512-Xwwo44whKBVCYoliBQwaPvtd/2tYFkRQtXDWj1nackaV2JPXx3L0+Jvd8/qCJ2p+ML0/XVkJ2q+Mr+UVdpJK5w==}
+    engines: {node: '>=12.0.0'}
+
   hookable@5.5.3:
     resolution: {integrity: sha512-Yc+BQe8SvoXH1643Qez1zqLRmbA5rCL+sSmk6TVos0LWVfNIB7PGncdlId77WzLGSIB5KaWgTaNTs2lNVEI6VQ==}
 
@@ -1797,8 +1807,8 @@ packages:
   mark.js@8.11.1:
     resolution: {integrity: sha512-1I+1qpDt4idfgLQG+BNWmrqku+7/2bi5nLf4YwF8y8zXvmfiTBY3PV3ZibfrjBueCByROpuBjLLFCajqkgYoLQ==}
 
-  markdown-it-container@3.0.0:
-    resolution: {integrity: sha512-y6oKTq4BB9OQuY/KLfk/O3ysFhB3IMYoIWhGJEidXt1NQFocFK2sA2t0NYZAMyMShAGL6x5OPIbrmXPIqaN9rw==}
+  markdown-it-container@4.0.0:
+    resolution: {integrity: sha512-HaNccxUH0l7BNGYbFbjmGpf5aLHAMTinqRZQAEQbMr2cdD3z91Q6kIo1oUn1CQndkT03jat6ckrdRYuwwqLlQw==}
 
   markdown-it@14.1.0:
     resolution: {integrity: sha512-a54IwgWPaeBCAAsv13YgmALOF1elABB08FxO9i+r4VFk5Vl4pKokRPeX8u5TCgSsPi6ec1otfLjdOpVcgbpshg==}
@@ -3290,11 +3300,11 @@ snapshots:
       vitepress: 1.6.3(@algolia/client-search@5.25.0)(@types/node@22.15.18)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.89.0)(search-insights@2.17.3)(typescript@5.8.3)
       vue: 3.5.14(typescript@5.8.3)
 
-  '@vitepress-demo-preview/plugin@1.4.0(markdown-it-container@3.0.0)(vitepress@1.6.3(@algolia/client-search@5.25.0)(@types/node@22.15.18)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.89.0)(search-insights@2.17.3)(typescript@5.8.3))(vue@3.5.14(typescript@5.8.3))':
+  '@vitepress-demo-preview/plugin@1.4.0(markdown-it-container@4.0.0)(vitepress@1.6.3(@algolia/client-search@5.25.0)(@types/node@22.15.18)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.89.0)(search-insights@2.17.3)(typescript@5.8.3))(vue@3.5.14(typescript@5.8.3))':
     dependencies:
       '@flypeng/tool': 5.7.0
       markdown-it: 14.1.0
-      markdown-it-container: 3.0.0
+      markdown-it-container: 4.0.0
       vitepress: 1.6.3(@algolia/client-search@5.25.0)(@types/node@22.15.18)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.89.0)(search-insights@2.17.3)(typescript@5.8.3)
       vue: 3.5.14(typescript@5.8.3)
 
@@ -3964,6 +3974,8 @@ snapshots:
 
   he@1.2.0: {}
 
+  highlight.js@11.11.1: {}
+
   hookable@5.5.3: {}
 
   html-void-elements@3.0.0: {}
@@ -4080,7 +4092,7 @@ snapshots:
 
   mark.js@8.11.1: {}
 
-  markdown-it-container@3.0.0: {}
+  markdown-it-container@4.0.0: {}
 
   markdown-it@14.1.0:
     dependencies:
