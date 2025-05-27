@@ -1,32 +1,39 @@
 <template>
   <div ref="divRef" :class="[ns.b(), ns.b(placement)]">
-    <div v-if="avatar || slots.avatar" :class="[ns.b('avatar'), props.className?.avatar]" :style="props.styles?.header">
+    <div
+      v-if="avatar || slots.avatar"
+      :class="[ns.b('avatar'), props.className?.avatar]"
+      :style="props.styles?.header"
+    >
       <slot name="avatar">
         <el-avatar :size="32" :src="avatar" v-if="typeof avatar === 'string'" />
         <component :is="avatar" v-else />
       </slot>
     </div>
     <div v-if="slots.header || slots.footer" :class="[ns.b('content-wrapper')]">
-      <div v-if="slots.header" :class="[ns.b('header'), props.className?.header]" :style="props.styles?.header">
+      <div
+        v-if="slots.header"
+        :class="[ns.b('header'), props.className?.header]"
+        :style="props.styles?.header"
+      >
         <slot name="header"></slot>
       </div>
-      <div :class="[
-        ns.b('content'),
-        ns.b(`content-${props.variant}`),
-        props.className?.content,
-        props.shape && ns.b(`content-${props.placement}-${props.shape}`),
-      ]" :style="props.styles?.content">
-        <template v-if="props.loading">
+      <div
+        :class="[
+          ns.b('content'),
+          ns.b(`content-${props.variant}`),
+          props.className?.content,
+          props.shape && ns.b(`content-${props.placement}-${props.shape}`)
+        ]"
+        :style="props.styles?.content"
+      >
+        <template v-if="slots.content">
+          <slot v-if="slots.content" name="content"></slot>
+        </template>
+        <template v-else-if="props.loading">
           <slot v-if="slots.loading" name="loading" />
           <component :is="loadingRender()" v-else-if="loadingRender" />
           <Loading v-else />
-        </template>
-        <template v-else-if="slots.thinking">
-          <slot v-if="slots.thinking" name="thinking"></slot>
-          <div style="margin-top: 10px;">
-            <component :is="mergeContent" v-if="!isString(mergeContent)" />
-            <div v-else v-html="mergeContent"></div>
-          </div>
         </template>
         <template v-else>
           <!-- 根据 mergedContent 类型选择渲染方式 -->
@@ -34,34 +41,43 @@
           <div v-else v-html="mergeContent"></div>
         </template>
       </div>
-      <div v-if="slots.footer" :class="[ns.b('footer'), props.className?.footer]" :style="props.styles?.footer">
+      <div
+        v-if="slots.footer"
+        :class="[ns.b('footer'), props.className?.footer]"
+        :style="props.styles?.footer"
+      >
         <slot name="footer"></slot>
       </div>
     </div>
     <template v-else>
-      <div :class="[
-        ns.b('content'),
-        ns.b(`content-${props.variant}`),
-        props.className?.content,
-        props.shape && ns.b(`content-${props.placement}-${props.shape}`),
-      ]">
-        <template v-if="props.loading">
+      <div
+        :class="[
+          ns.b('content'),
+          ns.b(`content-${props.variant}`),
+          props.className?.content,
+          props.shape && ns.b(`content-${props.placement}-${props.shape}`)
+        ]"
+      >
+        <template v-if="slots.content">
+          <slot v-if="slots.content" name="content"></slot>
+        </template>
+        <template v-else-if="props.loading">
           <slot v-if="slots.loading" name="loading" />
           <component :is="loadingRender()" v-else-if="loadingRender" />
           <Loading v-else />
-        </template>
-        <template v-else-if="slots.thinking">
-          <slot v-if="slots.thinking" name="thinking"></slot>
-          <div style="margin-top: 10px;">
-            <component :is="mergeContent" v-if="!isString(mergeContent)" />
-            <div v-else v-html="mergeContent"></div>
-          </div>
         </template>
         <template v-else>
           <!-- 根据 mergedContent 类型选择渲染方式 -->
           <component :is="mergeContent" v-if="!isString(mergeContent)" />
           <div v-else v-html="mergeContent"></div>
         </template>
+      </div>
+      <div
+        v-if="slots.footer"
+        :class="[ns.b('footer'), props.className?.footer]"
+        :style="props.styles?.footer"
+      >
+        <slot name="footer"></slot>
       </div>
     </template>
   </div>
@@ -86,18 +102,19 @@ const props = withDefaults(defineProps<BubbleProps>(), {
   loadingRender: undefined,
   content: '',
   avatar: '',
-  typing: false,
+  typing: false
 })
-console.log('bubble props', props);
+console.log('bubble props', props)
 
 const emit = defineEmits<{
   (e: 'change', value: boolean, status: ThinkingStatus): void
 }>()
 
-
 const ns = useClassMoudle('bubble')
+// footer content avatar header loading
+
 const slots = useSlots()
-console.log('bubble slots', slots);
+console.log('bubble slots', slots)
 
 const divRef = ref<HTMLDivElement>()
 
@@ -119,9 +136,7 @@ const [typedContent, isTyping] = useTypedEffect2(
   interval as number
 )
 
-console.log(typedContent.value);
-
-
+console.log(typedContent.value)
 
 const mergeContent = computed(() =>
   props.messageRender
@@ -129,8 +144,7 @@ const mergeContent = computed(() =>
     : typedContent.value
 )
 
-console.log(mergeContent.value);
-
+console.log(mergeContent.value)
 
 function isString(content: unknown) {
   return typeof content === 'string'
@@ -156,12 +170,14 @@ watch(
 )
 
 // 内容更新触发的回调
-watch(() => typedContent.value, () => props.onUpdate?.())
+watch(
+  () => typedContent.value,
+  () => props.onUpdate?.()
+)
 // watch(()=>typedContent.value(), (newval, oldVal)=> console.log(newval, oldVal));
 
-
 defineExpose({
-  nativeElement: divRef,
+  nativeElement: divRef
 })
 </script>
 
