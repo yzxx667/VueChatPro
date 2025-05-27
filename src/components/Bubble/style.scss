@@ -34,14 +34,15 @@ $prefix: "bubble" !default;
     @include b(#{$prefix}-content) {
       position: relative;
       box-sizing: border-box;
-      min-height: calc($padding-sm * 2 + $line-height * $font-size);
-      font-size: $font-size;
+      min-height: calc($padding-sm * 2 + $line-height * $font-size-lg);
+      font-size: $font-size-lg;
       line-height: $line-height;
       overflow-wrap: break-word;
     }
 
     @include b(#{$prefix}-content-filled) {
-      background-color: rgb(var(--light), 12%);
+      // background-color: rgb(var(--light), 12%);
+      background-color: rgb(var(--dark));
     }
 
     @include b(#{$prefix}-content-outlined) {
@@ -49,8 +50,10 @@ $prefix: "bubble" !default;
     }
 
     @include b(#{$prefix}-content-shadow) {
-      box-shadow: 0 1px 2px 0 rgb(var(--light), 3%),
-        0 1px 6px -1px rgb(var(--light), 2%), 0 2px 4px 0 rgb(var(--light), 2%);
+      box-shadow:
+        0 1px 2px 0 rgb(var(--light), 3%),
+        0 1px 6px -1px rgb(var(--light), 2%),
+        0 2px 4px 0 rgb(var(--light), 2%);
     }
 
     &-header,

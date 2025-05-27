@@ -21,6 +21,13 @@
           <component :is="loadingRender()" v-else-if="loadingRender" />
           <Loading v-else />
         </template>
+        <template v-else-if="slots.thinking">
+          <slot v-if="slots.thinking" name="thinking"></slot>
+          <div style="margin-top: 10px;">
+            <component :is="mergeContent" v-if="!isString(mergeContent)" />
+            <div v-else v-html="mergeContent"></div>
+          </div>
+        </template>
         <template v-else>
           <!-- 根据 mergedContent 类型选择渲染方式 -->
           <component :is="mergeContent" v-if="!isString(mergeContent)" />
@@ -43,6 +50,13 @@
           <component :is="loadingRender()" v-else-if="loadingRender" />
           <Loading v-else />
         </template>
+        <template v-else-if="slots.thinking">
+          <slot v-if="slots.thinking" name="thinking"></slot>
+          <div style="margin-top: 10px;">
+            <component :is="mergeContent" v-if="!isString(mergeContent)" />
+            <div v-else v-html="mergeContent"></div>
+          </div>
+        </template>
         <template v-else>
           <!-- 根据 mergedContent 类型选择渲染方式 -->
           <component :is="mergeContent" v-if="!isString(mergeContent)" />
@@ -54,8 +68,10 @@
 </template>
 
 <script setup lang="ts">
+import Thinking from '@/components/Thinking/Think.vue'
 import type { BubbleProps } from './types'
 import type { Ref, VNode } from 'vue'
+import type { ThinkingStatus } from '../Thinking/types'
 import { computed, useSlots, watch, ref } from 'vue'
 import useTypingConfig from './hooks/useTypingConfig'
 import useTypedEffect from './hooks/useTypedEffect'
@@ -72,9 +88,17 @@ const props = withDefaults(defineProps<BubbleProps>(), {
   avatar: '',
   typing: false,
 })
+console.log('bubble props', props);
+
+const emit = defineEmits<{
+  (e: 'change', value: boolean, status: ThinkingStatus): void
+}>()
+
 
 const ns = useClassMoudle('bubble')
 const slots = useSlots()
+console.log('bubble slots', slots);
+
 const divRef = ref<HTMLDivElement>()
 
 const contents = computed(() => props.content)
@@ -110,6 +134,10 @@ console.log(mergeContent.value);
 
 function isString(content: unknown) {
   return typeof content === 'string'
+}
+
+function onThinkingChange(value: boolean, status: ThinkingStatus) {
+  emit('change', value, status)
 }
 
 const triggerTypingCompleteRef = ref(false)

@@ -75,6 +75,8 @@ $color-bg-container: #fff;
 $color-bg-elevated: #fff;
 $color-bg-spotlight: rgb(0 0 0 / 85%);
 $color-bg-blur: lighten($dark, 4%);
+// Thinking
+$color-bg-thinking: #f5f5f5;
 
 $border-radius: 6px;
 $border-radius-xs: 2px;
@@ -143,5 +145,6 @@ $box-shadow-secondary:
 
 $motion-duration-slow: 0.3s;
 $motion-duration-very-slow: 0.6s;
+$motion-duration-very-very-slow: 1s;
 
 $attachments-color-bg-placeholder-hover: rgb(255 255 255 / 85%);

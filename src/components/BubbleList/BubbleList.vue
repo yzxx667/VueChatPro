@@ -4,10 +4,13 @@
     <Bubble v-for="bubble in ListData" :key="bubble.key" v-bind="bubble"
       :ref="(node) => getBubbleRefs(node, bubble.key)" :on-typing-complete="() => onTypingCompleteFn(bubble)"
       :typing="initialized ? (bubble.typing as boolean) : false">
-      <template v-for="(slotName, _slot) in slots" :key="slotName" #[slotName]="slotProps">
-        <!-- slotProps可以换成任意字符串 例如foo -->
-        <!-- {{ console.log('slotName:', slotName, 'slot function:', _slot, 'slotProps', slotProps) }} -->
-        <slot :name="slotName" :info="{ ...slotProps, ...bubble }" :index="slotName" />
+      <!-- <template v-for="(_, name) in slots" :key="name" #[name]="slotProps">
+        slotProps可以换成任意字符串 例如foo
+        {{ console.log('slotName:', slotName, 'slot function:', _slot, 'slotProps', slotProps) }}
+        <slot :name="name" :info="{ ...slotProps, ...bubble }" :index="name" />
+      </template> -->
+      <template v-if="slots.thinking" #thinking>
+        <slot name="thinking" :info="bubble" />
       </template>
     </Bubble>
   </div>
@@ -35,7 +38,10 @@ const slots = defineSlots<{
   header?: (slotProps: { info: BubbleDataType }) => void
   loading?: (slotProps: { info: BubbleDataType }) => void
   footer?: (slotProps: { info: BubbleDataType }) => void
+  thinking?: (slotProps: { info: BubbleDataType }) => void
 }>()
+console.log('bubblelist slots', slots);
+
 
 const ns = useClassMoudle('bubble-list')
 const scrollEnd = ref(false)
@@ -54,7 +60,7 @@ const handleScroll = (e: Event) => {
 
 // 获取对话列表以及设置key and 设置bubble的呈现方式（props）
 const { ListData, setListData } = useListData(props.items, props.roles)
-console.log(props.items, props.roles);
+console.log(props.items, props.roles, ListData.value);
 
 
 watch(() => props.items, () => {

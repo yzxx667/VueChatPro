@@ -1,262 +1,185 @@
-<script setup lang="ts">
-import { reactive, onMounted } from 'vue'
-import Bubble from "./components/Bubble/Bubble.vue";
-import BubbleList from "./components/BubbleList/BubbleList.vue";
-import Conversations from "./components/Conversation/Conversation.vue";
-// import { ElButton, ElSpace } from 'element-plus'
-import { ref } from 'vue'
-import { AddLocation, Aim, AlarmClock, CircleClose } from '@element-plus/icons-vue'
-import { ElMessage } from 'element-plus'
-import Sender from './components/Sender/Sender.vue';
-import TestComp from './components/TestComp/TestComp.vue';
-import { useAudio } from './hooks/useAudio'
-
-// const repeat = ref(1)
-// const text = ref('hello world！')
-
-
-// import markdownit from 'markdown-it'
-
-// const md = markdownit({ html: true })
-// const text = `
-// > Render as markdown content to show rich text!
-
-// Link: [Ant Design X](https://x.ant.design)
-// `.trim()
-
-// const msgRender = (text: string) => md.render(text)
-
-// const items = reactive([
-//   {
-//     role: 'ai',
-//     content: '123',
-//     headerProps: 'ai头部'
-//   },
-//   {
-//     role: 'user',
-//     content: '567',
-//     headerProps: 'user头部',
-
-//   },
-// ])
-
-// const roles = {
-//   ai: {
-//     placement: 'start',
-//     avatar: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
-//     typing: { step: 1, interval: 100 },
-//   },
-//   user: {
-//     placement: 'end',
-//     avatar: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
-//   },
-// }
-// const bubbleListRef = ref()
-// const handleClick = () => {
-//   items.push({
-//     role: 'ai',
-//     content: '789',
-//     headerProps: 'ai头部',
-//     onTypingComplete: () => {
-//       console.log('打字完成');
-//     }
-//   })
-//   console.log(items);
-
-// }
-// const handleTop = () => {
-//   bubbleListRef.value?.scrollTo({
-//     key: 0,
-//     block: 'nearest',
-//   })
-// }
-
-// const items = Array.from({ length: 4 }).map((_, index) => ({
-//   key: `item${index + 1}`,
-//   label: `Conversation Item ${index + 1}`,
-//   disabled: index === 3,
-//   group: index === 3 ? '工作' : '学习',
-// }))
-// const activeKey = ref('item1')
-
-// const menuConfig = () => ({
-//   items: [
-//     {
-//       label: 'Operation 1',
-//       icon: AddLocation,
-//       command: 'command1',
-//     },
-//     {
-//       label: 'Operation 2',
-//       icon: Aim,
-//       command: 'command2',
-//       disabled: true,
-//     },
-//     {
-//       label: 'Operation 3',
-//       icon: AlarmClock,
-//       command: 'command3',
-//     },
-//   ],
-//   onClick: (e) => {
-//     ElMessage.info(`You clicked ${e.label} - ${e.key}`)
-//   },
-// })
-
-// const groupableConfig = {
-//   sort: (a, b) => {
-//     const order: Record<string, number> = { 学习: 0, 工作: 1 }
-//     const orderA = order[a] !== undefined ? order[a] : 999
-//     const orderB = order[b] !== undefined ? order[b] : 999
-//     return orderA - orderB
-//   },
-//   title: undefined
-// }
-
-
-const senderValue = ref('')
-const senderRef = ref()
-// const handleSubmit = (e) => {
-//   console.log(e);
-// }
-const handleClick = () => {
-  senderRef.value?.handleHeaderOpen()
-
-  senderRef.value?.handleFocusDefault()
-}
-const handleClickClose = () => {
-  senderRef.value?.handleHeaderClose()
-  senderRef.value?.handleFocusDefault()
-}
-const handleChange = (e) => {
-  console.log(e);
-}
-const handleKeypress = (e) => {
-  console.log(e);
-}
-const handleSubmit = (e) => {
-  console.log(e);
-}
-
-const { start, value, loading, stop } = useAudio({ lang: 'en-US', onEnd: handleEnd, onResult: handleResult })
-
-function handleEnd(res: string) {
-  console.log('end:', res)
-}
-function handleResult(res: string) {
-  console.log('result:', res)
-}
-</script>
-
 <template>
   <div>
-    <el-button @click="start">开始录音</el-button>
-    <el-button @click="stop">停止录音</el-button>
-    <div>
-      {{ value }}
+    <div style="display: flex;">
+      <el-button @click="callOpenAI">开始</el-button>
+      <el-button @click="cancel()">停止</el-button>
+      <el-button @click="status = 'end'">点我</el-button>
     </div>
-    <!-- <TestComp>
-      <template #header>
-        <div style="margin: 20px;overflow: auto;">Template</div>
-      </template>
-</TestComp> -->
 
-    <!-- <Bubble content="hello world！" />
-    <br />
-    <ElSpace direction="vertical" alignment="align-start" style="width: 100%">
-      <div class="btns">
-        <ElButton style="float: right" type="primary" @click="repeat = repeat < 5 ? repeat + 1 : 1">
-          Repeat {{ repeat }} Times
-        </ElButton>
-      </div>
-      <Bubble :content="text.repeat(repeat)"
-        avatar="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
-        :typing="{ step: 2, interval: 50 }" />
-    </ElSpace> -->
-
-
-    <!-- <Bubble :content="text" typing avatar="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
-      :message-render="msgRender" /> -->
-    <!-- <el-button @click="handleClick">add message</el-button>
-    <el-button @click="handleTop">to Top</el-button>
-    <div style="margin: 10px;"></div>
-    <BubbleList ref="bubbleListRef" :items="items" :roles="roles" style="height: 100px;overflow: auto;">
-      <template #header="{ info }">
-        {{ info.headerProps }}
-      </template>
-</BubbleList> -->
-
-    <!-- <Conversations v-model:active-key="activeKey" :items="items" style="width: 300px" :menu="menuConfig"
-      :groupable="groupableConfig" /> -->
-    <!-- <Conversations v-model:active-key="activeKey" :items="items" style="width: 300px" :menu="menuConfig" /> -->
-    <div style="height: 300px; display: flex;flex-direction: column;justify-content: space-between;">
-      <el-button @click="handleClick">点击</el-button>
-      <el-button @click="senderRef?.handleInputClear">清空内容</el-button>
-      <el-button @click="senderRef?.handleInputClear">清空内容</el-button>
-      <Sender v-model="senderValue" ref="senderRef" @on-input="handleChange" @on-submit="handleSubmit"
-        variants="updown">
-        <template #prefix>
-          <el-button type="primary" @click="handleClickClose">关闭header</el-button>
-        </template>
-        <template #header>
-          <div class="header-self-wrap">
-            <div class="header-self-title">
-              <div class="header-left">
-                💯 欢迎使用 Element Plus X
-              </div>
-              <div class="header-right">
-                <el-button>
-                  <el-icon>
-                    <CircleClose />
-                  </el-icon>
-                  <span>关闭头部</span>
-                </el-button>
-              </div>
-            </div>
-            <div class="header-self-content">
-              🦜 自定义头部内容
-            </div>
-          </div>
-        </template>
-        <!-- <template #header>
-        header
-      </template> -->
-        <!-- <template #footer>
-        footer
-      </template> -->
-        <!-- <template #actionsList>
-        <el-button type="warning">警告牌</el-button>
-      </template> -->
-      </Sender>
+    <div style="margin-bottom: 30px;">
+      <el-button @click="handleClick" type="primary">add message</el-button>
+      <el-button @click="handleTop">scroll to Top</el-button>
     </div>
+    <BubbleList ref="bubbleListRef" :items="items" :roles="roles" style="height: 200px;overflow: auto;">
+      <template #thinking="{ info }">
+        <Thinking v-if="info.reason" v-model="info.modelValue" :status="info.status" :content="info.reason" />
+      </template>
+    </BubbleList>
   </div>
 </template>
 
-<style scoped lang="scss">
-.header-self-wrap {
-  display: flex;
-  flex-direction: column;
-  padding: 16px;
-  height: 200px;
+<script setup lang="ts">
+import type { ThinkingStatus } from './components/Thinking/types'
+import Thinking from './components/Thinking/Think.vue'
+import Bubble from './components/Bubble/Bubble.vue'
+import BubbleList from "@/components/BubbleList/BubbleList.vue";
+import { ref, computed, reactive, watch } from 'vue'
+import { useStream } from "@/hooks/useStream";
+// import { useXStream } from './hooks/useXStream_orgign';
+const isShow = ref<boolean>(true)
+const status = ref<ThinkingStatus>('start')
+const { startStream, cancel, data, error, isLoading } = useStream()
+const handleChange = (value: boolean, status: ThinkingStatus) => {
+  console.log(value, status)
+}
 
-  .header-self-title {
-    width: 100%;
-    display: flex;
-    height: 30px;
-    align-items: center;
-    justify-content: space-between;
-    padding-bottom: 8px;
-  }
+interface MessageItem {
+  role: string;
+  content: string;
+  headerProps?: string;
+  reason?: string;
+  modelValue?: boolean;
+  status?: string;
+}
 
-  .header-self-content {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    color: #626aef;
-    font-weight: 600;
+const items = reactive<MessageItem[]>([
+  {
+    role: 'user',
+    content: 'Mock User content! Mock User content! Mock User content! Mock User content! Mock User content! Mock User content! Mock User content! Mock User content! ',
+    headerProps: 'user头部'
+  },
+  // {
+  //   role: 'ai',
+  //   content: 'Mock Ai content! Mock Ai content! Mock Ai content! Mock Ai content! Mock Ai content! Mock Ai content! Mock Ai content! Mock Ai content! ',
+  //   headerProps: 'ai头部',
+  //   reason: '我在思考!',
+  //   modelValue: true,
+  //   status: 'thinking',
+  //   typing: false
+  // },
+  // {
+  //   role: 'user',
+  //   content: 'Mock User content! Mock User content! Mock User content! Mock User content! Mock User content! Mock User content! Mock User content! Mock User content! ',
+  //   headerProps: 'user头部'
+  // },
+])
+
+const roles = {
+  ai: {
+    placement: 'start',
+    avatar: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
+    typing: { step: 1, interval: 20 },
+  },
+  user: {
+    placement: 'end',
+    avatar: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
+  },
+}
+
+const bubbleListRef = ref()
+const handleClick = () => {
+  console.log(items);
+
+}
+const handleTop = () => {
+  bubbleListRef.value?.scrollTo({
+    key: 0,
+    block: 'nearest',
+  })
+}
+
+async function callOpenAI() {
+  const apiKey = 'sk-68c46bf2db2d4bf8b80941300e886cf5'; // ⚠️ 切勿在前端暴露密钥
+  const url = 'https://api.deepseek.com/v1/chat/completions';
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${apiKey}`,
+  };
+
+  const body = {
+    // model: 'deepseek-chat',
+    model: 'deepseek-reasoner',
+    messages: [
+      { role: 'system', content: '你是一个有帮助的助手。' },
+      { role: 'user', content: '男子100米世界最好的成绩是多少。（请用中文回答， 10个字以内）' },
+      // { role: 'user', content: '帮我用js写一个1-100的和的function' },
+    ],
+    stream: true,
+    temperature: 0.7,
+  };
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(body),
+    });
+
+    if (!response.ok) {
+      throw new Error(`请求失败：${response.status} ${response.statusText}`);
+    }
+    startStream({
+      readableStream: response.body!,
+    })
+    console.log('data', data.value);
+    items.push({
+      role: 'ai',
+      content: '',
+      reason: '',
+      modelValue: true,
+      status: 'thinking',
+    })
+  } catch (error) {
+    console.error('❌ 出错了：', error);
   }
 }
 
-// @import './style'</style>
+const content = computed(() => {
+  if (!data.value.length)
+    return { text: '', textReason: '' }
+  let textReason = ''
+  let text = ''
+  for (let index = 0; index < data.value.length; index++) {
+    const chunk = data.value[index].data
+
+    try {
+      const parsedChunk = JSON.parse(chunk).choices[0].delta
+
+      // 优先处理 reasoning_content
+      if (parsedChunk.reasoning_content !== null) {
+        textReason += parsedChunk.reasoning_content
+      }
+
+      // 然后处理 content
+      if (parsedChunk.content) {
+        text += parsedChunk.content
+      }
+    }
+    catch (error) {
+      if (chunk === ' [DONE]') {
+        // 处理数据结束的情况
+      }
+      else {
+        console.error('解析数据时出错:', error)
+      }
+    }
+  }
+  return {
+    text,
+    textReason
+  }
+})
+
+// 监听content变化，更新items中最后一个对象的content和reason
+watch(() => content.value, (newVal) => {
+  if (items.length > 0) {
+    const lastItem = items[items.length - 1]
+    if (lastItem.role === 'ai') {
+      lastItem.content = newVal.text
+      lastItem.reason = newVal.textReason
+    }
+  }
+}, { deep: true })
+</script>
+
+<style scoped lang="scss"></style>

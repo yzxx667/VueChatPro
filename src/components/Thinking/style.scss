@@ -1,0 +1,89 @@
+@import "../../theme/index";
+@import "../../theme/mixin";
+
+$prefix: "thinking" !default;
+
+@include b(#{$prefix}) {
+  // width: fit-content;
+  // width: 400px;
+  box-sizing: border-box;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  @include b(#{$prefix}-top) {
+    display: flex;
+    width: fit-content;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--padding-xs);
+    background-color: var(--color-bg-thinking);
+    // border: 1px solid var(--border-color);
+    border: none;
+    border-radius: calc($border-radius * 2);
+    box-shadow: var(--box-shadow-tertiary);
+    // transition: all $motion-duration-slow;
+    cursor: pointer;
+
+    &:hover {
+      background: #f8f8f8;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+  }
+
+  @include b(#{$prefix}-icon) {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  @include b(#{$prefix}-label) {
+    flex: 1;
+    text-align: center;
+    padding: 0 var(--padding-sm);
+  }
+
+  @include b(#{$prefix}-arrow) {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    transition: transform $motion-duration-slow ease;
+    transform: rotate(0deg);
+
+    &.is-open {
+      transform: rotate(-180deg);
+    }
+  }
+
+  @include b(#{$prefix}-content) {
+    width: fit-content;
+    box-sizing: border-box;
+    height: auto;
+    padding: 0 var(--padding-sm);
+    margin-top: var(--margin);
+    background-color: rgb(var(--dark));
+    font-size: var(--font-size);
+    color: var(--color-thinking-text);
+    border-left: 2px solid var(--border-color);
+  }
+}
+
+.thinking-loading {
+  animation: rotate $motion-duration-very-very-slow linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
