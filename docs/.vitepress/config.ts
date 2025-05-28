@@ -53,7 +53,10 @@ export default defineConfig({
       },
       {
         text: "Hooks",
-        items: [{ text: "useAudio 语音识别 🎤", link: "/components/useAudio" }],
+        items: [
+          { text: "useAudio 语音识别 🎤", link: "/components/useAudio" },
+          { text: "useStream 流式请求 🌐", link: "/components/useStream" },
+        ],
       },
     ],
 
