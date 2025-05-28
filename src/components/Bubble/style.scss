@@ -16,7 +16,6 @@ $prefix: "bubble" !default;
     }
 
     @include b(#{$prefix}-content-wrapper) {
-      // flex: auto;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
@@ -25,10 +24,16 @@ $prefix: "bubble" !default;
 
     @include b(#{$prefix}-header) {
       margin-bottom: $padding-xxs;
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
     }
 
     @include b(#{$prefix}-footer) {
       margin-top: $padding-sm;
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
     }
 
     @include b(#{$prefix}-content) {
@@ -41,7 +46,6 @@ $prefix: "bubble" !default;
     }
 
     @include b(#{$prefix}-content-filled) {
-      // background-color: rgb(var(--light), 12%);
       background-color: rgb(var(--dark));
     }
 
@@ -59,8 +63,10 @@ $prefix: "bubble" !default;
     &-header,
     &-footer {
       font-size: $font-size;
+      box-sizing: border-box;
       line-height: $line-height;
       color: var(--color-text);
+      padding: 0 $padding;
     }
 
     &-content-filled,
@@ -68,6 +74,19 @@ $prefix: "bubble" !default;
     &-content-outlined {
       padding: $padding-sm $padding;
       border-radius: $border-radius-lg;
+    }
+  }
+
+  @include b(#{$prefix}-end) {
+    flex-direction: row-reverse;
+    justify-content: end;
+
+    @include b(#{$prefix}-header) {
+      direction: rtl;
+    }
+
+    @include b(#{$prefix}-footer) {
+      direction: rtl;
     }
   }
 
@@ -85,11 +104,6 @@ $prefix: "bubble" !default;
 
   @include b(#{$prefix}-content-end-corner) {
     border-start-end-radius: $border-radius-xs;
-  }
-
-  @include b(#{$prefix}-end) {
-    flex-direction: row-reverse;
-    justify-content: end;
   }
 
   .round {

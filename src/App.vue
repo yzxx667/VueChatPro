@@ -3,27 +3,30 @@
     <div style="display: flex">
       <el-button @click="callOpenAI">开始</el-button>
       <el-button @click="cancel()">停止</el-button>
-      <el-button @click="status = 'end'">点我</el-button>
+      <el-button @click="items[1]['status'] = 'end'">点我</el-button>
     </div>
 
     <div style="margin-bottom: 30px">
       <el-button @click="handleClick" type="primary">add message</el-button>
       <el-button @click="handleTop">scroll to Top</el-button>
     </div>
-    <BubbleList
-      ref="bubbleListRef"
-      :items="items"
-      :roles="roles"
-      style="height: 200px; overflow: auto"
-    >
-      <template #thinking="{ info }">
-        <Thinking
-          v-if="info.reason"
-          v-model="info.modelValue"
-          :status="info.status"
-          :content="info.reason"
-          autoCollapse
-        />
+    <BubbleList ref="bubbleListRef" :items="items" style="height: 200px; overflow: auto">
+      <template #header>
+        <div>
+          header
+        </div>
+      </template>
+      <template #content="{ info }">
+        <Thinking v-if="info.reason" v-model="info.modelValue" :status="info.status" :content="info.reason"
+          @change="handleChange" autoCollapse />
+        <div style="padding-top: 10px;">
+          {{ info.content }}
+        </div>
+      </template>
+      <template #footer>
+        <div>
+          footer
+        </div>
       </template>
     </BubbleList>
   </div>
@@ -37,8 +40,8 @@ import BubbleList from '@/components/BubbleList/BubbleList.vue'
 import { ref, computed, reactive, watch } from 'vue'
 import { useStream } from '@/hooks/useStream'
 // import { useXStream } from './hooks/useXStream_orgign';
-const isShow = ref<boolean>(true)
-const status = ref<ThinkingStatus>('start')
+// const isShow = ref<boolean>(true)
+// const status = ref<ThinkingStatus>('start')
 const { startStream, cancel, data, error, isLoading } = useStream()
 const handleChange = (value: boolean, status: ThinkingStatus) => {
   console.log(value, status)
@@ -51,15 +54,25 @@ interface MessageItem {
   reason?: string
   modelValue?: boolean
   status?: string
+  placement?: string
+  avatar?: string
+  loading?: boolean
+  key: string
 }
+
+
 
 const items = reactive<MessageItem[]>([
   {
     role: 'user',
     content:
       'Mock User content! Mock User content! Mock User content! Mock User content! Mock User content! Mock User content! Mock User content! Mock User content! ',
-    headerProps: 'user头部'
-  }
+    headerProps: 'user头部',
+    modelValue: true,
+    placement: 'end',
+    avatar: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
+    key: `persit_0`
+  },
   // {
   //   role: 'ai',
   //   content: 'Mock Ai content! Mock Ai content! Mock Ai content! Mock Ai content! Mock Ai content! Mock Ai content! Mock Ai content! Mock Ai content! ',
@@ -67,7 +80,8 @@ const items = reactive<MessageItem[]>([
   //   reason: '我在思考!',
   //   modelValue: true,
   //   status: 'thinking',
-  //   typing: false
+  //   placement: 'start',
+  //   avatar: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
   // },
   // {
   //   role: 'user',
@@ -75,6 +89,8 @@ const items = reactive<MessageItem[]>([
   //   headerProps: 'user头部'
   // },
 ])
+
+
 
 const roles = {
   ai: {
@@ -102,6 +118,18 @@ const handleTop = () => {
 }
 
 async function callOpenAI() {
+  items.push({
+    role: 'ai',
+    content: '',
+    headerProps: 'ai头部',
+    reason: '',
+    modelValue: true,
+    status: 'thinking',
+    placement: 'start',
+    avatar: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
+    loading: true,
+    key: `persit_1`
+  })
   const apiKey = 'sk-b225389fec5242419fd4e50bc570de79' // ⚠️ 切勿在前端暴露密钥
   const url = 'https://api.deepseek.com/v1/chat/completions'
   const headers = {
@@ -138,13 +166,6 @@ async function callOpenAI() {
       readableStream: response.body!
     })
     console.log('data', data.value)
-    items.push({
-      role: 'ai',
-      content: '',
-      reason: '',
-      modelValue: true,
-      status: 'thinking'
-    })
   } catch (error) {
     console.error('❌ 出错了：', error)
   }
@@ -193,9 +214,11 @@ watch(
         if (newVal.text.length > 0) {
           lastItem.content = newVal.text
           lastItem.status = 'end'
+          lastItem.loading = false
         }
         if (newVal.textReason.length > 0) {
           lastItem.reason = newVal.textReason
+          lastItem.loading = false
         }
       }
     }
