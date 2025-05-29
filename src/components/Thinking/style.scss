@@ -65,12 +65,18 @@ $prefix: "thinking" !default;
     width: fit-content;
     box-sizing: border-box;
     height: auto;
-    padding: 0 var(--padding-sm);
+    padding: var(--padding-sm);
     margin-top: var(--margin);
     background-color: rgb(var(--dark));
     font-size: var(--font-size);
     color: var(--color-thinking-text);
+    border-radius: var(--border-radius);
+  }
+
+  @include b(#{$prefix}-content-lb) {
     border-left: 2px solid var(--border-color);
+    border-radius: 0;
+    padding: 0 var(--padding-sm);
   }
 }
 

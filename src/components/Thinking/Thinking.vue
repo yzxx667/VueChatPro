@@ -1,37 +1,19 @@
 <template>
   <div :class="ns.b()">
     <div>
-      <button
-        :class="ns.b('top')"
-        :disabled="disabled"
-        :style="computedTopStyle"
-        @click="handleArrowClick"
-      >
+      <button :class="ns.b('top')" :disabled="disabled" :style="computedTopStyle" @click="handleArrowClick">
         <span :class="ns.b('icon')">
           <slot name="icon" :status="status">
-            <el-icon
-              v-if="status === 'start'"
-              style="color: var(--start-color)"
-            >
+            <el-icon v-if="status === 'start'" style="color: var(--start-color)">
               <Opportunity />
             </el-icon>
-            <el-icon
-              v-else-if="status === 'thinking'"
-              style="color: var(--thinking-color)"
-              class="thinking-loading"
-            >
+            <el-icon v-else-if="status === 'thinking'" style="color: var(--thinking-color)" class="thinking-loading">
               <Loading />
             </el-icon>
-            <el-icon
-              v-else-if="status === 'end'"
-              style="color: var(--end-color)"
-            >
+            <el-icon v-else-if="status === 'end'" style="color: var(--end-color)">
               <SuccessFilled />
             </el-icon>
-            <el-icon
-              v-else-if="status === 'error'"
-              style="color: var(--error-color)"
-            >
+            <el-icon v-else-if="status === 'error'" style="color: var(--error-color)">
               <CircleCloseFilled />
             </el-icon>
           </slot>
@@ -41,10 +23,7 @@
             {{ defalutLabel }}
           </slot>
         </span>
-        <span
-          :class="[ns.b('arrow'), { 'is-open': isOpen }]"
-          :style="computedArrowStyle"
-        >
+        <span :class="[ns.b('arrow'), { 'is-open': isOpen }]" :style="computedArrowStyle">
           <slot name="arrow">
             <el-icon class="el-icon-center">
               <ArrowUpBold />
@@ -53,12 +32,13 @@
         </span>
       </button>
     </div>
-    <div :class="ns.b('content')" v-show="isOpen" :style="computedContentStyle">
-      <template v-if="slots.error">
+    <div :class="[ns.b('content'),
+    { [ns.b('content-lb')]: lb }]" v-show="isOpen" :style="computedContentStyle">
+      <template v-if="slots.error && status === 'error'">
         <slot name="error"></slot>
       </template>
       <template v-else>
-        <slot name="content">
+        <slot name="content" :status="status" :content="content">
           {{ content }}
         </slot>
       </template>
@@ -89,17 +69,18 @@ const props = withDefaults(defineProps<ThinkingProps>(), {
   duration: '0.2s',
   maxWidth: '500px',
   color: '#00',
-  isBorder: false
+  isBorder: false,
+  lb: true
 })
 
 const defalutLabel = computed(() => {
   return props.status === 'start'
     ? '开始思考'
     : props.status === 'thinking'
-    ? '思考中'
-    : props.status === 'end'
-    ? '思考完成'
-    : '思考失败'
+      ? '思考中'
+      : props.status === 'end'
+        ? '思考完成'
+        : '思考失败'
 })
 
 const emit = defineEmits<ThinkingEmits>()
@@ -138,7 +119,11 @@ const computedContentStyle = computed(() => {
     style.maxWidth = props.maxWidth
   }
   if (props.backgroundColor) {
-    style.backgroundColor = props.backgroundColor
+    if (props.backgroundColor.includes('linear-gradient')) {
+      style.background = props.backgroundColor
+    } else {
+      style.backgroundColor = props.backgroundColor
+    }
   }
   if (props.color) {
     style.color = props.color

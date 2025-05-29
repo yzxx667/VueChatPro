@@ -1,178 +1,115 @@
 <template>
   <div>
-    <div style="display: flex">
+    <div style="display: flex;">
       <el-button @click="callOpenAI">开始</el-button>
       <el-button @click="cancel()">停止</el-button>
-      <el-button @click="items[1]['status'] = 'end'">点我</el-button>
+      <el-button @click="status = 'end'">点我</el-button>
     </div>
+    <!-- <Think v-model="isShow" @change="handleChange" :status="status" auto-collapse :content="content.textReason">
+      <template #label v-if="status === 'end'">
+        思考用时3s
+      </template>
+</Think> -->
+    <Bubble :content="'123'" :styles="computedStyles" />
+    <br />
+    <Bubble :content="content.text"
+      avatar="https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*s5sNRo5LjfQAAAAAAAAAAAAADgCCAQ/fmt.webp">
+      <template #thinking>
+        <Think v-model="isShow" @change="handleChange" collapse :status="status" :content="content.textReason">
+          <template #label v-if="status === 'end'">
+            思考用时3s
+          </template>
+        </Think>
+      </template>
+    </Bubble>
 
-    <div style="margin-bottom: 30px">
-      <el-button @click="handleClick" type="primary">add message</el-button>
-      <el-button @click="handleTop">scroll to Top</el-button>
-    </div>
-    <BubbleList ref="bubbleListRef" :items="items" style="height: 200px; overflow: auto">
-      <template #header>
-        <div>
-          header
-        </div>
-      </template>
-      <template #content="{ info }">
-        <Thinking v-if="info.reason" v-model="info.modelValue" :status="info.status" :content="info.reason"
-          @change="handleChange" autoCollapse />
-        <div style="padding-top: 10px;">
-          {{ info.content }}
-        </div>
-      </template>
-      <template #footer>
-        <div>
-          footer
-        </div>
-      </template>
-    </BubbleList>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { ThinkingStatus } from './components/Thinking/types'
-import Thinking from './components/Thinking/Think.vue'
+import Think from './components/Thinking/Think.vue'
 import Bubble from './components/Bubble/Bubble.vue'
-import BubbleList from '@/components/BubbleList/BubbleList.vue'
-import { ref, computed, reactive, watch } from 'vue'
-import { useStream } from '@/hooks/useStream'
+import { ref, computed, watch } from 'vue'
+import { useStream } from "@/hooks/useStream";
 // import { useXStream } from './hooks/useXStream_orgign';
-// const isShow = ref<boolean>(true)
-// const status = ref<ThinkingStatus>('start')
+const isShow = ref<boolean>(true)
+const status = ref<ThinkingStatus>('start')
 const { startStream, cancel, data, error, isLoading } = useStream()
 const handleChange = (value: boolean, status: ThinkingStatus) => {
-  console.log(value, status)
+  console.log('handleChange', value, status)
 }
 
-interface MessageItem {
-  role: string
-  content: string
-  headerProps?: string
-  reason?: string
-  modelValue?: boolean
-  status?: string
-  placement?: string
-  avatar?: string
-  loading?: boolean
-  key: string
-}
-
-
-
-const items = reactive<MessageItem[]>([
-  {
-    role: 'user',
-    content:
-      'Mock User content! Mock User content! Mock User content! Mock User content! Mock User content! Mock User content! Mock User content! Mock User content! ',
-    headerProps: 'user头部',
-    modelValue: true,
-    placement: 'end',
-    avatar: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
-    key: `persit_0`
+const computedStyles = {
+  content: {
+    backgroundColor: 'red',
+    color: 'white',
+    padding: '10px',
+    borderRadius: '8px',
+    margin: '10px 0',
+    maxWidth: '80%',
+    wordBreak: 'break-word'
   },
-  // {
-  //   role: 'ai',
-  //   content: 'Mock Ai content! Mock Ai content! Mock Ai content! Mock Ai content! Mock Ai content! Mock Ai content! Mock Ai content! Mock Ai content! ',
-  //   headerProps: 'ai头部',
-  //   reason: '我在思考!',
-  //   modelValue: true,
-  //   status: 'thinking',
-  //   placement: 'start',
-  //   avatar: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
-  // },
-  // {
-  //   role: 'user',
-  //   content: 'Mock User content! Mock User content! Mock User content! Mock User content! Mock User content! Mock User content! Mock User content! Mock User content! ',
-  //   headerProps: 'user头部'
-  // },
-])
-
-
-
-const roles = {
-  ai: {
-    placement: 'start',
-    avatar:
-      'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
-    typing: { step: 1, interval: 20 }
+  header: {
+    marginBottom: '5px'
   },
-  user: {
-    placement: 'end',
-    avatar:
-      'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
+  footer: {
+    marginTop: '5px'
+  },
+  avatar: {
+    marginRight: '10px'
   }
 }
 
-const bubbleListRef = ref()
-const handleClick = () => {
-  console.log(items)
-}
-const handleTop = () => {
-  bubbleListRef.value?.scrollTo({
-    key: 0,
-    block: 'nearest'
-  })
-}
+const thinkStatus = ref<ThinkingStatus>('start')
+
 
 async function callOpenAI() {
-  items.push({
-    role: 'ai',
-    content: '',
-    headerProps: 'ai头部',
-    reason: '',
-    modelValue: true,
-    status: 'thinking',
-    placement: 'start',
-    avatar: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
-    loading: true,
-    key: `persit_1`
-  })
-  const apiKey = 'sk-b225389fec5242419fd4e50bc570de79' // ⚠️ 切勿在前端暴露密钥
-  const url = 'https://api.deepseek.com/v1/chat/completions'
+  thinkStatus.value = 'thinking'
+  const apiKey = 'sk-68c46bf2db2d4bf8b80941300e886cf5'; // ⚠️ 切勿在前端暴露密钥
+  const url = 'https://api.deepseek.com/v1/chat/completions';
   const headers = {
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${apiKey}`
-  }
+    Authorization: `Bearer ${apiKey}`,
+  };
 
   const body = {
     // model: 'deepseek-chat',
     model: 'deepseek-reasoner',
     messages: [
       { role: 'system', content: '你是一个有帮助的助手。' },
-      {
-        role: 'user',
-        content: '男子100米世界最好的成绩是多少。（请用中文回答， 10个字以内）'
-      }
+      { role: 'user', content: '男子100米世界最好的成绩是多少。' },
       // { role: 'user', content: '帮我用js写一个1-100的和的function' },
     ],
     stream: true,
-    temperature: 0.7
-  }
+    temperature: 0.7,
+  };
 
   try {
     const response = await fetch(url, {
       method: 'POST',
       headers,
-      body: JSON.stringify(body)
-    })
+      body: JSON.stringify(body),
+    });
 
     if (!response.ok) {
-      throw new Error(`请求失败：${response.status} ${response.statusText}`)
+      throw new Error(`请求失败：${response.status} ${response.statusText}`);
     }
     startStream({
-      readableStream: response.body!
+      readableStream: response.body!,
     })
-    console.log('data', data.value)
+    console.log('data', data.value);
+
   } catch (error) {
-    console.error('❌ 出错了：', error)
+    console.error('❌ 出错了：', error);
   }
 }
 
+
+
 const content = computed(() => {
-  if (!data.value.length) return { text: '', textReason: '' }
+  if (!data.value.length)
+    return ''
   let textReason = ''
   let text = ''
   for (let index = 0; index < data.value.length; index++) {
@@ -184,55 +121,40 @@ const content = computed(() => {
       // 优先处理 reasoning_content
       if (parsedChunk.reasoning_content !== null) {
         textReason += parsedChunk.reasoning_content
+        // console.log('parsedChunkReason', parsedChunk.reasoning_content)
       }
 
       // 然后处理 content
       if (parsedChunk.content) {
         text += parsedChunk.content
+        // console.log('parsedChunk', parsedChunk.content)
       }
-    } catch (error) {
+    }
+    catch (error) {
+      // 这个 结束标识 是后端给的，所以这里这样判断
+      // 实际项目中，以项目需要为准
       if (chunk === ' [DONE]') {
         // 处理数据结束的情况
-      } else {
+        // console.log('数据接收完毕')
+      }
+      else {
         console.error('解析数据时出错:', error)
       }
     }
   }
+  console.log('textReason', textReason)
+  console.log('Text:', text)
   return {
     text,
     textReason
   }
 })
-
-// 监听content变化，更新items中最后一个对象的content和reason
-watch(
-  () => content.value,
-  newVal => {
-    if (items.length > 0) {
-      const lastItem = items[items.length - 1]
-      if (lastItem.role === 'ai') {
-        if (newVal.text.length > 0) {
-          lastItem.content = newVal.text
-          lastItem.status = 'end'
-          lastItem.loading = false
-        }
-        if (newVal.textReason.length > 0) {
-          lastItem.reason = newVal.textReason
-          lastItem.loading = false
-        }
-      }
-    }
-  },
-  { deep: true }
-)
-
-watch(
-  () => items,
-  newVal => {
-    console.log('App items变化了', newVal)
-  },
-  { deep: true }
-)
+watch(() => content.value.text, (newVal) => {
+  console.log('content', newVal);
+  if (newVal) {
+    thinkStatus.value = 'end'
+  }
+})
 </script>
 
 <style scoped lang="scss"></style>

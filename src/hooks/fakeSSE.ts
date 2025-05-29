@@ -76,7 +76,7 @@ export function createFakeSSEStream(
           {
             index: 0,
             delta: {
-              content: `这是第 ${messageIndex + 1} 条消息`,
+              content: `这是第 ${messageIndex + 1} 条消息  `,
               reasoning_content: "",
             },
             logprobs: null,

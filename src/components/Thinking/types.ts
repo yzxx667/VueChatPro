@@ -4,7 +4,7 @@ export interface ThinkingProps {
   /** 内容 */
   content?: string;
   /** 初始展开状态 */
-  modelValue?: boolean;
+  modelValue: boolean;
   status?: ThinkingStatus;
   autoCollapse?: boolean;
   disabled?: boolean;
@@ -16,6 +16,7 @@ export interface ThinkingProps {
   // 内容content区域的文字颜色
   color?: string;
   isBorder?: boolean;
+  lb?: boolean;
 }
 
 export interface ThinkingEmits {

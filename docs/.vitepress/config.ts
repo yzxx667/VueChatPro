@@ -52,6 +52,10 @@ export default defineConfig({
         items: [{ text: "Sender 输入框 💭", link: "/components/sender" }],
       },
       {
+        text: "思考",
+        items: [{ text: "Thinking 思考 🤔", link: "/components/Thinking" }],
+      },
+      {
         text: "Hooks",
         items: [
           { text: "useAudio 语音识别 🎤", link: "/components/useAudio" },

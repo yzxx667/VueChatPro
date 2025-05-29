@@ -1,6 +1,6 @@
 <template>
   <div ref="divRef" :class="[ns.b(), ns.b(placement)]">
-    <div v-if="avatar || slots.avatar" :class="[ns.b('avatar'), props.className?.avatar]" :style="props.styles?.header">
+    <div v-if="avatar || slots.avatar" :class="[ns.b('avatar'), props.className?.avatar]" :style="props.styles?.avatar">
       <slot name="avatar">
         <el-avatar :size="32" :src="avatar" v-if="typeof avatar === 'string'" />
         <component :is="avatar" v-else />
@@ -21,13 +21,15 @@
           <component :is="loadingRender()" v-else-if="loadingRender" />
           <Loading v-else />
         </template>
-        <template v-if="slots.content">
-          <slot v-if="slots.content" name="content"></slot>
-        </template>
-        <template v-else>
-          <!-- 根据 mergedContent 类型选择渲染方式 -->
-          <component :is="mergeContent" v-if="!isString(mergeContent)" />
-          <div v-else v-html="mergeContent"></div>
+        <template v-if="!props.loading">
+          <template v-if="slots.content">
+            <slot v-if="slots.content" name="content"></slot>
+          </template>
+          <template v-else>
+            <!-- 根据 mergedContent 类型选择渲染方式 -->
+            <component :is="mergeContent" v-if="!isString(mergeContent)" />
+            <div v-else v-html="mergeContent"></div>
+          </template>
         </template>
       </div>
       <div v-if="slots.footer" :class="[ns.b('footer'), props.className?.footer]" :style="props.styles?.footer">
@@ -40,19 +42,21 @@
         ns.b(`content-${props.variant}`),
         props.className?.content,
         props.shape && ns.b(`content-${props.placement}-${props.shape}`)
-      ]">
+      ]" :style="props.styles?.content">
         <template v-if="props.loading">
           <slot v-if="slots.loading" name="loading" />
           <component :is="loadingRender()" v-else-if="loadingRender" />
           <Loading v-else />
         </template>
-        <template v-if="slots.content">
-          <slot v-if="slots.content" name="content"></slot>
-        </template>
-        <template v-else>
-          <!-- 根据 mergedContent 类型选择渲染方式 -->
-          <component :is="mergeContent" v-if="!isString(mergeContent)" />
-          <div v-else v-html="mergeContent"></div>
+        <template v-if="!props.loading">
+          <template v-if="slots.content">
+            <slot v-if="slots.content" name="content"></slot>
+          </template>
+          <template v-else>
+            <!-- 根据 mergedContent 类型选择渲染方式 -->
+            <component :is="mergeContent" v-if="!isString(mergeContent)" />
+            <div v-else v-html="mergeContent"></div>
+          </template>
         </template>
       </div>
       <div v-if="slots.footer" :class="[ns.b('footer'), props.className?.footer]" :style="props.styles?.footer">
