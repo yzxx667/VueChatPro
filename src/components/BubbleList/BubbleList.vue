@@ -5,7 +5,7 @@
     className,
     scrollEnd ? ns.b('reach-end') : ''
   ]" @scroll="handleScroll">
-    <Bubble v-for="bubble in props.items" :key="bubble.key" v-bind="bubble"
+    <Bubble v-for="bubble in props.items" :key="bubble.key" v-bind="bubble" @onUpdate="onBubbleUpdate"
       :ref="node => getBubbleRefs(node, bubble.key)" :on-typing-complete="() => onTypingCompleteFn(bubble)"
       :typing="initialized ? (bubble.typing as boolean) : false">
       <template v-for="(_, name) in slots" :key="name" #[name]>
@@ -112,6 +112,12 @@ watch(
   }
 )
 
+function onBubbleUpdate() {
+  if (props.autoScroll) {
+    updateCount.value = updateCount.value + 1
+  }
+}
+
 // watch(
 //   () => ListData.value.length,
 //   () => {
@@ -131,6 +137,8 @@ watch(() => props.items.length, () => {
     }
   })
 })
+
+
 
 const onTypingCompleteFn = (bubble: ListItemType) => {
   if (!bubble.key) return

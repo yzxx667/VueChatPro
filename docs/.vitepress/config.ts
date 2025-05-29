@@ -11,7 +11,7 @@ const alias = {
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "Vue_Chat",
+  title: "VueChat",
   description: "A VitePress Site",
   vite: {
     resolve: {
@@ -26,12 +26,29 @@ export default defineConfig({
   },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
+    logo: "https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*s5sNRo5LjfQAAAAAAAAAAAAADgCCAQ/fmt.webp",
     nav: [
-      { text: "Home", link: "/" },
-      { text: "Examples", link: "/markdown-examples" },
+      { text: "组件", link: "/component/overview" },
+      {
+        text: "更多",
+        items: [
+          {
+            text: "Ant Design X of React",
+            link: "https://x.ant.design/index-cn",
+          },
+          {
+            text: "Ant Design X of Vue",
+            link: "https://antd-design-x-vue.netlify.app",
+          },
+        ],
+      },
     ],
 
     sidebar: [
+      {
+        text: "总览",
+        link: "/components/overview",
+      },
       {
         text: "唤醒",
         items: [{ text: "Welcome 欢迎 👏🏻", link: "/components/welcome" }],

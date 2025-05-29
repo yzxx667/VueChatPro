@@ -28,7 +28,7 @@ $prefix: "thinking" !default;
     cursor: pointer;
 
     &:hover {
-      background: #f8f8f8;
+      background: var(--color-hover);
     }
 
     &:disabled {
@@ -67,7 +67,7 @@ $prefix: "thinking" !default;
     height: auto;
     padding: var(--padding-sm);
     margin-top: var(--margin);
-    background-color: rgb(var(--dark));
+    // background-color: rgb(var(--dark));
     font-size: var(--font-size);
     color: var(--color-thinking-text);
     border-radius: var(--border-radius);
@@ -92,4 +92,15 @@ $prefix: "thinking" !default;
   to {
     transform: rotate(360deg);
   }
+}
+
+.thinking-content-enter-active,
+.thinking-content-leave-active {
+  transition: all $motion-duration-slow ease;
+}
+
+.thinking-content-enter-from,
+.thinking-content-leave-to {
+  opacity: 0;
+  height: 0;
 }

@@ -10,7 +10,7 @@
         <div class="header-self-wrap">
           <div class="header-self-title">
             <div class="header-left">
-              💯 欢迎使用 Vue3_Chat
+              💯 欢迎使用 VueChat
             </div>
             <div class="header-right">
               <el-button @click="handleClickClose">
@@ -34,7 +34,7 @@
 import { ref } from 'vue'
 import Sender from '@/components/Sender/Sender.vue'
 const senderValue = ref('')
-const senderRef = ref()
+const senderRef = ref<InstanceType<typeof Sender>>()
 
 const handleClick = () => {
   senderRef.value?.handleHeaderOpen()

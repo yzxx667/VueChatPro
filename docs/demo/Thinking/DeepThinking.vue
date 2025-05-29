@@ -1,14 +1,13 @@
 <template>
   <div>
     <div style="display: flex">
-      <el-button @click="callOpenAI" type="primary">开始请求Open AI</el-button>
-      <el-button @click="cancel()" type="danger">停止请求</el-button>
+      <el-button @click="callOpenAI" type="primary" :disabled="showOnce">开始请求Open AI</el-button>
     </div>
 
     <BubbleList ref="bubbleListRef" :items="items" style="height: 200px; overflow: auto">
       <template #header="{ info }">
         <div>
-          {{ info.role === 'ai' ? 'Vue3_Chat 🍧' : '🧁 用户' }}
+          {{ info.role === 'ai' ? 'VueChat 🍧' : '🧁 用户' }}
         </div>
       </template>
       <template #content="{ info }">
@@ -36,37 +35,22 @@
 </template>
 
 <script setup lang="ts">
-import type { CSSProperties } from 'vue'
+import type { BubbleDataType } from '@/components/BubbleList/BubbleList.vue'
 import { DocumentCopy, Refresh, Search, Star } from '@element-plus/icons-vue'
 import type { ThinkingStatus } from '@/components/Thinking/types'
 import Thinking from '@/components/Thinking/Thinking.vue'
 import BubbleList from '@/components/BubbleList/BubbleList.vue'
 import { ref, computed, reactive, watch } from 'vue'
-import { useStream } from '@/hooks/useStream'
-const { startStream, cancel, data, error, isLoading } = useStream()
+const bubbleListRef = ref<InstanceType<typeof BubbleList>>()
+const data = ref<any[]>([])
+const showOnce = ref<boolean>(false)
 const handleChange = (value: boolean, status: ThinkingStatus) => {
   console.log(value, status)
 }
 
-interface MessageItem {
-  role: string
-  content: string
-  headerProps?: string
-  reason?: string
-  modelValue?: boolean
-  status?: string
-  placement?: string
-  avatar?: string
-  loading?: boolean
-  key: string
-  styles?: {
-    content?: CSSProperties
-  }
-}
 
 
-
-const items = reactive<MessageItem[]>([
+const items = reactive<BubbleDataType[]>([
   {
     role: 'user',
     content: '男子100米世界最好的成绩是多少。（请用中文回答， 10个字以内）',
@@ -75,24 +59,10 @@ const items = reactive<MessageItem[]>([
     placement: 'end',
     avatar: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
     key: `persit_0`,
-    styles: {
-      content: {
-        backgroundColor: 'red'
-      }
-    }
   }
 ])
 
-const bubbleListRef = ref()
-const handleClick = () => {
-  console.log(items)
-}
-const handleTop = () => {
-  bubbleListRef.value?.scrollTo({
-    key: 0,
-    block: 'nearest'
-  })
-}
+
 
 // 模拟数据生成函数
 function createMockResponse() {
@@ -142,6 +112,7 @@ function createMockResponse() {
 }
 
 async function callOpenAI() {
+  showOnce.value = true
   // 添加新的消息项
   items.push({
     role: 'ai',
@@ -151,9 +122,10 @@ async function callOpenAI() {
     modelValue: true,
     status: 'thinking',
     placement: 'start',
-    avatar: 'https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*k0oYSZQMoBwAAAAAAAAAAAAADgCCAQ/original',
+    avatar: 'https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*s5sNRo5LjfQAAAAAAAAAAAAADgCCAQ/fmt.webp',
     loading: true,
-    key: `persit_${items.length}`
+    key: `persit_${items.length}`,
+    transparent: true
   })
 
   // 使用模拟数据

@@ -2,7 +2,7 @@ import type { BubbleProps } from "../Bubble/types";
 
 // BubbleDataType 的值为其 BubbleDataType 的值联合 BubbleProps 的值
 export type BubbleDataType = {
-  key?: number | string;
+  key: number | string;
   role?: string;
   [key: string]: any;
 } & BubbleProps;

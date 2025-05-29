@@ -32,17 +32,19 @@
         </span>
       </button>
     </div>
-    <div :class="[ns.b('content'),
-    { [ns.b('content-lb')]: lb }]" v-show="isOpen" :style="computedContentStyle">
-      <template v-if="slots.error && status === 'error'">
-        <slot name="error"></slot>
-      </template>
-      <template v-else>
-        <slot name="content" :status="status" :content="content">
-          {{ content }}
-        </slot>
-      </template>
-    </div>
+    <Transition name="thinking-content">
+      <div :class="[ns.b('content'),
+      { [ns.b('content-lb')]: lb }]" v-show="isOpen" :style="computedContentStyle">
+        <template v-if="slots.error && status === 'error'">
+          <slot name="error"></slot>
+        </template>
+        <template v-else>
+          <slot name="content" :status="status" :content="content">
+            {{ content }}
+          </slot>
+        </template>
+      </div>
+    </Transition>
   </div>
 </template>
 

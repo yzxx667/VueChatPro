@@ -1,5 +1,5 @@
 ---
-title: useStream | Vue-Chat
+title: useStream | VueChat
 description: useStream 组件的文档
 ---
 
@@ -35,6 +35,10 @@ const DEFAULT_PART_SEPARATOR = "\n";
 const DEFAULT_KV_SEPARATOR = ":";
 ```
 
+:::
+
+::: tip 💌 提示
+本示例使用的是 `createFakeSSEStream` 模拟流式数据，实际使用时，请使用 `fetch` 或 `axios` 等请求库。
 :::
 
 ## 返回钩子

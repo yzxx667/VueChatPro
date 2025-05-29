@@ -18,7 +18,7 @@ import Thinking from '@/components/Thinking/Thinking.vue'
 import type { ThinkingStatus } from '@/components/Thinking/types'
 const statusValue = ref<ThinkingStatus>('thinking')
 import { ref } from 'vue'
-const thinking = ref(false)
+const thinking = ref<boolean>(false)
 </script>
 
 <style scoped></style>

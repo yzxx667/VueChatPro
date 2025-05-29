@@ -6,6 +6,4 @@
 import Bubble from '@/components/Bubble/Bubble.vue'
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

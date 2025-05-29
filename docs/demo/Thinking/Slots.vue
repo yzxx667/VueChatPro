@@ -14,7 +14,7 @@
     </el-radio-button>
   </el-radio-group>
 
-  <Thinking v-model="thinking" :status="statusValue" content="欢迎使用 Vue3_Chat" button-width="200px" max-width="100%">
+  <Thinking v-model="thinking" :status="statusValue" content="欢迎使用 VueChat" button-width="200px" max-width="100%">
     <template #icon="{ status }">
       <span v-if="status === 'start'">😄</span>
       <span v-else-if="status === 'error'">😭</span>
@@ -46,8 +46,9 @@
 <script setup lang="ts">
 import Thinking from '@/components/Thinking/Thinking.vue'
 import { ref } from 'vue'
-const thinking = ref(false)
-const statusValue = ref('start')
+import type { ThinkingStatus } from '@/components/Thinking/types'
+const thinking = ref<boolean>(false)
+const statusValue = ref<ThinkingStatus>('start')
 </script>
 
 <style scoped></style>

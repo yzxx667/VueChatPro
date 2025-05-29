@@ -14,7 +14,10 @@
         ns.b('content'),
         ns.b(`content-${props.variant}`),
         props.className?.content,
-        props.shape && ns.b(`content-${props.placement}-${props.shape}`)
+        props.shape && ns.b(`content-${props.placement}-${props.shape}`),
+        {
+          [ns.b('content-filled-transparent')]: props.transparent
+        }
       ]" :style="props.styles?.content">
         <template v-if="props.loading">
           <slot v-if="slots.loading" name="loading" />
@@ -41,7 +44,10 @@
         ns.b('content'),
         ns.b(`content-${props.variant}`),
         props.className?.content,
-        props.shape && ns.b(`content-${props.placement}-${props.shape}`)
+        props.shape && ns.b(`content-${props.placement}-${props.shape}`),
+        {
+          [ns.b('content-filled-transparent')]: props.transparent
+        }
       ]" :style="props.styles?.content">
         <template v-if="props.loading">
           <slot v-if="slots.loading" name="loading" />
@@ -75,6 +81,7 @@ import { computed, useSlots, watch, ref } from 'vue'
 import useTypingConfig from './hooks/useTypingConfig'
 import useTypedEffect from './hooks/useTypedEffect'
 import useTypedEffect2 from './hooks/useTypedEffect2'
+import type { BubbleEmits } from './types'
 
 import { useClassMoudle } from '@/hooks/useClassMoudle'
 import Loading from './components/Loading.vue'
@@ -90,13 +97,12 @@ const props = withDefaults(defineProps<BubbleProps>(), {
   loadingRender: undefined,
   content: '',
   avatar: '',
-  typing: false
+  typing: false,
+  transparent: false
 })
 console.log('bubble props', props)
 
-const emit = defineEmits<{
-  (e: 'change', value: boolean, status: ThinkingStatus): void
-}>()
+const emit = defineEmits(['onTypingComplete', 'onUpdate'])
 
 const ns = useClassMoudle('bubble')
 // footer content avatar header loading
@@ -124,7 +130,7 @@ const [typedContent, isTyping] = useTypedEffect2(
   interval as number
 )
 
-console.log(typedContent.value)
+console.log('typedContent.value', typedContent.value)
 
 const mergeContent = computed(() =>
   props.messageRender
@@ -132,15 +138,14 @@ const mergeContent = computed(() =>
     : typedContent.value
 )
 
-console.log(mergeContent.value)
 
 function isString(content: unknown) {
   return typeof content === 'string'
 }
 
-function onThinkingChange(value: boolean, status: ThinkingStatus) {
-  emit('change', value, status)
-}
+// function onThinkingChange(value: boolean, status: ThinkingStatus) {
+//   emit('change', value, status)
+// }
 
 const triggerTypingCompleteRef = ref(false)
 watch(
@@ -149,7 +154,8 @@ watch(
     if (!isTyping.value && !props.loading) {
       if (!triggerTypingCompleteRef.value) {
         triggerTypingCompleteRef.value = true
-        props.onTypingComplete?.()
+        // props.onTypingComplete?.()
+        emit('onTypingComplete')
       }
     } else {
       triggerTypingCompleteRef.value = false
@@ -157,12 +163,14 @@ watch(
   }
 )
 
+
 // 内容更新触发的回调
 watch(
-  () => typedContent.value,
-  () => props.onUpdate?.()
+  () => typedContent.value(),
+  // () => props.onUpdate?.()
+  () => emit('onUpdate')
 )
-// watch(()=>typedContent.value(), (newval, oldVal)=> console.log(newval, oldVal));
+// watch(() => typedContent.value(), (newval, oldVal) => console.log(newval, oldVal));
 
 defineExpose({
   nativeElement: divRef

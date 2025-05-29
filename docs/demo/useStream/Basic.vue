@@ -4,7 +4,7 @@
       <el-button @click="callOpenAI" :loading="isLoading" type="primary">开始流式请求</el-button>
       <el-button @click="cancel()" :disabled="!isLoading" type="danger">停止流式请求</el-button>
     </div>
-    <Bubble :content="content" :styles="computedStyles" />
+    <Bubble :content="content" :styles="computedStyles" v-if="content" />
   </div>
 </template>
 
@@ -37,7 +37,6 @@ async function callOpenAI() {
     console.error('❌ 出错了：', error);
   }
 }
-// callOpenAI()
 
 
 const content = computed(() => {

@@ -19,7 +19,7 @@ import type { SenderProps } from '@/components/Sender/types'
 import { ElMessage } from 'element-plus'
 const activeName = ref<SenderProps['submitType']>('enter')
 const senderValue = ref('')
-const senderLoading = ref(false)
+const senderLoading = ref<SenderProps['loading']>(false)
 
 const handleSubmit = (value: string) => {
   ElMessage.info(`发送中`)

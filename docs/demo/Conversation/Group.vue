@@ -5,10 +5,11 @@
 
 <script setup lang="ts">
 import Conversations from '@/components/Conversation/Conversation.vue'
+import type { Conversation, ConversationProps } from '@/components/Conversation/types'
 import { AddLocation, Aim, AlarmClock } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import { ref } from 'vue'
-const items = Array.from({ length: 4 }).map((_, index) => ({
+const items: Conversation[] = Array.from({ length: 4 }).map((_, index) => ({
   key: `item${index + 1}`,
   label: `Conversation Item ${index + 1}`,
   disabled: index === 3,
@@ -16,7 +17,7 @@ const items = Array.from({ length: 4 }).map((_, index) => ({
 }))
 const activeKey = ref('item1')
 
-const menuConfig = () => ({
+const menuConfig: ConversationProps['menu'] = () => ({
   items: [
     {
       label: 'Operation 1',
@@ -40,7 +41,7 @@ const menuConfig = () => ({
   },
 })
 
-const groupableConfig = {
+const groupableConfig: ConversationProps['groupable'] = {
   sort: (a, b) => {
     const order: Record<string, number> = { 学习: 0, 工作: 1 }
     const orderA = order[a] !== undefined ? order[a] : 999

@@ -30,7 +30,7 @@ $prefix: "bubble" !default;
     }
 
     @include b(#{$prefix}-footer) {
-      margin-top: $padding-sm;
+      margin-top: $padding-xxs;
       width: 100%;
       display: flex;
       justify-content: flex-start;
@@ -46,7 +46,11 @@ $prefix: "bubble" !default;
     }
 
     @include b(#{$prefix}-content-filled) {
-      background-color: rgb(var(--dark));
+      background-color: var(--color-bg-bubble);
+    }
+
+    @include b(#{$prefix}-content-filled-transparent) {
+      background-color: transparent;
     }
 
     @include b(#{$prefix}-content-outlined) {
@@ -82,11 +86,11 @@ $prefix: "bubble" !default;
     justify-content: end;
 
     @include b(#{$prefix}-header) {
-      direction: rtl;
+      justify-content: flex-end;
     }
 
     @include b(#{$prefix}-footer) {
-      direction: rtl;
+      justify-content: flex-end;
     }
   }
 

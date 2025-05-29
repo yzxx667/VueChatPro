@@ -13,18 +13,16 @@ import { ref } from 'vue';
 import Sender from '@/components/Sender/Sender.vue';
 import { ElMessage } from 'element-plus'
 const value = ref('')
-const senderRef = ref()
+const senderRef = ref<InstanceType<typeof Sender>>()
 
 const handleSubmit = () => {
   senderRef.value?.handleInputSubmit()
   ElMessage.success('提交成功')
-
 }
 
 const handleClear = () => {
   senderRef.value?.handleInputClear()
   ElMessage.success('清空成功')
-
 }
 </script>
 

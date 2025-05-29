@@ -1,5 +1,5 @@
 ---
-title: useAudio | Vue3-Chat
+title: useAudio | VueChat
 description: useAudio hooks的文档
 ---
 
@@ -12,6 +12,10 @@ description: useAudio hooks的文档
 ## 基础用法
 
 <preview path="../demo/useAudio/Basic.vue" title="基础用法" description="useAudio 的基础用法"></preview>
+
+::: tip 💌 提示
+若想使用 `useAudio` 钩子函数，可能需要科学上网。
+:::
 
 ## useAudio 参数
 

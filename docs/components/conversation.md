@@ -1,10 +1,15 @@
-# Conversations 管理对话
+---
+title: Conversation | VueChat
+description: Conversation 组件的文档
+---
+
+# Conversation 管理对话
 
 用于记录用户发送的历史对话列表。
 
 ## 介绍
 
-Conversations 是一个基于 Vue 3 和 Element Plus 开发的会话管理组件，支持分组展示、菜单交互、自定义样式等功能。适用于消息列表、任务分组等场景，通过灵活的配置和插槽扩展，满足多样化的业务需求。
+`Conversations` 是一个基于 Vue 3 和 Element Plus 开发的会话管理组件，支持分组展示、菜单交互、自定义样式等功能。适用于消息列表、任务分组等场景，通过灵活的配置和插槽扩展，满足多样化的业务需求。
 
 ## 基础用法
 

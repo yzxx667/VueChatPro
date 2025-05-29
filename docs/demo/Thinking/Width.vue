@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import Thinking from '@/components/Thinking/Thinking.vue'
 import { ref } from 'vue'
-const thinking1 = ref(false)
+const thinking1 = ref<boolean>(false)
 </script>
 
 <style scoped></style>

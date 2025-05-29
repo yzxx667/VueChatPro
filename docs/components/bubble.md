@@ -15,6 +15,12 @@ description: Bubble 组件的文档
 
 <preview path="../demo/Bubble/Basic.vue" title="基础用法" description="Bubble 组件的基础用法"></preview>
 
+## 透明背景
+
+使用 `transparent` 设置气泡的背景是否透明。
+
+<preview path="../demo/Bubble/Transparent.vue" title="透明背景" description="Bubble 组件的透明背景"></preview>
+
 ## 位置与头像
 
 使用 `avatar` 设置自定义头像，通过 `placement` 设置位置，提供了 start、end 两个选项。
@@ -73,6 +79,7 @@ description: Bubble 组件的文档
 | messageRender    | 自定义渲染内容                                               | (content?: string) => VNode                                            | -        |      |
 | onTypingComplete | 打字效果完成时的回调，如果没有设置 typing 将在渲染时立刻触发 | () => void                                                             | -        |      |
 | onUpdate         | 内容更新时会触发                                             | () => void                                                             | -        | -    |
+| transparent      | 气泡背景是否透明                                             | boolean                                                                | false    | -    |
 
 ## Bubble Slot
 

@@ -19,14 +19,14 @@
           <slot name="actionsList"></slot>
         </div>
         <div v-else-if="props?.loading" :class="[ns.b('actionsList')]">
-          <ElButton circle type="primary">
+          <ElButton circle type="primary" :disabled="!inputValue">
             <ElIcon color="white" size="32">
               <StopLoading />
             </ElIcon>
           </ElButton>
         </div>
         <div :class="[ns.b('actionsList-default')]" v-else>
-          <el-button circle type="primary" :disabled="props?.disabled">
+          <el-button circle type="primary" :disabled="props?.disabled || !inputValue">
             <el-icon>
               <Promotion @click="handleSubmit" />
             </el-icon>
@@ -47,14 +47,14 @@
             <slot name="actionsList"></slot>
           </div>
           <div v-else-if="props?.loading" :class="[ns.b('actionsList')]">
-            <ElButton circle type="primary">
+            <ElButton circle type="primary" :disabled="!inputValue">
               <ElIcon color="white" size="32">
                 <StopLoading />
               </ElIcon>
             </ElButton>
           </div>
           <div :class="[ns.b('actionsList-default')]" v-else>
-            <el-button circle type="primary" :disabled="props?.disabled">
+            <el-button circle type="primary" :disabled="props?.disabled || !inputValue">
               <el-icon>
                 <Promotion @click="handleSubmit" />
               </el-icon>

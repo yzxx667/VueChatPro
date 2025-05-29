@@ -1,5 +1,5 @@
 import type { VNode, CSSProperties } from "vue";
-import type { ThinkingProps } from "../Thinking/types";
+import type { ThinkingStatus } from "../Thinking/types";
 export interface TypingOption {
   /**
    * @default 50
@@ -23,8 +23,8 @@ export interface BubbleProps {
   loading?: boolean;
   loadingRender?: undefined | (() => VNode);
   messageRender?: (content: string) => string | VNode;
-  onTypingComplete?: () => void;
-  onUpdate?: () => void;
+  // onTypingComplete?: () => void;
+  // onUpdate?: () => void;
   placement?: "start" | "end";
   shape?: "round" | "corner";
   styles?: {
@@ -35,5 +35,13 @@ export interface BubbleProps {
   };
   typing?: boolean | TypingOption;
   variant?: "borderless" | "filled" | "outlined" | "shadow";
+  // 背景是否透明
+  transparent?: boolean;
   // thinkingProps?: ThinkingProps;
+}
+
+export interface BubbleEmits {
+  (e: "onTypingComplete"): void;
+  // (e: "change", value: boolean, status: ThinkingStatus): void;
+  (e: "onUpdate"): void;
 }

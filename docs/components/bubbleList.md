@@ -1,5 +1,5 @@
 ---
-title: BubbleList | Vue-Chat
+title: BubbleList | VueChat
 description: BubbleList 组件的文档
 ---
 
@@ -23,11 +23,10 @@ description: BubbleList 组件的文档
 
 ### BubbleList Attributes
 
-| 属性       | 说明                                                 | 类型                                                        | 默认值 | required |
-| ---------- | ---------------------------------------------------- | ----------------------------------------------------------- | ------ | -------- |
-| autoScroll | 当内容更新时，自动滚动到最新位置。                   | boolean                                                     | true   |          |
-| items      | `Bubble` 数据列表                                    | (BubbleProps & { key?: string \| number, role?: string })[] | -      | true     |
-| roles      | 设置气泡默认属性，`items` 中的 `role` 会进行自动对应 | Record<string, BubbleProps> \| (bubble) => BubbleProps      | -      |          |
+| 属性       | 说明                               | 类型                                                       | 默认值 | required |
+| ---------- | ---------------------------------- | ---------------------------------------------------------- | ------ | -------- |
+| autoScroll | 当内容更新时，自动滚动到最新位置。 | boolean                                                    | true   |          |
+| items      | `Bubble` 数据列表                  | (BubbleProps & { key: string \| number, role?: string })[] | -      | true     |
 
 ### BubbleList Slots
 
@@ -37,3 +36,4 @@ description: BubbleList 组件的文档
 | header  | 头部面板     | -    |
 | footer  | 底部内容     | -    |
 | loading | loading 占位 | -    |
+| content | 内容         | -    |
