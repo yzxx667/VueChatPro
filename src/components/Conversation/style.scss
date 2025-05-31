@@ -1,0 +1,68 @@
+@import "../../theme/index";
+@import "../../theme/mixin";
+
+$prefix: "conversations" !default;
+
+@include b(#{$prefix}-item) {
+  display: flex;
+  gap: $padding-xs;
+  align-items: center;
+  padding: $padding-sm;
+  cursor: pointer;
+  border-radius: $border-radius;
+
+  @include b(#{$prefix}-label) {
+    display: -webkit-box;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--color-text);
+    -webkit-box-orient: vertical;
+  }
+
+  &:hover {
+    background-color: rgb(var(--light), 12%);
+  }
+
+  &-active {
+    background-color: rgb(var(--light), 18%);
+
+    &:hover {
+      background-color: rgb(var(--light), 18%);
+    }
+  }
+
+  &-disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  &:hover,
+  &-active {
+    @include b(#{$prefix}-menu-icon) {
+      opacity: 1;
+    }
+  }
+}
+
+@include b(#{$prefix}-item-active) {
+  background-color: rgb(var(--light), 18%);
+}
+
+@include b($prefix) {
+  display: flex;
+  flex-direction: column;
+  gap: $padding-xs;
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+
+  &-list {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+@include b(#{$prefix}-rtl) {
+  direction: rtl;
+}

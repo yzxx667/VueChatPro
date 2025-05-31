@@ -1,0 +1,11 @@
+@import '@/theme/index';
+@import '@/theme/mixin';
+
+$prefix: 'bubble-list' !default;
+
+@include b($prefix) {
+  display: flex;
+  flex-direction: column;
+  gap: $padding;
+  overflow-y: auto;
+}

@@ -1,0 +1,185 @@
+@import "../../theme/index";
+@import "../../theme/mixin";
+
+$prefix: "bubble" !default;
+
+@at-root {
+  @include b($prefix) {
+    display: flex;
+    column-gap: $padding-sm;
+    max-width: 100%;
+
+    @include b(#{$prefix}-avatar) {
+      display: inline-flex;
+      align-self: flex-start;
+      justify-content: center;
+    }
+
+    @include b(#{$prefix}-content-wrapper) {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      max-width: 100%;
+    }
+
+    @include b(#{$prefix}-header) {
+      margin-bottom: $padding-xxs;
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    @include b(#{$prefix}-footer) {
+      margin-top: $padding-xxs;
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    @include b(#{$prefix}-content) {
+      position: relative;
+      box-sizing: border-box;
+      min-height: calc($padding-sm * 2 + $line-height * $font-size-lg);
+      font-size: $font-size-lg;
+      line-height: $line-height;
+      overflow-wrap: break-word;
+    }
+
+    @include b(#{$prefix}-content-filled) {
+      background-color: var(--color-bg-bubble);
+    }
+
+    @include b(#{$prefix}-content-filled-transparent) {
+      background-color: transparent;
+    }
+
+    @include b(#{$prefix}-content-outlined) {
+      border: 1px solid var(--border-secondary);
+    }
+
+    @include b(#{$prefix}-content-shadow) {
+      box-shadow:
+        0 1px 2px 0 rgb(var(--light), 3%),
+        0 1px 6px -1px rgb(var(--light), 2%),
+        0 2px 4px 0 rgb(var(--light), 2%);
+    }
+
+    &-header,
+    &-footer {
+      font-size: $font-size;
+      box-sizing: border-box;
+      line-height: $line-height;
+      color: var(--color-text);
+      padding: 0 $padding;
+    }
+
+    &-content-filled,
+    &-content-shadow,
+    &-content-outlined {
+      padding: $padding-sm $padding;
+      border-radius: $border-radius-lg;
+    }
+  }
+
+  @include b(#{$prefix}-end) {
+    flex-direction: row-reverse;
+    justify-content: end;
+
+    @include b(#{$prefix}-header) {
+      justify-content: flex-end;
+    }
+
+    @include b(#{$prefix}-footer) {
+      justify-content: flex-end;
+    }
+  }
+
+  @include b(#{$prefix}-content-start-round) {
+    @extend .round;
+  }
+
+  @include b(#{$prefix}-content-end-round) {
+    @extend .round;
+  }
+
+  @include b(#{$prefix}-content-start-corner) {
+    border-start-start-radius: $border-radius-xs;
+  }
+
+  @include b(#{$prefix}-content-end-corner) {
+    border-start-end-radius: $border-radius-xs;
+  }
+
+  .round {
+    padding-inline: calc($padding * 1.25);
+    border-radius: calc($font-size * $line-height / 2 + $padding-sm);
+  }
+}
+
+@keyframes loadingMove {
+  0% {
+    transform: translateY(0);
+  }
+
+  10% {
+    transform: translateY(4px);
+  }
+
+  20% {
+    transform: translateY(0);
+  }
+
+  30% {
+    transform: translateY(-4px);
+  }
+
+  40% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes cursorBlink {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+[class$="-dot"] {
+  position: relative;
+  display: flex;
+  column-gap: $margin-xs;
+  align-items: center;
+  height: 100%;
+  padding: 0 $padding-xxs;
+
+  [class$="-dot-item"] {
+    width: 4px;
+    height: 4px;
+    background-color: var(--color-primary);
+    border-radius: 100%;
+    animation-name: loadingMove;
+    animation-duration: 2s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+
+    &:nth-child(1) {
+      animation-delay: 0s;
+    }
+
+    &:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    &:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+  }
+}
