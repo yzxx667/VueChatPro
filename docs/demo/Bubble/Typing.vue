@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import Bubble from '@/components/Bubble/Bubble.vue'
+import { Bubble } from 'vue-chat-pro'
 const text = ref<string>('hello world！')
 </script>
 

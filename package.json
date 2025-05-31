@@ -64,6 +64,7 @@
     "vite-plugin-dts": "^4.5.4",
     "vite-plugin-vue-devtools": "^7.7.2",
     "vitepress": "^1.6.3",
+    "vue-chat-pro": "0.0.0",
     "vue-tsc": "^2.2.8"
   }
 }

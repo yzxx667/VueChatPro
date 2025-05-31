@@ -27,7 +27,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import Sender from '@/components/Sender/Sender.vue';
+import { Sender } from 'vue-chat-pro'
 import { Paperclip, ElementPlus } from '@element-plus/icons-vue'
 const value1 = ref('')
 const value2 = ref('')

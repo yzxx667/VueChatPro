@@ -73,15 +73,11 @@
 </template>
 
 <script setup lang="ts">
-import Thinking from '@/components/Thinking/Thinking.vue'
 import type { BubbleProps } from './types'
-import type { Ref, VNode } from 'vue'
-import type { ThinkingStatus } from '../Thinking/types'
+import type { Ref } from 'vue'
 import { computed, useSlots, watch, ref } from 'vue'
 import useTypingConfig from './hooks/useTypingConfig'
-import useTypedEffect from './hooks/useTypedEffect'
 import useTypedEffect2 from './hooks/useTypedEffect2'
-import type { BubbleEmits } from './types'
 
 import { useClassMoudle } from '@/hooks/useClassMoudle'
 import Loading from './components/Loading.vue'
@@ -116,13 +112,6 @@ const contents = computed(() => props.content)
 
 const [typingEnabled, interval, step] = useTypingConfig(props.typing)
 
-// const [typedContent, isTyping]: [Ref<() => string | VNode>, Ref<boolean>] = useTypedEffect(
-//   contents as Ref<string>,
-//   typingEnabled as boolean,
-//   step as number,
-//   interval as number
-// )
-
 const [typedContent, isTyping] = useTypedEffect2(
   contents as Ref<string>,
   typingEnabled as boolean,
@@ -143,9 +132,6 @@ function isString(content: unknown) {
   return typeof content === 'string'
 }
 
-// function onThinkingChange(value: boolean, status: ThinkingStatus) {
-//   emit('change', value, status)
-// }
 
 const triggerTypingCompleteRef = ref(false)
 watch(
@@ -154,7 +140,6 @@ watch(
     if (!isTyping.value && !props.loading) {
       if (!triggerTypingCompleteRef.value) {
         triggerTypingCompleteRef.value = true
-        // props.onTypingComplete?.()
         emit('onTypingComplete')
       }
     } else {
@@ -167,10 +152,9 @@ watch(
 // 内容更新触发的回调
 watch(
   () => typedContent.value(),
-  // () => props.onUpdate?.()
   () => emit('onUpdate')
 )
-// watch(() => typedContent.value(), (newval, oldVal) => console.log(newval, oldVal));
+
 
 defineExpose({
   nativeElement: divRef

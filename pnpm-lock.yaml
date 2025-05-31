@@ -87,6 +87,9 @@ importers:
       vitepress:
         specifier: ^1.6.3
         version: 1.6.3(@algolia/client-search@5.25.0)(@types/node@22.15.18)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.89.0)(search-insights@2.17.3)(typescript@5.8.3)
+      vue-chat-pro:
+        specifier: 0.0.0
+        version: 0.0.0
       vue-tsc:
         specifier: ^2.2.8
         version: 2.2.10(typescript@5.8.3)
@@ -2498,6 +2501,9 @@ packages:
 
   vscode-uri@3.1.0:
     resolution: {integrity: sha512-/BpdSx+yCQGnCvecbyXdxHDkuk55/G3xwnC0GqY4gmQ3j+A+g8kzzgB4Nk/SINjqn6+waqw3EgbVF2QKExkRxQ==}
+
+  vue-chat-pro@0.0.0:
+    resolution: {integrity: sha512-02RY5tNj9B3I28KhpbrnvHTZx+sQkfTl8atrGcGsLjad7PlV/qs1g5geYV24uhtecQdCa6CkUA9invcedeO7Qw==}
 
   vue-demi@0.14.10:
     resolution: {integrity: sha512-nMZBOwuzabUO0nLgIcc6rycZEebF6eeUfaiQx9+WSk8e29IbLvPU9feI6tqW4kTo3hvoYAJkMh8n8D0fuISphg==}
@@ -5015,6 +5021,8 @@ snapshots:
       - universal-cookie
 
   vscode-uri@3.1.0: {}
+
+  vue-chat-pro@0.0.0: {}
 
   vue-demi@0.14.10(vue@3.5.14(typescript@5.8.3)):
     dependencies:

@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import Sender from '@/components/Sender/Sender.vue';
+import { Sender } from 'vue-chat-pro'
 import { ElMessage } from 'element-plus'
 const value = ref('')
 const senderRef = ref<InstanceType<typeof Sender>>()

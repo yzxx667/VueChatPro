@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import Bubble from '@/components/Bubble/Bubble.vue'
+import { Bubble } from 'vue-chat-pro'
 import markdownit from 'markdown-it'
 const md = markdownit({ html: true })
 const text = `

@@ -14,8 +14,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import Sender from '@/components/Sender/Sender.vue'
-import type { SenderProps } from '@/components/Sender/types'
+import { Sender } from 'vue-chat-pro'
+import type { SenderProps } from 'vue-chat-pro/types'
 import { ElMessage } from 'element-plus'
 const activeName = ref<SenderProps['submitType']>('enter')
 const senderValue = ref('')

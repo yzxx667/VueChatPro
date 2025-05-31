@@ -44,9 +44,9 @@
 </template>
 
 <script setup lang="ts">
-import Thinking from '@/components/Thinking/Thinking.vue'
+import { Thinking } from 'vue-chat-pro'
 import { ref } from 'vue'
-import type { ThinkingStatus } from '@/components/Thinking/types'
+import type { ThinkingStatus } from 'vue-chat-pro/types'
 const thinking = ref<boolean>(false)
 const statusValue = ref<ThinkingStatus>('start')
 </script>

@@ -8,6 +8,7 @@
     extra="额外信息" />
 </template>
 <script setup lang="ts">
-import Welcome from '@/components/Welcome/Welcome.vue'
+// import Welcome from '@/components/Welcome/Welcome.vue'
+import { Welcome } from 'vue-chat-pro'
 </script>
 <style></style>

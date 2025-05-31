@@ -20,7 +20,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import Sender from '@/components/Sender/Sender.vue';
+import { Sender } from 'vue-chat-pro'
 import { Delete, Position } from '@element-plus/icons-vue'
 const value = ref('')
 </script>

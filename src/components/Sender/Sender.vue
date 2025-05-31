@@ -92,9 +92,7 @@ const footerShow = ref<boolean>(false)
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void
-  // (e: 'submit', value: string): void
   (e: 'on-input', value: string): void
-  // (e: 'on-keypress', value: KeyboardEvent): void
   (e: 'on-submit', value: string): void
 }>();
 
@@ -128,10 +126,6 @@ function onInput(value: string) {
 const handleChange = (e: string) => {
   emit('on-input', e)
 }
-
-// const handleKeypress = (e: KeyboardEvent) => {
-//   emit('on-keypress', e)
-// }
 
 const handleSubmit = (e: string) => {
   emit('on-submit', e)

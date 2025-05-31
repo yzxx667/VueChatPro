@@ -12,7 +12,6 @@ export interface BubbleListProps {
   autoScroll?: boolean;
   className?: string;
   items: BubbleDataType[];
-  // roles?: ((bubbleDataP: BubbleDataType) => RoleType) | Record<string, RoleType>
   rootClassName?: string;
 }
 

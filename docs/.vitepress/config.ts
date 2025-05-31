@@ -28,7 +28,8 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     logo: "https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*s5sNRo5LjfQAAAAAAAAAAAAADgCCAQ/fmt.webp",
     nav: [
-      { text: "组件", link: "/component/overview" },
+      { text: "指南", link: "/guide/install" },
+      { text: "组件", link: "/components/overview" },
       {
         text: "更多",
         items: [
@@ -44,45 +45,52 @@ export default defineConfig({
       },
     ],
 
-    sidebar: [
-      {
-        text: "总览",
-        link: "/components/overview",
-      },
-      {
-        text: "唤醒",
-        items: [{ text: "Welcome 欢迎 👏🏻", link: "/components/welcome" }],
-      },
-      {
-        text: "通用",
-        items: [
-          { text: "Bubble 对话 💬", link: "/components/bubble" },
-          { text: "BubbleList 对话列表 ☄️", link: "/components/bubbleList" },
-          {
-            text: "Conversation 管理对话 📱",
-            link: "/components/conversation",
-          },
-        ],
-      },
-      {
-        text: "表达",
-        items: [{ text: "Sender 输入框 💭", link: "/components/sender" }],
-      },
-      {
-        text: "思考",
-        items: [{ text: "Thinking 思考 🤔", link: "/components/Thinking" }],
-      },
-      {
-        text: "Hooks",
-        items: [
-          { text: "useAudio 语音识别 🎤", link: "/components/useAudio" },
-          { text: "useStream 流式请求 🌐", link: "/components/useStream" },
-        ],
-      },
-    ],
-
+    sidebar: {
+      "/components/": [
+        {
+          text: "总览",
+          link: "/components/overview",
+        },
+        {
+          text: "唤醒",
+          items: [{ text: "Welcome 欢迎 👏🏻", link: "/components/welcome" }],
+        },
+        {
+          text: "通用",
+          items: [
+            { text: "Bubble 对话 💬", link: "/components/bubble" },
+            { text: "BubbleList 对话列表 ☄️", link: "/components/bubbleList" },
+            {
+              text: "Conversation 管理对话 📱",
+              link: "/components/conversation",
+            },
+          ],
+        },
+        {
+          text: "表达",
+          items: [{ text: "Sender 输入框 💭", link: "/components/sender" }],
+        },
+        {
+          text: "思考",
+          items: [{ text: "Thinking 思考 🤔", link: "/components/Thinking" }],
+        },
+        {
+          text: "Hooks",
+          items: [
+            { text: "useAudio 语音识别 🎤", link: "/components/useAudio" },
+            { text: "useStream 流式请求 🌐", link: "/components/useStream" },
+          ],
+        },
+      ],
+      "/guide/": [
+        {
+          text: "安装",
+          link: "/guide/install",
+        },
+      ],
+    },
     socialLinks: [
-      { icon: "github", link: "https://github.com/vuejs/vitepress" },
+      { icon: "github", link: "https://github.com/yzxx667/Vue3_Chat" },
     ],
   },
 });

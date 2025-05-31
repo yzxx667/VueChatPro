@@ -32,7 +32,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import Sender from '@/components/Sender/Sender.vue'
+import { Sender } from 'vue-chat-pro'
 const senderValue = ref('')
 const senderRef = ref<InstanceType<typeof Sender>>()
 

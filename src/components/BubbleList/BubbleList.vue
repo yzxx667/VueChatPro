@@ -9,13 +9,8 @@
       :ref="node => getBubbleRefs(node, bubble.key)" :on-typing-complete="() => onTypingCompleteFn(bubble)"
       :typing="initialized ? (bubble.typing as boolean) : false">
       <template v-for="(_, name) in slots" :key="name" #[name]>
-        <!-- slotProps可以换成任意字符串 例如foo -->
-        <!-- {{ console.log('slotName:', slotName, 'slot function:', _slot, 'slotProps', slotProps) }} -->
         <slot :name="name" :info="bubble" />
       </template>
-      <!-- <template v-if="slots.thinking" #thinking>
-        <slot name="thinking" :info="bubble" />
-      </template> -->
     </Bubble>
   </div>
 </template>
@@ -30,9 +25,6 @@ import type {
 import { ref, watch, onMounted, nextTick } from 'vue'
 import type { Component } from 'vue'
 import Bubble from '../Bubble/Bubble.vue'
-import useListData from './hooks/useListData'
-// import useDisplayData from './hooks/useDisplayData'
-import type { ListItemType } from './hooks/useListData'
 const props = withDefaults(defineProps<BubbleListProps>(), {
   autoScroll: true,
   items: () => []
@@ -68,25 +60,6 @@ const handleScroll = (e: Event) => {
     Residual.value
 }
 
-// 获取对话列表以及设置key and 设置bubble的呈现方式（props）
-// const { ListData, setListData } = useListData(props.items, props.roles)
-// console.log(props.items, props.roles, ListData.value)
-
-// watch(
-//   () => props.items,
-//   () => {
-//     setListData(props.items)
-//   },
-//   { deep: true }
-// )
-
-
-// const [displayData, onTypingComplete, ItemsWatch] = useDisplayData(ListData)
-
-// watch(() => ListData.value, () => {
-//   ItemsWatch()
-// })
-
 // 存储每个bubble的ref
 const getBubbleRefs = (
   node: Component<InstanceType<typeof Bubble>> | null,
@@ -118,17 +91,6 @@ function onBubbleUpdate() {
   }
 }
 
-// watch(
-//   () => ListData.value.length,
-//   () => {
-//     nextTick(() => {
-//       if (props.autoScroll) {
-//         updateCount.value += 1
-//         scrollEnd.value = true
-//       }
-//     })
-//   }
-// )
 watch(() => props.items.length, () => {
   nextTick(() => {
     if (props.autoScroll) {
@@ -140,7 +102,7 @@ watch(() => props.items.length, () => {
 
 
 
-const onTypingCompleteFn = (bubble: ListItemType) => {
+const onTypingCompleteFn = (bubble) => {
   if (!bubble.key) return
   bubble?.onTypingComplete?.()
 }
@@ -158,11 +120,8 @@ const scrollTo = ({
       behavior
     })
   } else if (key !== undefined) {
-    // console.log('bubbleRefs', bubbleRefs.value)
 
     const bubbleInst = bubbleRefs.value[props.items[key as number].key as string]
-    // console.log(bubbleInst)
-    // console.log('key', key)
 
     if (bubbleInst) {
       // Block current auto scrolling
@@ -182,44 +141,12 @@ const scrollTo = ({
   }
 }
 
-// bubblelist更新的回调
-// const onBubbleUpdate = () => {
-//   updateCount.value += 1
-// }
 
 onMounted(() => {
   nextTick(() => {
     scrollTo({ offset: listRef.value!.scrollHeight, behavior: 'auto' })
   })
 })
-
-// watch(
-//   () => props.items,
-//   newItems => {
-//     newItems.forEach(item => {
-//       if (item.status === 'end' && item.modelValue) {
-//         item.modelValue = false
-//       }
-//     })
-//   },
-//   { deep: true }
-// )
-
-// watch(() => ListData.value, (newVal) => {
-//   console.log('ListData change', newVal)
-// })
-
-// const emit = defineEmits(['update:items'])
-
-// watch(
-//   () => ListData.value,
-//   (newVal) => {
-//     console.log('ListData change2', newVal)
-
-//     emit('update:items', newVal)
-//   },
-//   { deep: true }
-// )
 
 defineExpose({
   nativeElement: listRef.value,

@@ -35,11 +35,9 @@
 </template>
 
 <script setup lang="ts">
-import type { BubbleDataType } from '@/components/BubbleList/BubbleList.vue'
+import type { BubbleDataType, ThinkingStatus } from 'vue-chat-pro/types'
 import { DocumentCopy, Refresh, Search, Star } from '@element-plus/icons-vue'
-import type { ThinkingStatus } from '@/components/Thinking/types'
-import Thinking from '@/components/Thinking/Thinking.vue'
-import BubbleList from '@/components/BubbleList/BubbleList.vue'
+import { Thinking, BubbleList } from 'vue-chat-pro'
 import { ref, computed, reactive, watch } from 'vue'
 const bubbleListRef = ref<InstanceType<typeof BubbleList>>()
 const data = ref<any[]>([])

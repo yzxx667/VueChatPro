@@ -22,8 +22,6 @@ export interface BubbleProps {
   loading?: boolean;
   loadingRender?: undefined | (() => VNode);
   messageRender?: (content: string) => string | VNode;
-  // onTypingComplete?: () => void;
-  // onUpdate?: () => void;
   placement?: "start" | "end";
   shape?: "round" | "corner";
   styles?: {
@@ -41,6 +39,5 @@ export interface BubbleProps {
 
 export interface BubbleEmits {
   (e: "onTypingComplete"): void;
-  // (e: "change", value: boolean, status: ThinkingStatus): void;
   (e: "onUpdate"): void;
 }

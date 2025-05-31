@@ -7,9 +7,9 @@
 </template>
 
 <script setup lang="ts">
-import BubbleList from "@/components/BubbleList/BubbleList.vue";
+import { BubbleList } from 'vue-chat-pro'
 import { reactive, ref } from 'vue';
-import type { BubbleDataType } from '@/components/BubbleList/BubbleList.vue';
+import type { BubbleDataType } from 'vue-chat-pro/types'
 const items = reactive<BubbleDataType[]>([
   {
     role: 'user',
