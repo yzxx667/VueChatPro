@@ -1,38 +1,33 @@
 <template>
-  <BubbleList ref="bubbleListRef" :items="items" :roles="roles" style="height: 200px;overflow: auto;">
+  <BubbleList ref="bubbleListRef" :items="items" style="height: 200px;overflow: auto;">
   </BubbleList>
 </template>
 
 <script setup lang="ts">
-import BubbleList from "@/components/BubbleList/BubbleList.vue";
+import { BubbleList } from 'vue-chat-pro'
 import { reactive, ref, h } from 'vue';
-const items = reactive([
+import type { BubbleDataType } from 'vue-chat-pro/types'
+const items = reactive<BubbleDataType[]>([
   {
     role: 'user',
     content: 'Mock User content! Mock User content! Mock User content! Mock User content! Mock User content! Mock User content! Mock User content! Mock User content! ',
-    headerProps: 'user头部'
+    headerProps: 'user头部',
+    key: 'perset_user_1',
   },
   {
     role: 'ai',
-    content: 'Mock Ai content! Mock Ai content! Mock Ai content! Mock Ai content! Mock Ai content! Mock Ai content! Mock Ai content! Mock Ai content! ',
+    content: 'Mock Ai content! Mock Ai content! Mock Ai content! ',
     headerProps: 'ai头部',
-    loading: true
-  }
+    placement: 'start',
+    avatar: 'https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*s5sNRo5LjfQAAAAAAAAAAAAADgCCAQ/fmt.webp',
+    typing: { step: 5, interval: 20 },
+    loadingRender: () => h('div', { style: { color: 'red' } }, 'Custom loading...'),
+    key: 'perset_ai_1',
+    loading: true,
+  },
 ])
 
-const roles = {
-  ai: {
-    placement: 'start',
-    avatar: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
-    typing: { step: 1, interval: 20 },
-    loadingRender: () => h('div', null, 'Custom loading...'),
-  },
-  user: {
-    placement: 'end',
-    avatar: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
-  },
-}
-const bubbleListRef = ref()
+const bubbleListRef = ref<InstanceType<typeof BubbleList>>()
 </script>
 
 <style scoped lang="scss"></style>

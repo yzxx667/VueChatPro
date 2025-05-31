@@ -173,10 +173,7 @@ export function useStream() {
 
         if (done) break;
 
-        if (!value) continue;
-
-        // Transformed data through all transform pipes
-        yield value;
+        if (value) yield value;
       }
     };
 
@@ -199,9 +196,6 @@ export function useStream() {
   const cancel = () => {
     if (abortController.value) {
       abortController.value.abort();
-      isLoading.value = false;
-      stream.value = null; // 释放流引用
-      abortController.value = null; // 释放控制器
     }
   };
 

@@ -16,7 +16,6 @@ $prefix: "bubble" !default;
     }
 
     @include b(#{$prefix}-content-wrapper) {
-      // flex: auto;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
@@ -25,23 +24,33 @@ $prefix: "bubble" !default;
 
     @include b(#{$prefix}-header) {
       margin-bottom: $padding-xxs;
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
     }
 
     @include b(#{$prefix}-footer) {
-      margin-top: $padding-sm;
+      margin-top: $padding-xxs;
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
     }
 
     @include b(#{$prefix}-content) {
       position: relative;
       box-sizing: border-box;
-      min-height: calc($padding-sm * 2 + $line-height * $font-size);
-      font-size: $font-size;
+      min-height: calc($padding-sm * 2 + $line-height * $font-size-lg);
+      font-size: $font-size-lg;
       line-height: $line-height;
       overflow-wrap: break-word;
     }
 
     @include b(#{$prefix}-content-filled) {
-      background-color: rgb(var(--light), 12%);
+      background-color: var(--color-bg-bubble);
+    }
+
+    @include b(#{$prefix}-content-filled-transparent) {
+      background-color: transparent;
     }
 
     @include b(#{$prefix}-content-outlined) {
@@ -49,15 +58,19 @@ $prefix: "bubble" !default;
     }
 
     @include b(#{$prefix}-content-shadow) {
-      box-shadow: 0 1px 2px 0 rgb(var(--light), 3%),
-        0 1px 6px -1px rgb(var(--light), 2%), 0 2px 4px 0 rgb(var(--light), 2%);
+      box-shadow:
+        0 1px 2px 0 rgb(var(--light), 3%),
+        0 1px 6px -1px rgb(var(--light), 2%),
+        0 2px 4px 0 rgb(var(--light), 2%);
     }
 
     &-header,
     &-footer {
       font-size: $font-size;
+      box-sizing: border-box;
       line-height: $line-height;
       color: var(--color-text);
+      padding: 0 $padding;
     }
 
     &-content-filled,
@@ -65,6 +78,19 @@ $prefix: "bubble" !default;
     &-content-outlined {
       padding: $padding-sm $padding;
       border-radius: $border-radius-lg;
+    }
+  }
+
+  @include b(#{$prefix}-end) {
+    flex-direction: row-reverse;
+    justify-content: end;
+
+    @include b(#{$prefix}-header) {
+      justify-content: flex-end;
+    }
+
+    @include b(#{$prefix}-footer) {
+      justify-content: flex-end;
     }
   }
 
@@ -82,11 +108,6 @@ $prefix: "bubble" !default;
 
   @include b(#{$prefix}-content-end-corner) {
     border-start-end-radius: $border-radius-xs;
-  }
-
-  @include b(#{$prefix}-end) {
-    flex-direction: row-reverse;
-    justify-content: end;
   }
 
   .round {

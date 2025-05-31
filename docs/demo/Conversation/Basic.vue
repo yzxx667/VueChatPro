@@ -1,9 +1,9 @@
 <template>
-  <Conversations v-model:active-key="activeKey" :items="items" style="width: 300px" />
+  <Conversation v-model:active-key="activeKey" :items="items" style="width: 300px" />
 </template>
 
 <script setup lang="ts">
-import Conversations from '@/components/Conversation/Conversation.vue'
+import { Conversation } from 'vue-chat-pro'
 import { ref } from 'vue'
 
 const items = Array.from({ length: 4 }).map((_, index) => ({

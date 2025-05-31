@@ -11,13 +11,13 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import Sender from '@/components/Sender/Sender.vue'
+import { Sender } from 'vue-chat-pro'
 const value = ref('')
 const value2 = ref('只读状态')
 const value3 = ref('loading状态')
-const senderRef = ref()
-const senderRef2 = ref()
-const senderRef3 = ref()
+const senderRef = ref<InstanceType<typeof Sender>>()
+const senderRef2 = ref<InstanceType<typeof Sender>>()
+const senderRef3 = ref<InstanceType<typeof Sender>>()
 </script>
 
 <style scoped></style>

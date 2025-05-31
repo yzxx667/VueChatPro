@@ -1,15 +1,11 @@
 <template>
-  <Bubble
-      :content="text"
-      typing
-      avatar="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
-      :message-render="msgRender"
-    />
+  <Bubble :content="text" typing
+    avatar="https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*s5sNRo5LjfQAAAAAAAAAAAAADgCCAQ/fmt.webp"
+    :message-render="msgRender" />
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import Bubble from '@/components/Bubble/Bubble.vue'
+import { Bubble } from 'vue-chat-pro'
 import markdownit from 'markdown-it'
 const md = markdownit({ html: true })
 const text = `
@@ -20,6 +16,4 @@ Link: [Ant Design X](https://x.ant.design)
 const msgRender = (text: string) => md.render(text)
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

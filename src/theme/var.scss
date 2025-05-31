@@ -1,4 +1,4 @@
-@import './index';
+@import "./index";
 
 :root {
   --light: 0, 0, 0;
@@ -27,6 +27,13 @@
   --color-bg-elevated: #{$color-bg-elevated};
   --color-bg-spotlight: #{$color-bg-spotlight};
   --color-bg-blur: rgb(var(--light), 4%);
+  --color-bg-welcome: #e6f4ff;
+  --color-bg-bubble: #f0f2f5;
+  --color-hover: #f8f8f8;
+  // thinging
+  --color-bg-thinking: #{$color-bg-thinking};
+  --color-thinking-text: #71757f;
+  // thinging
   --border-radius: 6px;
   --border-radius-xs: 2px;
   --border-radius-sm: 4px;
@@ -82,6 +89,10 @@
     0 9px 28px 8px #{rgba($light, 5%)};
   --motion-duration-slow: 0.3s;
   --attachments-color-bg-placeholder-hover: #{$attachments-color-bg-placeholder-hover};
+  --start-color: var(--el-color-warning);
+  --thinking-color: var(--el-color-primary);
+  --end-color: var(--el-color-success);
+  --error-color: var(--el-color-danger);
 }
 
 :root.dark {
@@ -102,6 +113,14 @@
   --border-color: #414243;
   --border-secondary: #303030;
   --attachments-color-bg-placeholder-hover: rgb(20 20 20 / 85%);
+  --color-bg-welcome: #141414;
+  --color-bg-bubble: #1f1f1f;
+  --color-hover: #222222;
+
+  // thinging
+  --color-bg-thinking: #34363a;
+  --color-thinking-text: #71757f;
+  // thinging
 
   color-scheme: dark;
 }

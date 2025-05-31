@@ -3,23 +3,25 @@
 layout: home
 
 hero:
-  name: "Vue_Chat"
-  text: "A VitePress Site"
-  tagline: My great project tagline
+  name: "VueChat"
+  text: "AI 体验新秩序"
+  tagline: Ant Design X For Vue (Element Plus)。Ant Design 团队匠心呈现 RICH 设计范式，打造卓越 AI 界面解决方案，引领智能新体验。
   actions:
     - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
+      text: 开始使用
+      link: /components/overview
     - theme: alt
-      text: API Examples
-      link: /api-examples
+      text: 设计语言
+      link: https://x.ant.design/docs/spec/introduce-cn
+  image:
+    src: https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*s5sNRo5LjfQAAAAAAAAAAAAADgCCAQ/fmt.webp
+    alt: VueChat Logo
 
 features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+  - title: AI 设计范式 - RICH
+    details: 创造卓越 AI 产品体验
+  - title: AI 界面解决方案
+    details: 基于RICH，全新 AGI 混合界面（Hybrid-UI）解决方案，完美融合 GUI 和自然会话交互。
+  - title: 组件丰富，选用自如
+    details: Ant Design X Vue (Element Plus) 全新 AI 组件 , 大量实用组件满足你的需求 , 灵活定制与拓展
 ---
-

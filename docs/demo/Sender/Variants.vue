@@ -1,7 +1,7 @@
 <template>
-  <Sender v-model="value" variants="default" />
+  <Sender v-model="value1" variants="default" />
   <br />
-  <Sender v-model="value" variants="updown">
+  <Sender v-model="value2" variants="updown">
     <template #prefix>
       <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
         <el-button round plain color="#626aef">
@@ -27,10 +27,11 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import Sender from '@/components/Sender/Sender.vue';
+import { Sender } from 'vue-chat-pro'
 import { Paperclip, ElementPlus } from '@element-plus/icons-vue'
-const value = ref('')
-const isSelect = ref(false)
+const value1 = ref('')
+const value2 = ref('')
+const isSelect = ref<boolean>(false)
 </script>
 
 <style scoped lang="scss">

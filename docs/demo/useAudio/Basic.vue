@@ -26,10 +26,12 @@
 </template>
 
 <script setup lang="ts">
-import Sender from '@/components/Sender/Sender.vue';
-import { useAudio } from '@/hooks/useAudio';
+import { Sender } from 'vue-chat-pro'
+import { useAudio } from 'vue-chat-pro'
 // const value = ref('')
 const { start, value: audioValue, loading, stop } = useAudio({ lang: 'zh-CN', onEnd: handleEnd, onResult: handleResult })
+console.log('audioValue:', audioValue.value)
+
 
 function handleStart() {
   start()

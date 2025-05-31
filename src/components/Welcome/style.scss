@@ -1,7 +1,7 @@
-@import '../../theme/index';
-@import '../../theme/mixin';
+@import "../../theme/index";
+@import "../../theme/mixin";
 
-$prefix: 'welcome' !default;
+$prefix: "welcome" !default;
 
 @include b($prefix) {
   $component-prefix: &;
@@ -31,7 +31,8 @@ $prefix: 'welcome' !default;
     display: flex;
     flex: auto;
     flex-direction: column;
-    gap: var(--padding-xs);
+    /* gap: var(--padding-xs); */
+    justify-content: space-between;
     align-items: stretch;
     width: 0;
 
@@ -71,7 +72,7 @@ $prefix: 'welcome' !default;
     padding-block: var(--padding-sm);
     padding-inline: 16px;
     padding-inline: var(--padding);
-    background: rgb(var(--light), 0.12);
+    background: var(--color-bg-welcome);
     border-radius: 8px;
     border-radius: var(--border-radius-lg);
   }

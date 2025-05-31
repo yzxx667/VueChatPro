@@ -8,6 +8,7 @@ $prefix: "sender" !default;
     border: none; // 移除边框
     box-shadow: none; // 移除阴影
     background: transparent; // 透明背景
+    color: var(--dark);
 
     &:focus {
       box-shadow: none; // 移除聚焦时的阴影

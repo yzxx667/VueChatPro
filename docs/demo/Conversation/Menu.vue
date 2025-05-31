@@ -1,9 +1,10 @@
 <template>
-  <Conversations v-model:active-key="activeKey" :items="items" style="width: 300px" :menu="menuConfig" />
+  <Conversation v-model:active-key="activeKey" :items="items" style="width: 300px" :menu="menuConfig" />
 </template>
 
 <script setup lang="ts">
-import Conversations from '@/components/Conversation/Conversation.vue'
+import { Conversation } from 'vue-chat-pro'
+import type { ConversationProps } from 'vue-chat-pro/types'
 import { AddLocation, Aim, AlarmClock } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import { ref } from 'vue'
@@ -15,7 +16,7 @@ const items = Array.from({ length: 4 }).map((_, index) => ({
 }))
 const activeKey = ref('item1')
 
-const menuConfig = () => ({
+const menuConfig: ConversationProps['menu'] = () => ({
   items: [
     {
       label: 'Operation 1',
