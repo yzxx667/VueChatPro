@@ -73,7 +73,7 @@
 </template>
 
 <script setup lang="ts">
-import Thinking from '@/components/Thinking/Think.vue'
+import Thinking from '@/components/Thinking/Thinking.vue'
 import type { BubbleProps } from './types'
 import type { Ref, VNode } from 'vue'
 import type { ThinkingStatus } from '../Thinking/types'

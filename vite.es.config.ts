@@ -13,7 +13,7 @@ export default defineConfig({
     vue(),
     vueJsx(),
     vueDevTools(),
-    dts({ tsconfigPath: "./tsconfig.build.json" }),
+    dts({ tsconfigPath: "./tsconfig.build.json", outDir: "dist/types" }),
   ],
   resolve: {
     alias: {
@@ -21,13 +21,24 @@ export default defineConfig({
     },
   },
   build: {
+    outDir: "dist/es",
     lib: {
       entry: resolve(__dirname, "src/index.ts"),
       name: "VueChat",
       fileName: "vue-chat",
+      formats: ["es"],
     },
     rollupOptions: {
-      external: ["vue"],
+      external: [
+        "vue",
+        "@element-plus/icons-vue",
+        "@vitepress-demo-preview/component",
+        "@vitepress-demo-preview/plugin",
+        "element-plus",
+        "highlight.js",
+        "markdown-it",
+        "markdown-it-container",
+      ],
       output: {
         exports: "named",
         globals: {

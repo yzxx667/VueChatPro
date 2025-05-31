@@ -1,5 +1,4 @@
 import type { VNode, CSSProperties } from "vue";
-import type { ThinkingStatus } from "../Thinking/types";
 export interface TypingOption {
   /**
    * @default 50
