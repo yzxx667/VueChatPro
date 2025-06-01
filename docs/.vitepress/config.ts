@@ -11,6 +11,7 @@ const alias = {
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  base: "/VueChatPro_Zh/",
   title: "VueChat",
   description: "A VitePress Site",
   vite: {
@@ -20,8 +21,8 @@ export default defineConfig({
   },
   markdown: {
     config(md) {
+      // 使用 componentPreview 插件，并传递 alias 作为参数
       md.use(componentPreview, { alias });
-      md.use(containerPreview, { alias });
     },
   },
   themeConfig: {
