@@ -58,7 +58,7 @@ const value = ref("");
 
 2. **全量引入**
 
-```
+```vue
 // main.ts
 import { createApp } from 'vue'
 import VueChatPro from 'vue-chat-pro'
