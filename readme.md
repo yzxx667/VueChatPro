@@ -1,4 +1,4 @@
-📱 VueChatPro
+# 📱 VueChatPro
 
 开箱即用的聊天组件库（基于 Vue3 + ElementPlus）
 
@@ -19,3 +19,64 @@ npm install vue-chat-pro
 # pnpm（推荐）
 pnpm install vue-chat-pro
 
+```
+
+## 验证安装
+
+1. 检查 `package.json` 文件是否包含：
+
+   ```json
+   {
+     "dependencies": {
+       "vue-chat-pro": "^0.0.0"
+     }
+   }
+   ```
+
+2. 运行项目验证组件是否可用：
+
+   ```bash
+   pnpm dev
+   ```
+
+## 按需加载说明
+
+内置 **Tree Shaking** 优化，无需额外配置
+
+1. **按需引入**
+
+```vue
+<script>
+import { Sender } from "vue-chat-pro";
+const value = ref("");
+</script>
+
+<template>
+  <Sender v-model="value" />
+</template>
+```
+
+2. **全量引入**
+
+```
+// main.ts
+import { createApp } from 'vue'
+import VueChatPro from 'vue-chat-pro'
+import 'vue-chat-pro/es/index.css'
+import App from './App.vue'
+
+const app = createApp(App)
+// 使用 app.use() 全局引入
+app.use(VueChatPro)
+app.mount('#app')
+```
+
+## 🤝 参与贡献
+
+我们欢迎所有形式的贡献：
+
+1. Fork 本仓库
+2. 创建 Feature 分支（建议命名为 `feature/your-feature-name`）
+3. 提交 Pull Request，附上变更说明
+
+> 如有重大改动，请先通过 issue 与我们沟通～
