@@ -1,6 +1,8 @@
 # 📱 VueChatPro
 
 开箱即用的聊天组件库（基于 Vue3 + ElementPlus）
+📚 [文档地址](https://yzxx667.github.io/VueChatPro_Zh/)
+
 
 ## 核心特性
 
@@ -59,6 +61,7 @@ const value = ref("");
 2. **全量引入**
 
 ```javascript
+// main.ts
 import { createApp } from 'vue'
 import VueChatPro from 'vue-chat-pro'
 import 'vue-chat-pro/es/index.css'
