@@ -82,3 +82,8 @@ app.mount('#app')
 3. 提交 Pull Request，附上变更说明
 
 > 如有重大改动，请先通过 issue 与我们沟通～
+
+## ⭐ Stars 历史记录
+
+[![Star History Chart](https://api.star-history.com/svg?repos=yzxx667/VueChatPro_Zh&type=Date)](https://star-history.com/#yzxx667/VueChatPro_Zh&Date)
+
