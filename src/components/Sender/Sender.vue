@@ -10,10 +10,21 @@
         <div :class="[ns.b('prefix')]" v-if="solts.prefix">
           <slot name="prefix"></slot>
         </div>
-        <el-input ref="inputRefDefault" v-model="inputValue" :placeholder="props?.placeholder"
-          :disabled="props?.disabled" autosize resize="none" type="textarea"
-          :readonly="props?.readonly || props?.loading" :class="computedInputClass" :style="{ ...props?.styles?.input }"
-          :submitType="props?.submitType" @input="handleChange" @keypress="handleKeyPress">
+        <el-input
+          ref="inputRefDefault"
+          v-model="inputValue"
+          :placeholder="props?.placeholder"
+          :disabled="props?.disabled"
+          autosize
+          resize="none"
+          type="textarea"
+          :readonly="props?.readonly || props?.loading"
+          :class="computedInputClass"
+          :style="{ ...props?.styles?.input }"
+          :submitType="props?.submitType"
+          @input="handleChange"
+          @keypress="handleKeyPress"
+        >
         </el-input>
         <div :class="[ns.b('actionsList')]" v-if="solts.actionsList">
           <slot name="actionsList"></slot>
@@ -34,10 +45,21 @@
         </div>
       </template>
       <template v-else>
-        <el-input ref="inputRefupDown" v-model="inputValue" :placeholder="props?.placeholder"
-          :disabled="props?.disabled" autosize resize="none" type="textarea"
-          :readonly="props?.readonly || props?.loading" :class="computedInputClass" :style="{ ...props?.styles?.input }"
-          :submitType="props?.submitType" @input="handleChange" @keypress="handleKeyPress">
+        <el-input
+          ref="inputRefupDown"
+          v-model="inputValue"
+          :placeholder="props?.placeholder"
+          :disabled="props?.disabled"
+          autosize
+          resize="none"
+          type="textarea"
+          :readonly="props?.readonly || props?.loading"
+          :class="computedInputClass"
+          :style="{ ...props?.styles?.input }"
+          :submitType="props?.submitType"
+          @input="handleChange"
+          @keypress="handleKeyPress"
+        >
         </el-input>
         <div class="foo">
           <div :class="[ns.b('prefix')]">
@@ -72,16 +94,15 @@
 </template>
 
 <script setup lang="ts">
-import { useClassMoudle } from '@/hooks/useClassMoudle';
-import type { SenderProps, SenderMethods } from './types';
-import { useSlots, computed, ref } from 'vue';
+import { useClassMoudle } from '@/hooks/useClassMoudle'
+import type { SenderProps, SenderMethods } from './types'
+import { useSlots, computed, ref } from 'vue'
 import StopLoading from './Loading.vue'
-const ns = useClassMoudle('sender');
+const ns = useClassMoudle('sender')
 const props = withDefaults(defineProps<SenderProps>(), {
   variants: 'default',
-  submitType: 'enter'
-});
-
+  submitType: 'enter',
+})
 
 const senderRef = ref<HTMLDivElement>()
 // 头部是否打开
@@ -94,17 +115,13 @@ const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void
   (e: 'on-input', value: string): void
   (e: 'on-submit', value: string): void
-}>();
+}>()
 
-const solts = useSlots();
+const solts = useSlots()
 // console.log(solts);
 
-
 const computedInputClass = computed(() => {
-  return [
-    ns.b('input'),
-    props?.className?.input,
-  ]
+  return [ns.b('input'), props?.className?.input]
 })
 
 const computedContainerClass = computed(() => {
@@ -113,10 +130,9 @@ const computedContainerClass = computed(() => {
     {
       [ns.b('default')]: props.variants === 'default',
       [ns.b('updown')]: props.variants === 'updown',
-    }
+    },
   ]
 })
-
 
 // 当输入框变化时触发双向绑定更新
 function onInput(value: string) {
@@ -131,10 +147,9 @@ const handleSubmit = (e: string) => {
   emit('on-submit', e)
 }
 
-
 const inputValue = computed({
   get: () => props.modelValue,
-  set: (value) => onInput(value)
+  set: (value) => onInput(value),
 })
 
 // 键盘按下事件
@@ -192,10 +207,16 @@ const handleInputClear = () => {
 
 defineExpose<SenderMethods>({
   handleHeaderClose,
-  handleHeaderOpen, handleFocusDefault, handleFocusupDown, handleFooterClose, handleFooterOpen, handleInputSubmit, handleInputClear
+  handleHeaderOpen,
+  handleFocusDefault,
+  handleFocusupDown,
+  handleFooterClose,
+  handleFooterOpen,
+  handleInputSubmit,
+  handleInputClear,
 })
 </script>
 
 <style scoped lang="scss">
-@import './style'
+@import './style';
 </style>

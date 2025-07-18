@@ -1,9 +1,9 @@
-import type { App } from "vue";
-import Thinking from "./Thinking.vue";
+import type { App } from 'vue'
+import Thinking from './Thinking.vue'
 
 Thinking.install = (app: App) => {
-  app.component("Thinking", Thinking);
-};
+  app.component('Thinking', Thinking)
+}
 
-export default Thinking;
-export * from "./types";
+export default Thinking
+export * from './types'

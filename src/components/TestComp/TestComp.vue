@@ -1,12 +1,12 @@
 <template>
-  <div style="border: 1px solid red; ">
+  <div style="border: 1px solid red">
     <!-- <Transition @before-enter="onBeforeEnter" @enter="onEnter">
       <div v-if="input" ref="headerRef" style="box-sizing: border-box;">
         <slot name="header"></slot>
       </div>
     </Transition> -->
     <Transition name="header-slide">
-      <div v-if="input" ref="headerRef" style="box-sizing: border-box;">
+      <div v-if="input" ref="headerRef" style="box-sizing: border-box">
         <slot name="header"></slot>
       </div>
     </Transition>
@@ -29,8 +29,8 @@ watch(input, async (newVal) => {
 
 // 类型修正：将HTMLDivElement改为Element
 function onBeforeEnter(el: Element) {
-  (el as HTMLElement).style.height = '0px'
-    ; (el as HTMLElement).style.opacity = '0'
+  ;(el as HTMLElement).style.height = '0px'
+  ;(el as HTMLElement).style.opacity = '0'
 }
 
 // 类型修正：将HTMLDivElement改为Element，添加done参数

@@ -11,10 +11,17 @@
           </template>
         </li>
         <ul :class="[ns.b('list')]">
-          <ConversationItem v-for="(convInfo, convIndex) in item.data" :key="convInfo.key || `key-${convIndex}`"
-            :active="mergedActiveKey === convInfo.key" :class-name="props.classNames?.item" :direction="props.direction"
-            :info="convInfo" :menu="typeof props.menu === 'function' ? props.menu(convInfo) : props.menu"
-            :style="props.styles?.item" @click="onConversationItemClick">
+          <ConversationItem
+            v-for="(convInfo, convIndex) in item.data"
+            :key="convInfo.key || `key-${convIndex}`"
+            :active="mergedActiveKey === convInfo.key"
+            :class-name="props.classNames?.item"
+            :direction="props.direction"
+            :info="convInfo"
+            :menu="typeof props.menu === 'function' ? props.menu(convInfo) : props.menu"
+            :style="props.styles?.item"
+            @click="onConversationItemClick"
+          >
             <template #label="{ item }">
               <slot :item="item" name="item" />
             </template>
@@ -25,10 +32,17 @@
         </ul>
       </template>
       <template v-else>
-        <ConversationItem v-for="(convInfo, convIndex) in item.data" :key="convInfo.key || `key-${convIndex}`"
-          :active="mergedActiveKey === convInfo.key" :class-name="props.classNames?.item" :direction="props.direction"
-          :info="convInfo" :menu="typeof props.menu === 'function' ? props.menu(convInfo) : props.menu"
-          :style="props.styles?.item" @click="onConversationItemClick">
+        <ConversationItem
+          v-for="(convInfo, convIndex) in item.data"
+          :key="convInfo.key || `key-${convIndex}`"
+          :active="mergedActiveKey === convInfo.key"
+          :class-name="props.classNames?.item"
+          :direction="props.direction"
+          :info="convInfo"
+          :menu="typeof props.menu === 'function' ? props.menu(convInfo) : props.menu"
+          :style="props.styles?.item"
+          @click="onConversationItemClick"
+        >
           <template #label="{ item }">
             <slot :item="item" name="item" />
           </template>
@@ -42,23 +56,22 @@
 </template>
 
 <script setup lang="ts">
-import { useClassMoudle } from "@/hooks/useClassMoudle";
-import { computed } from "vue";
-import type { ConversationProps } from "./types";
-import useGroupable from "./hooks/useGroupable";
-import renderVnode from "@/hooks/renderVnode";
-import ConversationItem from "./components/ConversationItem.vue";
+import { useClassMoudle } from '@/hooks/useClassMoudle'
+import { computed } from 'vue'
+import type { ConversationProps } from './types'
+import useGroupable from './hooks/useGroupable'
+import renderVnode from '@/hooks/renderVnode'
+import ConversationItem from './components/ConversationItem.vue'
 const props = defineProps<ConversationProps>()
 const emit = defineEmits(['update:activeKey'])
 const ns = useClassMoudle('conversations')
 
 const mergedActiveKey = computed(() => props.activeKey || props.defaultActiveKey || '')
 
-console.log(props.items);
+console.log(props.items)
 
 const [groupList, isGroup] = useGroupable(props.groupable, props.items)
-console.log(groupList, isGroup);
-
+console.log(groupList, isGroup)
 
 // 计算外层class
 const mergeClass = computed(() => [
@@ -66,7 +79,7 @@ const mergeClass = computed(() => [
   props.className,
   {
     [ns.b('rtl')]: props.direction === 'rtl',
-  }
+  },
 ])
 
 function onConversationItemClick(info: any) {

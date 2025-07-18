@@ -1,7 +1,7 @@
-@import "../../theme/index";
-@import "../../theme/mixin";
+@import '../../theme/index';
+@import '../../theme/mixin';
 
-$prefix: "conversations" !default;
+$prefix: 'conversations' !default;
 
 @include b(#{$prefix}-item) {
   display: flex;

@@ -1,7 +1,7 @@
-@import "../../theme/index";
-@import "../../theme/mixin";
+@import '../../theme/index';
+@import '../../theme/mixin';
 
-$prefix: "bubble" !default;
+$prefix: 'bubble' !default;
 
 @at-root {
   @include b($prefix) {
@@ -152,7 +152,7 @@ $prefix: "bubble" !default;
   }
 }
 
-[class$="-dot"] {
+[class$='-dot'] {
   position: relative;
   display: flex;
   column-gap: $margin-xs;
@@ -160,7 +160,7 @@ $prefix: "bubble" !default;
   height: 100%;
   padding: 0 $padding-xxs;
 
-  [class$="-dot-item"] {
+  [class$='-dot-item'] {
     width: 4px;
     height: 4px;
     background-color: var(--color-primary);

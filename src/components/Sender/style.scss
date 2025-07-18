@@ -1,7 +1,7 @@
-@import "../../theme/index";
-@import "../../theme/mixin";
+@import '../../theme/index';
+@import '../../theme/mixin';
 
-$prefix: "sender" !default;
+$prefix: 'sender' !default;
 :deep(.el-textarea) {
   .el-textarea__inner {
     padding: var(--padding-sm);

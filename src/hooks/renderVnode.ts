@@ -1,4 +1,4 @@
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue'
 const renderVnode = defineComponent({
   props: {
     vNode: {
@@ -7,8 +7,8 @@ const renderVnode = defineComponent({
     },
   },
   setup(props) {
-    return () => props.vNode;
+    return () => props.vNode
   },
-});
+})
 
-export default renderVnode;
+export default renderVnode

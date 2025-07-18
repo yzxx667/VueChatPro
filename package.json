@@ -13,11 +13,17 @@
     ".": {
       "types": "./dist/types/index.d.ts",
       "import": "./dist/es/vue-chat.js",
-      "require": "./dist/umd/vue-chat.umd.cjs"
+      "require": "./dist/umd/vue-chat.umd.js"
     },
     "./dist/": {
       "import": "./dist/",
       "require": "./dist/"
+    }
+  },
+  "config": {
+    "ghooks": {
+      "commit-msg": "validate-commit-msg",
+      "pre-commit": "pnpm run lint && pnpm run format"
     }
   },
   "scripts": {
@@ -33,13 +39,15 @@
     "format": "prettier --write src/",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "docs:preview": "vitepress preview docs",
+    "prepare": "husky"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
     "@vitepress-demo-preview/component": "^2.3.2",
     "@vitepress-demo-preview/plugin": "^1.4.0",
     "element-plus": "^2.9.10",
+    "ghooks": "^2.0.4",
     "highlight.js": "^11.11.1",
     "markdown-it": "^14.1.0",
     "markdown-it-container": "^4.0.0",
@@ -55,7 +63,9 @@
     "@vue/tsconfig": "^0.7.0",
     "eslint": "^9.22.0",
     "eslint-plugin-vue": "~10.0.0",
+    "husky": "^9.1.7",
     "jiti": "^2.4.2",
+    "lint-staged": "^16.1.2",
     "npm-run-all2": "^7.0.2",
     "prettier": "3.5.3",
     "sass": "^1.89.0",

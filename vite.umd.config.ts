@@ -25,6 +25,8 @@ export default defineConfig({
     rollupOptions: {
       external: ["vue"],
       output: {
+        format: "umd",
+        name: "VueChat", // 浏览器全局变量
         exports: "named",
         globals: {
           vue: "Vue",
