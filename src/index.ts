@@ -10,7 +10,7 @@ import BubbleList from './components/BubbleList/BubbleList.vue'
 import Conversation from './components/Conversation/Conversation.vue'
 import Sender from './components/Sender/Sender.vue'
 
-const a = 'ss'
+const a = 'sss'
 
 const components = [Welcome, Thinking, Bubble, BubbleList, Conversation, Sender]
 

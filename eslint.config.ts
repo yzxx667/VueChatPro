@@ -51,7 +51,7 @@ export default defineConfigWithVueTs(
     rules: {
       // Vue 相关规则
       // 警告未使用的变量
-      'vue/no-unused-vars': 'warn',
+      'vue/no-unused-vars': 'error',
       // 关闭 require-default-prop 规则，允许某些 props 没有默认值。
       'vue/require-default-prop': 'off',
       // 关闭 block-lang 规则，允许 Vue 文件中的 <template>、<script>、<style> 标签没有指定语言。
