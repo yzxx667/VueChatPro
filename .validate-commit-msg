@@ -1,0 +1,8 @@
+{
+  "types": ["feat", "fix", "docs", "style", "refactor", "perf", "test", "build", "ci", "chore", "revert"],
+  "warnOnFail": false,
+  "maxSubjectLength": 72,
+  "subjectPattern": ".+",
+  "subjectPatternErrorMsg": "subject does not match pattern: .+",
+  "helpMessage": "Commit message format: <type>(<scope>): <subject>"
+} 
