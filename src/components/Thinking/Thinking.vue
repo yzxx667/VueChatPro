@@ -1,13 +1,22 @@
 <template>
   <div :class="ns.b()">
     <div>
-      <button :class="ns.b('top')" :disabled="disabled" :style="computedTopStyle" @click="handleArrowClick">
+      <button
+        :class="ns.b('top')"
+        :disabled="disabled"
+        :style="computedTopStyle"
+        @click="handleArrowClick"
+      >
         <span :class="ns.b('icon')">
           <slot name="icon" :status="status">
             <el-icon v-if="status === 'start'" style="color: var(--start-color)">
               <Opportunity />
             </el-icon>
-            <el-icon v-else-if="status === 'thinking'" style="color: var(--thinking-color)" class="thinking-loading">
+            <el-icon
+              v-else-if="status === 'thinking'"
+              style="color: var(--thinking-color)"
+              class="thinking-loading"
+            >
               <Loading />
             </el-icon>
             <el-icon v-else-if="status === 'end'" style="color: var(--end-color)">
@@ -33,8 +42,11 @@
       </button>
     </div>
     <Transition name="thinking-content">
-      <div :class="[ns.b('content'),
-      { [ns.b('content-lb')]: lb }]" v-show="isOpen" :style="computedContentStyle">
+      <div
+        :class="[ns.b('content'), { [ns.b('content-lb')]: lb }]"
+        v-show="isOpen"
+        :style="computedContentStyle"
+      >
         <template v-if="slots.error && status === 'error'">
           <slot name="error"></slot>
         </template>
@@ -57,7 +69,7 @@ import {
   CircleCloseFilled,
   Loading,
   Opportunity,
-  SuccessFilled
+  SuccessFilled,
 } from '@element-plus/icons-vue'
 
 const ns = useClassMoudle('thinking')
@@ -72,7 +84,7 @@ const props = withDefaults(defineProps<ThinkingProps>(), {
   maxWidth: '500px',
   color: '#00',
   isBorder: false,
-  lb: true
+  lb: true,
 })
 
 const defalutLabel = computed(() => {
@@ -95,7 +107,7 @@ const isOpen = computed({
   },
   set(value) {
     emit('update:modelValue', value)
-  }
+  },
 })
 
 const handleArrowClick = () => {
@@ -138,26 +150,26 @@ const computedArrowStyle = computed(() => {
   return {
     transition: props.duration
       ? `transform ${props.duration} ease`
-      : `transform $motion-duration-slow ease`
+      : `transform $motion-duration-slow ease`,
   }
 })
 
 // 自动收起
 watch(
   () => props.status,
-  newVal => {
+  (newVal) => {
     if (props.autoCollapse && newVal === 'end') {
       isOpen.value = false
       console.log('isOpen.value', isOpen.value)
     }
-  }
+  },
 )
 
 watch(
   () => isOpen.value,
-  newVal => {
+  (newVal) => {
     console.log('Watch isOpen.value', newVal)
-  }
+  },
 )
 </script>
 

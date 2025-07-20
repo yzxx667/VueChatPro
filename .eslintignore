@@ -1,0 +1,25 @@
+# 构建输出
+dist/
+dist-ssr/
+coverage/
+
+# 依赖
+node_modules/
+
+# 缓存文件
+.vitepress/cache/
+docs/.vitepress/cache/
+
+# 测试文件
+**/*.test.js
+**/*.test.ts
+**/*.spec.js
+**/*.spec.ts
+
+# 配置文件
+vite.config.ts
+vite.es.config.ts
+vite.umd.config.ts
+
+# 文档示例文件
+docs/demo/**/*.vue 

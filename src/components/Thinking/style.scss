@@ -1,7 +1,7 @@
-@import "../../theme/index";
-@import "../../theme/mixin";
+@import '../../theme/index';
+@import '../../theme/mixin';
 
-$prefix: "thinking" !default;
+$prefix: 'thinking' !default;
 
 @include b(#{$prefix}) {
   // width: fit-content;

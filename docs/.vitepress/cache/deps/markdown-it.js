@@ -454,7 +454,7 @@ var decodeMap = /* @__PURE__ */ new Map([
   [159, 376]
 ]);
 var fromCodePoint = (
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, node/no-unsupported-features/es-builtins
+  // eslint-disable-next-line node/no-unsupported-features/es-builtins
   (_a = String.fromCodePoint) !== null && _a !== void 0 ? _a : function(codePoint) {
     let output = "";
     if (codePoint > 65535) {
@@ -858,7 +858,7 @@ var xmlCodeMap = /* @__PURE__ */ new Map([
   [62, "&gt;"]
 ]);
 var getCodePoint = (
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+   
   String.prototype.codePointAt != null ? (str, index) => str.codePointAt(index) : (
     // http://mathiasbynens.be/notes/javascript-encoding#surrogate-formulae
     (c, index) => (c.charCodeAt(index) & 64512) === 55296 ? (c.charCodeAt(index) - 55296) * 1024 + c.charCodeAt(index + 1) - 56320 + 65536 : c.charCodeAt(index)

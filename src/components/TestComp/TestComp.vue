@@ -1,12 +1,12 @@
 <template>
-  <div style="border: 1px solid red; ">
+  <div style="border: 1px solid red">
     <!-- <Transition @before-enter="onBeforeEnter" @enter="onEnter">
       <div v-if="input" ref="headerRef" style="box-sizing: border-box;">
         <slot name="header"></slot>
       </div>
     </Transition> -->
     <Transition name="header-slide">
-      <div v-if="input" ref="headerRef" style="box-sizing: border-box;">
+      <div v-if="input" ref="headerRef" style="box-sizing: border-box">
         <slot name="header"></slot>
       </div>
     </Transition>
@@ -28,26 +28,26 @@ watch(input, async (newVal) => {
 })
 
 // 类型修正：将HTMLDivElement改为Element
-function onBeforeEnter(el: Element) {
-  (el as HTMLElement).style.height = '0px'
-    ; (el as HTMLElement).style.opacity = '0'
-}
+// function onBeforeEnter(el: Element) {
+//   ; (el as HTMLElement).style.height = '0px'
+//     ; (el as HTMLElement).style.opacity = '0'
+// }
 
 // 类型修正：将HTMLDivElement改为Element，添加done参数
-function onEnter(el: Element, done?: () => void) {
-  // 使用nextTick确保渲染完成后再获取scrollHeight
-  nextTick(() => {
-    const htmlEl = el as HTMLElement
-    htmlEl.style.height = `${htmlEl.scrollHeight}px`
-    htmlEl.style.opacity = '1'
-    htmlEl.style.transition = 'all 1s'
+// function onEnter(el: Element, done?: () => void) {
+//   // 使用nextTick确保渲染完成后再获取scrollHeight
+//   nextTick(() => {
+//     const htmlEl = el as HTMLElement
+//     htmlEl.style.height = `${htmlEl.scrollHeight}px`
+//     htmlEl.style.opacity = '1'
+//     htmlEl.style.transition = 'all 1s'
 
-    if (done) {
-      // 动画完成后调用done
-      htmlEl.addEventListener('transitionend', done, { once: true })
-    }
-  })
-}
+//     if (done) {
+//       // 动画完成后调用done
+//       htmlEl.addEventListener('transitionend', done, { once: true })
+//     }
+//   })
+// }
 </script>
 
 <style scoped lang="scss">

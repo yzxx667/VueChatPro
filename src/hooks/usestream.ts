@@ -1,24 +1,24 @@
 /**
  * @description 默认分隔符 {@link splitStream}
  */
-const DEFAULT_STREAM_SEPARATOR = "\n\n";
+const DEFAULT_STREAM_SEPARATOR = '\n\n'
 /**
  * @description 默认分隔符 {@link splitPart}
  * @example "event: delta\ndata: {\"key\": \"value\"}"
  */
-const DEFAULT_PART_SEPARATOR = "\n";
+const DEFAULT_PART_SEPARATOR = '\n'
 /**
  * @description 键值的默认分隔符，冒号(`:`)用于分隔键值
  * @example "event: delta"
  */
-const DEFAULT_KV_SEPARATOR = ":";
-import { ref, shallowRef } from "vue";
-export type SSEFields = "data" | "event" | "id" | "retry";
-export type SSEOutput = Partial<Record<SSEFields, any>>;
+const DEFAULT_KV_SEPARATOR = ':'
+import { ref, shallowRef } from 'vue'
+export type SSEFields = 'data' | 'event' | 'id' | 'retry'
+export type SSEOutput = Partial<Record<SSEFields, unknown>>
 
-interface VueReadableStream<R = any> extends ReadableStream<R> {
+interface VueReadableStream<R = unknown> extends ReadableStream<R> {
   // 生成器每次 yield 的值的类型，即迭代产生的数据类型  生成器结束时返回的值的类型，即调用 return() 返回的值类型。  传入给生成器的 next(value) 方法的参数类型，即外部传入生成器的数据类型。
-  [Symbol.asyncIterator]: () => AsyncGenerator<R, void, unknown>;
+  [Symbol.asyncIterator]: () => AsyncGenerator<R, void, unknown>
 }
 
 export interface VueStreamOptions<Output> {
@@ -26,20 +26,20 @@ export interface VueStreamOptions<Output> {
    * @description 可读的二进制数据流
    * @link https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream
    */
-  readableStream: ReadableStream<Uint8Array>;
+  readableStream: ReadableStream<Uint8Array>
 
   /**
    * @description 支持可定制的transformStream来转换流
    * @default sseTransformStream
    * @link https://developer.mozilla.org/en-US/docs/Web/API/TransformStream
    */
-  transformStream?: TransformStream<string, Output>;
+  transformStream?: TransformStream<string, Output>
 }
-const isValidString = (str: string) => (str ?? "").trim() !== "";
+const isValidString = (str: string) => (str ?? '').trim() !== ''
 
 function splitStream() {
   // 在转换之间存储不完整数据块的缓冲区
-  let buffer = "";
+  let buffer = ''
 
   return new TransformStream<string, string>({
     /**
@@ -60,33 +60,31 @@ function splitStream() {
      */
 
     transform(streamChunk, controller) {
-      // console.log("streamChunk", streamChunk);
-      // console.log("controller", controller);
-      buffer += streamChunk;
-      console.log("buffer", buffer);
+      buffer += streamChunk
+      console.log('buffer', buffer)
 
       // 根据分隔符拆分缓冲区
-      const parts = buffer.split(DEFAULT_STREAM_SEPARATOR);
-      console.log("parts", parts);
+      const parts = buffer.split(DEFAULT_STREAM_SEPARATOR)
+      console.log('parts', parts)
 
       // 将除最后一个不完整部分之外的所有完整部分排入队列
       parts.slice(0, -1).forEach((part) => {
         // 跳过空字符串
         if (isValidString(part)) {
-          controller.enqueue(part);
+          controller.enqueue(part)
         }
-      });
+      })
 
       // 将最后一个未完成的部分保存回缓冲区，用于下一个块
-      buffer = parts[parts.length - 1] as string;
+      buffer = parts[parts.length - 1] as string
     },
     flush(controller) {
       // 如果缓冲区中还有剩余数据，将其作为最后一部分排队
       if (isValidString(buffer)) {
-        controller.enqueue(buffer);
+        controller.enqueue(buffer)
       }
     },
-  });
+  })
 }
 
 /**
@@ -105,99 +103,95 @@ function splitPart() {
   return new TransformStream<string, SSEOutput>({
     transform(partChunk, controller) {
       // 使用partSeparator将块分割成键值对
-      const lines = partChunk.split(DEFAULT_PART_SEPARATOR);
+      const lines = partChunk.split(DEFAULT_PART_SEPARATOR)
 
       const sseEvent = lines.reduce<SSEOutput>((acc, line) => {
-        const separatorIndex = line.indexOf(DEFAULT_KV_SEPARATOR);
+        const separatorIndex = line.indexOf(DEFAULT_KV_SEPARATOR)
 
         if (separatorIndex === -1) {
-          throw new Error(
-            `键值分隔符 "${DEFAULT_KV_SEPARATOR}" 在sse行块中找不到!`
-          );
+          throw new Error(`键值分隔符 "${DEFAULT_KV_SEPARATOR}" 在sse行块中找不到!`)
         }
 
         // 提取从行首到分隔符的密钥
-        const key = line.slice(0, separatorIndex);
+        const key = line.slice(0, separatorIndex)
 
         // 冒号用于注释行，直接跳过
-        if (!isValidString(key)) return acc;
+        if (!isValidString(key)) return acc
 
         // 从分隔符后的行中提取值
-        const value = line.slice(separatorIndex + 1);
+        const value = line.slice(separatorIndex + 1)
 
-        return { ...acc, [key]: value };
-      }, {});
+        return { ...acc, [key]: value }
+      }, {})
 
-      if (Object.keys(sseEvent).length === 0) return;
+      if (Object.keys(sseEvent).length === 0) return
 
       // 将键-值对减少到单个对象中并排队
-      controller.enqueue(sseEvent);
+      controller.enqueue(sseEvent)
     },
-  });
+  })
 }
 
 export function useStream() {
-  const data = ref<SSEOutput[]>([]);
-  const error = ref<Error | null>(null);
-  const isLoading = ref<boolean>(false);
-  const abortController = shallowRef<AbortController | null>(null);
-  const stream = shallowRef<VueReadableStream<SSEOutput> | null>(null);
+  const data = ref<SSEOutput[]>([])
+  const error = ref<Error | null>(null)
+  const isLoading = ref<boolean>(false)
+  const abortController = shallowRef<AbortController | null>(null)
+  const stream = shallowRef<VueReadableStream<SSEOutput> | null>(null)
 
-  const startStream = async <Output = SSEOutput>(
-    options: VueStreamOptions<Output>
-  ) => {
-    const { readableStream } = options;
-    isLoading.value = true;
-    error.value = null;
-    data.value = [];
-    abortController.value = new AbortController();
+  const startStream = async <Output = SSEOutput>(options: VueStreamOptions<Output>) => {
+    const { readableStream } = options
+    isLoading.value = true
+    error.value = null
+    data.value = []
+    abortController.value = new AbortController()
 
     // 每次调用时创建新的 decoderStream
-    const decoderStream = new TextDecoderStream();
+    const decoderStream = new TextDecoderStream()
 
     stream.value = readableStream
       .pipeThrough(decoderStream)
       .pipeThrough(splitStream())
-      .pipeThrough(splitPart()) as VueReadableStream<SSEOutput>;
+      .pipeThrough(splitPart()) as VueReadableStream<SSEOutput>
 
     /** support async iterator */
     stream.value[Symbol.asyncIterator] = async function* () {
-      const reader = this.getReader();
+      const reader = this.getReader()
 
       while (true) {
         if (abortController.value!.signal?.aborted) {
-          await reader.cancel(); // 主动取消 reader
-          break;
+          await reader.cancel() // 主动取消 reader
+          break
         }
-        const { done, value } = await reader.read();
+        const { done, value } = await reader.read()
 
-        if (done) break;
+        if (done) break
 
-        if (value) yield value;
+        if (value) yield value
       }
-    };
+    }
 
     try {
       for await (const item of stream.value!) {
-        data.value.push(item);
+        data.value.push(item)
       }
     } catch (err) {
       if (err instanceof Error) {
-        error.value = err;
+        error.value = err
       }
     } finally {
-      isLoading.value = false;
-      stream.value = null; // 释放流引用
-      abortController.value = null; // 释放控制器
+      isLoading.value = false
+      stream.value = null // 释放流引用
+      abortController.value = null // 释放控制器
     }
-  };
+  }
 
   // 中断流式请求（强制关闭流）
   const cancel = () => {
     if (abortController.value) {
-      abortController.value.abort();
+      abortController.value.abort()
     }
-  };
+  }
 
   return {
     startStream,
@@ -205,5 +199,5 @@ export function useStream() {
     data,
     error,
     isLoading,
-  };
+  }
 }

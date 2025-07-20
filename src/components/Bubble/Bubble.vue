@@ -1,24 +1,35 @@
 <template>
   <div ref="divRef" :class="[ns.b(), ns.b(placement)]">
-    <div v-if="avatar || slots.avatar" :class="[ns.b('avatar'), props.className?.avatar]" :style="props.styles?.avatar">
+    <div
+      v-if="avatar || slots.avatar"
+      :class="[ns.b('avatar'), props.className?.avatar]"
+      :style="props.styles?.avatar"
+    >
       <slot name="avatar">
         <el-avatar :size="32" :src="avatar" v-if="typeof avatar === 'string'" />
         <component :is="avatar" v-else />
       </slot>
     </div>
     <div v-if="slots.header || slots.footer" :class="[ns.b('content-wrapper')]">
-      <div v-if="slots.header" :class="[ns.b('header'), props.className?.header]" :style="props.styles?.header">
+      <div
+        v-if="slots.header"
+        :class="[ns.b('header'), props.className?.header]"
+        :style="props.styles?.header"
+      >
         <slot name="header"></slot>
       </div>
-      <div :class="[
-        ns.b('content'),
-        ns.b(`content-${props.variant}`),
-        props.className?.content,
-        props.shape && ns.b(`content-${props.placement}-${props.shape}`),
-        {
-          [ns.b('content-filled-transparent')]: props.transparent
-        }
-      ]" :style="props.styles?.content">
+      <div
+        :class="[
+          ns.b('content'),
+          ns.b(`content-${props.variant}`),
+          props.className?.content,
+          props.shape && ns.b(`content-${props.placement}-${props.shape}`),
+          {
+            [ns.b('content-filled-transparent')]: props.transparent,
+          },
+        ]"
+        :style="props.styles?.content"
+      >
         <template v-if="props.loading">
           <slot v-if="slots.loading" name="loading" />
           <component :is="loadingRender()" v-else-if="loadingRender" />
@@ -35,20 +46,27 @@
           </template>
         </template>
       </div>
-      <div v-if="slots.footer" :class="[ns.b('footer'), props.className?.footer]" :style="props.styles?.footer">
+      <div
+        v-if="slots.footer"
+        :class="[ns.b('footer'), props.className?.footer]"
+        :style="props.styles?.footer"
+      >
         <slot name="footer"></slot>
       </div>
     </div>
     <template v-else>
-      <div :class="[
-        ns.b('content'),
-        ns.b(`content-${props.variant}`),
-        props.className?.content,
-        props.shape && ns.b(`content-${props.placement}-${props.shape}`),
-        {
-          [ns.b('content-filled-transparent')]: props.transparent
-        }
-      ]" :style="props.styles?.content">
+      <div
+        :class="[
+          ns.b('content'),
+          ns.b(`content-${props.variant}`),
+          props.className?.content,
+          props.shape && ns.b(`content-${props.placement}-${props.shape}`),
+          {
+            [ns.b('content-filled-transparent')]: props.transparent,
+          },
+        ]"
+        :style="props.styles?.content"
+      >
         <template v-if="props.loading">
           <slot v-if="slots.loading" name="loading" />
           <component :is="loadingRender()" v-else-if="loadingRender" />
@@ -65,7 +83,11 @@
           </template>
         </template>
       </div>
-      <div v-if="slots.footer" :class="[ns.b('footer'), props.className?.footer]" :style="props.styles?.footer">
+      <div
+        v-if="slots.footer"
+        :class="[ns.b('footer'), props.className?.footer]"
+        :style="props.styles?.footer"
+      >
         <slot name="footer"></slot>
       </div>
     </template>
@@ -83,7 +105,7 @@ import { useClassMoudle } from '@/hooks/useClassMoudle'
 import Loading from './components/Loading.vue'
 
 defineOptions({
-  inheritAttrs: false
+  inheritAttrs: false,
 })
 
 const props = withDefaults(defineProps<BubbleProps>(), {
@@ -94,7 +116,7 @@ const props = withDefaults(defineProps<BubbleProps>(), {
   content: '',
   avatar: '',
   typing: false,
-  transparent: false
+  transparent: false,
 })
 console.log('bubble props', props)
 
@@ -116,7 +138,7 @@ const [typedContent, isTyping] = useTypedEffect2(
   contents as Ref<string>,
   typingEnabled as boolean,
   step as number,
-  interval as number
+  interval as number,
 )
 
 console.log('typedContent.value', typedContent.value)
@@ -124,14 +146,12 @@ console.log('typedContent.value', typedContent.value)
 const mergeContent = computed(() =>
   props.messageRender
     ? props.messageRender((typedContent.value as () => string)?.() ?? '')
-    : typedContent.value
+    : typedContent.value,
 )
-
 
 function isString(content: unknown) {
   return typeof content === 'string'
 }
-
 
 const triggerTypingCompleteRef = ref(false)
 watch(
@@ -145,19 +165,17 @@ watch(
     } else {
       triggerTypingCompleteRef.value = false
     }
-  }
+  },
 )
-
 
 // 内容更新触发的回调
 watch(
   () => typedContent.value(),
-  () => emit('onUpdate')
+  () => emit('onUpdate'),
 )
 
-
 defineExpose({
-  nativeElement: divRef
+  nativeElement: divRef,
 })
 </script>
 

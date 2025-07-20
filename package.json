@@ -13,7 +13,7 @@
     ".": {
       "types": "./dist/types/index.d.ts",
       "import": "./dist/es/vue-chat.js",
-      "require": "./dist/umd/vue-chat.umd.cjs"
+      "require": "./dist/umd/vue-chat.umd.js"
     },
     "./dist/": {
       "import": "./dist/",
@@ -33,7 +33,8 @@
     "format": "prettier --write src/",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "docs:preview": "vitepress preview docs",
+    "prepare": "husky"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
@@ -55,11 +56,12 @@
     "@vue/tsconfig": "^0.7.0",
     "eslint": "^9.22.0",
     "eslint-plugin-vue": "~10.0.0",
-    "jiti": "^2.4.2",
+    "husky": "^9.1.7",
     "npm-run-all2": "^7.0.2",
     "prettier": "3.5.3",
     "sass": "^1.89.0",
     "typescript": "~5.8.0",
+    "validate-commit-msg": "^2.14.0",
     "vite": "^6.2.4",
     "vite-plugin-dts": "^4.5.4",
     "vite-plugin-vue-devtools": "^7.7.2",
