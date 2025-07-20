@@ -62,7 +62,7 @@ export default defineConfigWithVueTs(
       // TypeScript 相关规则
       // 警告未使用的变量
       '@typescript-eslint/no-unused-vars': [
-        'warn',
+        'error',
         {
           argsIgnorePattern: '^_',
           varsIgnorePattern: '^_',
