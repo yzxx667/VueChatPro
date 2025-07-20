@@ -1,19 +1,16 @@
-import { defineConfig } from "vitepress";
-import {
-  containerPreview,
-  componentPreview,
-} from "@vitepress-demo-preview/plugin";
-import { fileURLToPath, URL } from "node:url";
+import { defineConfig } from 'vitepress'
+import { componentPreview } from '@vitepress-demo-preview/plugin'
+import { fileURLToPath, URL } from 'node:url'
 
 const alias = {
-  "@": fileURLToPath(new URL("../../src", import.meta.url)),
-};
+  '@': fileURLToPath(new URL('../../src', import.meta.url)),
+}
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  base: "/VueChatPro_Zh/",
-  title: "VueChat",
-  description: "A VitePress Site",
+  base: '/VueChatPro_Zh/',
+  title: 'VueChat',
+  description: 'A VitePress Site',
   vite: {
     resolve: {
       alias,
@@ -22,76 +19,74 @@ export default defineConfig({
   markdown: {
     config(md) {
       // 使用 componentPreview 插件，并传递 alias 作为参数
-      md.use(componentPreview, { alias });
+      md.use(componentPreview, { alias })
     },
   },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    logo: "https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*s5sNRo5LjfQAAAAAAAAAAAAADgCCAQ/fmt.webp",
+    logo: 'https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*s5sNRo5LjfQAAAAAAAAAAAAADgCCAQ/fmt.webp',
     nav: [
-      { text: "指南", link: "/guide/install" },
-      { text: "组件", link: "/components/overview" },
+      { text: '指南', link: '/guide/install' },
+      { text: '组件', link: '/components/overview' },
       {
-        text: "更多",
+        text: '更多',
         items: [
           {
-            text: "Ant Design X of React",
-            link: "https://x.ant.design/index-cn",
+            text: 'Ant Design X of React',
+            link: 'https://x.ant.design/index-cn',
           },
           {
-            text: "Ant Design X of Vue",
-            link: "https://antd-design-x-vue.netlify.app",
+            text: 'Ant Design X of Vue',
+            link: 'https://antd-design-x-vue.netlify.app',
           },
         ],
       },
     ],
 
     sidebar: {
-      "/components/": [
+      '/components/': [
         {
-          text: "总览",
-          link: "/components/overview",
+          text: '总览',
+          link: '/components/overview',
         },
         {
-          text: "唤醒",
-          items: [{ text: "Welcome 欢迎 👏🏻", link: "/components/welcome" }],
+          text: '唤醒',
+          items: [{ text: 'Welcome 欢迎 👏🏻', link: '/components/welcome' }],
         },
         {
-          text: "通用",
+          text: '通用',
           items: [
-            { text: "Bubble 对话 💬", link: "/components/bubble" },
-            { text: "BubbleList 对话列表 ☄️", link: "/components/bubbleList" },
+            { text: 'Bubble 对话 💬', link: '/components/bubble' },
+            { text: 'BubbleList 对话列表 ☄️', link: '/components/bubbleList' },
             {
-              text: "Conversation 管理对话 📱",
-              link: "/components/conversation",
+              text: 'Conversation 管理对话 📱',
+              link: '/components/conversation',
             },
           ],
         },
         {
-          text: "表达",
-          items: [{ text: "Sender 输入框 💭", link: "/components/sender" }],
+          text: '表达',
+          items: [{ text: 'Sender 输入框 💭', link: '/components/sender' }],
         },
         {
-          text: "思考",
-          items: [{ text: "Thinking 思考 🤔", link: "/components/Thinking" }],
+          text: '思考',
+          items: [{ text: 'Thinking 思考 🤔', link: '/components/Thinking' }],
         },
         {
-          text: "Hooks",
+          text: 'Hooks',
           items: [
-            { text: "useAudio 语音识别 🎤", link: "/components/useAudio" },
-            { text: "useStream 流式请求 🌐", link: "/components/useStream" },
+            { text: 'useAudio 语音识别 🎤', link: '/components/useAudio' },
+            { text: 'useStream 流式请求 🌐', link: '/components/useStream' },
           ],
         },
       ],
-      "/guide/": [
+      '/guide/': [
         {
-          text: "安装",
-          link: "/guide/install",
+          text: '安装',
+          link: '/guide/install',
         },
       ],
     },
-    socialLinks: [
-      { icon: "github", link: "https://github.com/yzxx667/Vue3_Chat" },
-    ],
+    socialLinks: [{ icon: 'github', link: 'https://github.com/yzxx667/Vue3_Chat' }],
   },
-});
+})

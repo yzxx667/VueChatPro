@@ -14,9 +14,9 @@ const DEFAULT_PART_SEPARATOR = '\n'
 const DEFAULT_KV_SEPARATOR = ':'
 import { ref, shallowRef } from 'vue'
 export type SSEFields = 'data' | 'event' | 'id' | 'retry'
-export type SSEOutput = Partial<Record<SSEFields, any>>
+export type SSEOutput = Partial<Record<SSEFields, unknown>>
 
-interface VueReadableStream<R = any> extends ReadableStream<R> {
+interface VueReadableStream<R = unknown> extends ReadableStream<R> {
   // 生成器每次 yield 的值的类型，即迭代产生的数据类型  生成器结束时返回的值的类型，即调用 return() 返回的值类型。  传入给生成器的 next(value) 方法的参数类型，即外部传入生成器的数据类型。
   [Symbol.asyncIterator]: () => AsyncGenerator<R, void, unknown>
 }

@@ -4,7 +4,7 @@ import type { BubbleProps } from '../Bubble/types'
 export type BubbleDataType = {
   key: number | string
   role?: string
-  [key: string]: any
+  [key: string]: unknown
 } & BubbleProps
 
 export type RoleType = Partial<Omit<BubbleProps, 'content'>>

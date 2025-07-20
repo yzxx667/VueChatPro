@@ -82,7 +82,7 @@ const mergeClass = computed(() => [
   },
 ])
 
-function onConversationItemClick(info: any) {
+function onConversationItemClick(info: unknown) {
   if (props.onActiveChange) {
     const next = props.onActiveChange(info.key)
     if (next === false) return

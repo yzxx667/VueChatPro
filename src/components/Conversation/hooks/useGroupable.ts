@@ -54,7 +54,9 @@ export default function useGroupable(
 
     const groupKeys =
       groupWatch.value[1] && typeof groupWatch.value[1] !== 'boolean'
-        ? Object.keys(groupMap).sort(groupWatch.value[1] as any)
+        ? Object.keys(groupMap).sort(
+            groupWatch.value[1] as unknown as (a: string, b: string) => number,
+          )
         : Object.keys(groupMap)
 
     const groupListFinal: GroupList = groupKeys.map((item) => ({

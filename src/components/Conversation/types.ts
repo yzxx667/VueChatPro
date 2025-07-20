@@ -31,7 +31,7 @@ export interface ItemProps {
 export interface GroupTitleRenderComponents {
   components: {
     // GroupTitleProps
-    GroupTitle: Component<any>
+    GroupTitle: Component<unknown>
   }
 }
 
