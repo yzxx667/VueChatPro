@@ -68,5 +68,10 @@
     "vitepress": "^1.6.3",
     "vue-chat-pro": "0.0.0",
     "vue-tsc": "^2.2.8"
+  },
+  "peerDependencies": {
+    "vue": "^3.2.0",
+    "element-plus": "^2.0.0",
+    "@element-plus/icons-vue": "^2.0.0"
   }
 }
