@@ -61,11 +61,11 @@ function splitStream() {
 
     transform(streamChunk, controller) {
       buffer += streamChunk
-      console.log('bufferFirst', buffer)
+      // console.log('bufferFirst', buffer)
 
       // 根据分隔符拆分缓冲区
       const parts = buffer.split(DEFAULT_STREAM_SEPARATOR)
-      console.log('parts', parts)
+      // console.log('parts', parts)
 
       // 将除最后一个不完整部分之外的所有完整部分排入队列
       parts.slice(0, -1).forEach((part) => {
@@ -108,7 +108,7 @@ function splitPart() {
     transform(partChunk, controller) {
       // 使用partSeparator将块分割成键值对
       const lines = partChunk.split(DEFAULT_PART_SEPARATOR)
-      console.log('lines', lines)
+      // console.log('lines', lines)
 
       const sseEvent = lines.reduce<SSEOutput>((acc, line) => {
         const separatorIndex = line.indexOf(DEFAULT_KV_SEPARATOR)
@@ -125,14 +125,15 @@ function splitPart() {
 
         // 从分隔符后的行中提取值
         const value = line.slice(separatorIndex + 1)
-        // console.log('value', value)
-        // console.log({ ...acc, [key]: value })
+        // console.log('acc', acc)
+        // console.log('key', { [key]: value })
+        // console.log('sseEvent', { ...acc, [key]: value })
 
         return { ...acc, [key]: value }
       }, {})
 
       if (Object.keys(sseEvent).length === 0) return
-      console.log('sseEvent', sseEvent)
+      // console.log('sseEvent', sseEvent)
       // 将键-值对减少到单个对象中并排队
       controller.enqueue(sseEvent)
     },
@@ -161,7 +162,7 @@ export function useStream() {
       .pipeThrough(splitStream())
       .pipeThrough(splitPart()) as VueReadableStream<SSEOutput>
 
-    console.log('stream', stream.value)
+    // console.log('stream', stream.value)
 
     const reader = stream.value.getReader()
 

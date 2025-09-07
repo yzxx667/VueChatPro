@@ -34,7 +34,7 @@ const isShow = ref<boolean>(true)
 const status = ref<ThinkingStatus>('start')
 const { startStream, cancel, data } = useStream()
 const handleChange = (value: boolean, status: ThinkingStatus) => {
-  console.log('handleChange', value, status)
+  // console.log('handleChange', value, status)
 }
 
 const computedStyles = {
@@ -79,8 +79,8 @@ async function callOpenAI() {
       },
       {
         role: 'user',
-        // content: '男子100米世界最好的成绩是多少？回答我一个成绩就好（多少s多少ms）',
-        content: '男子100米世界最好的成绩是多少？',
+        content: '男子100米世界最好的成绩是多少？回答我一个成绩就好（多少s多少ms）',
+        // content: '男子100米世界最好的成绩是多少？',
       },
       // { role: 'user', content: '帮我用js写一个1-100的和的function' },
     ],
@@ -101,9 +101,9 @@ async function callOpenAI() {
     startStream({
       readableStream: response.body!,
     })
-    console.log('data的值为', data.value)
+    // console.log('data的值为', data.value)
   } catch (error) {
-    console.error('❌ 出错了：', error)
+    // console.error('❌ 出错了：', error)
   }
 }
 
@@ -116,7 +116,7 @@ const content = computed(() => {
 
     try {
       const parsedChunk = JSON.parse(chunk).choices[0].delta
-      console.log('parsedChunk', parsedChunk)
+      // console.log('parsedChunk', parsedChunk)
 
       // 优先处理 reasoning_content
       if (parsedChunk.reasoning_content !== null) {
@@ -136,7 +136,7 @@ const content = computed(() => {
         // 处理数据结束的情况
         // console.log('数据接收完毕')
       } else {
-        console.error('解析数据时出错:', error)
+        // console.error('解析数据时出错:', error)
       }
     }
   }
