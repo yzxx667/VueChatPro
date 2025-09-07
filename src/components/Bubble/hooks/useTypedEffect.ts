@@ -1,7 +1,7 @@
 import type { Ref, VNode } from 'vue'
 import { computed, ref, watch, watchEffect } from 'vue'
 
-function isString(str: any): str is string {
+function isString(str: unknown): str is string {
   return typeof str === 'string'
 }
 

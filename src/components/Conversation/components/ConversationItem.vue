@@ -1,6 +1,10 @@
 <template>
-  <el-tooltip v-model:visible="opened" :content="info?.label" :disabled="inEllipsis && !opened"
-    :placement="direction === 'ltr' ? 'left' : 'right'">
+  <el-tooltip
+    v-model:visible="opened"
+    :content="info?.label"
+    :disabled="inEllipsis && !opened"
+    :placement="direction === 'ltr' ? 'left' : 'right'"
+  >
     <li :class="mergedCls" @click="onInternalClick">
       <slot name="icon" class="icon">
         <div v-if="info!.icon" :class="ns.b('icon')">
@@ -10,15 +14,27 @@
           <component v-else :is="info!.icon" />
         </div>
       </slot>
-      <div ref="textRef" :class="ns.b('label')" :style="{ 'textOverflow': 'ellipsis', '-webkit-line-clamp': line }"
-        @mouseenter="textRefMouseenter">
+      <div
+        ref="textRef"
+        :class="ns.b('label')"
+        :style="{
+          textOverflow: 'ellipsis',
+          '-webkit-line-clamp': line,
+        }"
+        @mouseenter="textRefMouseenter"
+      >
         <slot name="label" :item="info">
           {{ info!.label }}
         </slot>
       </div>
-      <Dropdown :disabled="info?.disabled" v-if="menu && !info?.disabled"
-        :menu="Array.isArray(menu) ? menu : menu.items" :placement="direction === 'rtl' ? 'bottom-start' : 'bottom-end'"
-        trigger="click" @command="handleCommand">
+      <Dropdown
+        :disabled="info?.disabled"
+        v-if="menu && !info?.disabled"
+        :menu="Array.isArray(menu) ? menu : menu.items"
+        :placement="direction === 'rtl' ? 'bottom-start' : 'bottom-end'"
+        trigger="click"
+        @command="handleCommand"
+      >
         <ElButton :disabled="info?.disabled" link @click="stopPropagation">
           <ElIcon :class="ns.b('menu-icon')">
             <!-- <MoreFilled /> -->
@@ -31,10 +47,10 @@
 </template>
 
 <script setup lang="ts">
-import { useClassMoudle } from '@/hooks/useClassMoudle';
-import type { ItemProps } from '../types';
-import { ref, computed } from 'vue';
-import Dropdown from './Dropdown.vue';
+import { useClassMoudle } from '@/hooks/useClassMoudle'
+import type { ItemProps } from '../types'
+import { ref, computed } from 'vue'
+import Dropdown from './Dropdown.vue'
 const props = withDefaults(defineProps<ItemProps>(), {
   inEllipsis: true,
   line: 1,
@@ -47,8 +63,12 @@ const opened = ref(false)
 const mergedCls = computed(() => [
   props.className,
   ns.b('item'),
-  { [ns.b('item-active')]: props.active && !props.info?.disabled },
-  { [ns.b('item-disabled')]: props.info?.disabled },
+  {
+    [ns.b('item-active')]: props.active && !props.info?.disabled,
+  },
+  {
+    [ns.b('item-disabled')]: props.info?.disabled,
+  },
 ])
 
 // 点击 item
@@ -66,7 +86,10 @@ const textRefMouseenter = () => {
   }
   if (!textRef.value) return
   // !!(...) 用于将结果转成布尔值（true/false）。
-  opened.value = Boolean(textRef.value?.scrollWidth > textRef.value?.offsetWidth || textRef.value?.scrollHeight > textRef.value?.offsetHeight)
+  opened.value = Boolean(
+    textRef.value?.scrollWidth > textRef.value?.offsetWidth ||
+      textRef.value?.scrollHeight > textRef.value?.offsetHeight,
+  )
 }
 
 // menu 菜单点击

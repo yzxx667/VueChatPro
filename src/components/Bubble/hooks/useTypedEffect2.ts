@@ -8,8 +8,8 @@ const useTypedEffect2 = (
   step: number,
   interval: number,
 ) => {
-  let prevContent = ref<string>('')
-  let currentIndex = ref<number>(1)
+  const prevContent = ref<string>('')
+  const currentIndex = ref<number>(1)
 
   const mergeEnable = ref(typeEnable && isString(contents.value))
 

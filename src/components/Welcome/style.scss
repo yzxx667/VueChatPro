@@ -1,7 +1,7 @@
-@import "../../theme/index";
-@import "../../theme/mixin";
+@import '../../theme/index';
+@import '../../theme/mixin';
 
-$prefix: "welcome" !default;
+$prefix: 'welcome' !default;
 
 @include b($prefix) {
   $component-prefix: &;

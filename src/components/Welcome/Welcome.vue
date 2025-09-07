@@ -34,13 +34,20 @@ const mergedCls = computed(() => [
     <!-- 右侧内容区域 -->
     <div :class="ns.b('content-wrapper')">
       <!-- 标题区域 -->
-      <div v-if="$slots.title || title" :class="[ns.b('title'), classNames?.title, ($slots.extra || extra) && 'extra']"
-        :style="styles?.title">
+      <div
+        v-if="$slots.title || title"
+        :class="[ns.b('title'), classNames?.title, ($slots.extra || extra) && 'extra']"
+        :style="styles?.title"
+      >
         <slot name="title">
           <h4>{{ title }}</h4>
         </slot>
         <!-- 右上角操作区域 -->
-        <div v-if="$slots.extra || extra" :class="[ns.b('extra'), classNames?.extra]" :style="styles?.extra">
+        <div
+          v-if="$slots.extra || extra"
+          :class="[ns.b('extra'), classNames?.extra]"
+          :style="styles?.extra"
+        >
           <slot name="extra">
             {{ extra }}
           </slot>
