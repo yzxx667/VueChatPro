@@ -61,11 +61,11 @@ function splitStream() {
 
     transform(streamChunk, controller) {
       buffer += streamChunk
-      console.log('buffer', buffer)
+      // console.log('bufferFirst', buffer)
 
       // 根据分隔符拆分缓冲区
       const parts = buffer.split(DEFAULT_STREAM_SEPARATOR)
-      console.log('parts', parts)
+      // console.log('parts', parts)
 
       // 将除最后一个不完整部分之外的所有完整部分排入队列
       parts.slice(0, -1).forEach((part) => {
@@ -77,9 +77,13 @@ function splitStream() {
 
       // 将最后一个未完成的部分保存回缓冲区，用于下一个块
       buffer = parts[parts.length - 1] as string
+      // console.log('bufferLast', buffer)
     },
+    // 流结束时触发
     flush(controller) {
       // 如果缓冲区中还有剩余数据，将其作为最后一部分排队
+      // console.log('flush')
+      // console.log('buffer', buffer)
       if (isValidString(buffer)) {
         controller.enqueue(buffer)
       }
@@ -104,6 +108,7 @@ function splitPart() {
     transform(partChunk, controller) {
       // 使用partSeparator将块分割成键值对
       const lines = partChunk.split(DEFAULT_PART_SEPARATOR)
+      // console.log('lines', lines)
 
       const sseEvent = lines.reduce<SSEOutput>((acc, line) => {
         const separatorIndex = line.indexOf(DEFAULT_KV_SEPARATOR)
@@ -114,18 +119,21 @@ function splitPart() {
 
         // 提取从行首到分隔符的密钥
         const key = line.slice(0, separatorIndex)
-
+        // console.log('key', key)
         // 冒号用于注释行，直接跳过
         if (!isValidString(key)) return acc
 
         // 从分隔符后的行中提取值
         const value = line.slice(separatorIndex + 1)
+        // console.log('acc', acc)
+        // console.log('key', { [key]: value })
+        // console.log('sseEvent', { ...acc, [key]: value })
 
         return { ...acc, [key]: value }
       }, {})
 
       if (Object.keys(sseEvent).length === 0) return
-
+      // console.log('sseEvent', sseEvent)
       // 将键-值对减少到单个对象中并排队
       controller.enqueue(sseEvent)
     },
@@ -154,36 +162,56 @@ export function useStream() {
       .pipeThrough(splitStream())
       .pipeThrough(splitPart()) as VueReadableStream<SSEOutput>
 
-    /** support async iterator */
-    stream.value[Symbol.asyncIterator] = async function* () {
-      const reader = this.getReader()
+    // console.log('stream', stream.value)
 
+    const reader = stream.value.getReader()
+
+    if (stream.value) {
       while (true) {
         if (abortController.value!.signal?.aborted) {
           await reader.cancel() // 主动取消 reader
           break
         }
         const { done, value } = await reader.read()
-
+        if (value) data.value.push(value)
         if (done) break
-
-        if (value) yield value
       }
     }
 
-    try {
-      for await (const item of stream.value!) {
-        data.value.push(item)
-      }
-    } catch (err) {
-      if (err instanceof Error) {
-        error.value = err
-      }
-    } finally {
-      isLoading.value = false
-      stream.value = null // 释放流引用
-      abortController.value = null // 释放控制器
-    }
+    isLoading.value = false
+    stream.value = null // 释放流引用
+    abortController.value = null // 释放控制器
+
+    /** support async iterator */
+    // stream.value[Symbol.asyncIterator] = async function* () {
+    //   const reader = this.getReader()
+
+    //   while (true) {
+    // if (abortController.value!.signal?.aborted) {
+    //   await reader.cancel() // 主动取消 reader
+    //   break
+    // }
+    //     const { done, value } = await reader.read()
+    //     console.log('value', value)
+    //     if (done) break
+
+    //     if (value) yield value
+    //   }
+    // }
+
+    // try {
+    //   for await (const item of stream.value!) {
+    //     data.value.push(item)
+    //   }
+    // } catch (err) {
+    //   if (err instanceof Error) {
+    //     error.value = err
+    //   }
+    // } finally {
+    //   isLoading.value = false
+    //   stream.value = null // 释放流引用
+    //   abortController.value = null // 释放控制器
+    // }
   }
 
   // 中断流式请求（强制关闭流）
