@@ -1,6 +1,6 @@
 {
   "name": "vue-chat",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": false,
   "type": "module",
   "files": [
@@ -18,6 +18,38 @@
     "./dist/": {
       "import": "./dist/",
       "require": "./dist/"
+    },
+    "./Bubble": {
+      "types": "./dist/types/components/Bubble/index.d.ts",
+      "import": "./dist/es/components/Bubble/index.js"
+    },
+    "./BubbleList": {
+      "types": "./dist/types/components/BubbleList/index.d.ts",
+      "import": "./dist/es/components/BubbleList/index.js"
+    },
+    "./Conversation": {
+      "types": "./dist/types/components/Conversation/index.d.ts",
+      "import": "./dist/es/components/Conversation/index.js"
+    },
+    "./Sender": {
+      "types": "./dist/types/components/Sender/index.d.ts",
+      "import": "./dist/es/components/Sender/index.js"
+    },
+    "./Thinking": {
+      "types": "./dist/types/components/Thinking/index.d.ts",
+      "import": "./dist/es/components/Thinking/index.js"
+    },
+    "./Welcome": {
+      "types": "./dist/types/components/Welcome/index.d.ts",
+      "import": "./dist/es/components/Welcome/index.js"
+    },
+    "./useAudio": {
+      "types": "./dist/types/hooks/useAudio.d.ts",
+      "import": "./dist/es/hooks/useAudio.js"
+    },
+    "./useStream": {
+      "types": "./dist/types/hooks/useStream.d.ts",
+      "import": "./dist/es/hooks/useStream.js"
     }
   },
   "scripts": {
@@ -64,9 +96,12 @@
     "prettier": "3.5.3",
     "sass": "^1.89.0",
     "typescript": "~5.8.0",
+    "unplugin-auto-import": "^20.1.0",
+    "unplugin-vue-components": "^29.0.0",
     "validate-commit-msg": "^2.14.0",
     "vite": "^6.2.4",
     "vite-plugin-dts": "^4.5.4",
+    "vite-plugin-lib-inject-css": "^2.2.2",
     "vite-plugin-vue-devtools": "^7.7.2",
     "vitepress": "^1.6.3",
     "vue-chat-pro": "0.0.0",
@@ -81,5 +116,9 @@
     "*.{js,ts,vue}": [
       "eslint --fix"
     ]
-  }
+  },
+  "sideEffects": [
+    "**/*.css",
+    "**/*.scss"
+  ]
 }
