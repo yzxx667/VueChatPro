@@ -1,14 +1,14 @@
 import type { App } from 'vue'
-import './theme/index.scss'
+// import './theme/index.scss'
 import './theme/var.scss'
-import './theme/config.scss'
-import './theme/mixin.scss'
+// import './theme/config.scss'
+// import './theme/mixin.scss'
 import Welcome from './components/Welcome'
 import Thinking from './components/Thinking'
-import Bubble from './components/Bubble/Bubble.vue'
-import BubbleList from './components/BubbleList/BubbleList.vue'
-import Conversation from './components/Conversation/Conversation.vue'
-import Sender from './components/Sender/Sender.vue'
+import Bubble from './components/Bubble'
+import BubbleList from './components/BubbleList'
+import Conversation from './components/Conversation'
+import Sender from './components/Sender'
 
 const components = [Welcome, Thinking, Bubble, BubbleList, Conversation, Sender]
 
